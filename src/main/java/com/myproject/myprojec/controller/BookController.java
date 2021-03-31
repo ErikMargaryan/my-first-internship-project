@@ -18,7 +18,13 @@ public class BookController {
         this.bookService = bookService;
     }
 
+    @GetMapping("/{id}")
+    public BookDto getBook(@PathVariable() Long id) throws Exception {
+        BookDto book = bookService.getBook(id);
+        return book;
+    }
     //read validate annotation
+
     @PostMapping()
     public ResponseEntity<BookDto> addBook(@RequestBody BookDto dto) throws Exception {
         if (dto.getTitle() == null) {
@@ -28,9 +34,19 @@ public class BookController {
         return ResponseEntity.status(HttpStatus.CREATED).body(book);
     }
 
-    @GetMapping("/{id}")
-    public BookDto getBook(@PathVariable() Long id) throws Exception {
-        BookDto dto = bookService.getBook(id);
-        return dto;
+    @PutMapping("/{id}")
+    public ResponseEntity<BookDto> updateBook(@PathVariable("id") Long id,
+                                              @RequestBody BookDto dto) throws Exception {
+        BookDto book = bookService.updateBookData(id, dto);
+        if (book == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(book);
     }
+
+    @DeleteMapping("/{id}")
+    public void addUser(@PathVariable("id") Long id) {
+        bookService.deleteBook(id);
+    }
+
 }
