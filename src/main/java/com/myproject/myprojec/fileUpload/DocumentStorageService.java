@@ -21,8 +21,9 @@ public class DocumentStorageService {
     private final Path fileStorageLocation;
 
     @Autowired
-    DocumentStoragePropertiesRepository docStorageRepo;
+     DocumentStoragePropertiesRepository documentStoragePropertiesRepository;
 
+    @Autowired
     public DocumentStorageService(DocumnentStorageProperties fileStorageProperties) {
         this.fileStorageLocation = Paths.get(fileStorageProperties.getUploadDir())
                 .toAbsolutePath().normalize();
@@ -53,18 +54,18 @@ public class DocumentStorageService {
             Path targetLocation = this.fileStorageLocation.resolve(fileName);
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
-            DocumnentStorageProperties doc = docStorageRepo.checkDocumentByUserId(userId, docType);
+            DocumnentStorageProperties doc = documentStoragePropertiesRepository.checkDocumentByUserId(userId, docType);
             if (doc != null) {
                 doc.setDocumentFormat(file.getContentType());
                 doc.setFileName(fileName);
-                docStorageRepo.save(doc);
+                documentStoragePropertiesRepository.save(doc);
             } else {
                 DocumnentStorageProperties newDoc = new DocumnentStorageProperties();
                 newDoc.setUserId(userId);
                 newDoc.setDocumentFormat(file.getContentType());
                 newDoc.setFileName(fileName);
                 newDoc.setDocumentType(docType);
-                docStorageRepo.save(newDoc);
+                documentStoragePropertiesRepository.save(newDoc);
             }
             return fileName;
         } catch (IOException ex) {
@@ -87,6 +88,6 @@ public class DocumentStorageService {
     }
 
     public String getDocumentName(Integer userId, String docType) {
-        return docStorageRepo.getUploadDocumnetPath(userId, docType);
+        return documentStoragePropertiesRepository.getUploadDocumnetPath(userId, docType);
     }
 }

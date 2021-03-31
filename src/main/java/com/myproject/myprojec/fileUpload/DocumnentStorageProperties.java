@@ -1,9 +1,11 @@
 package com.myproject.myprojec.fileUpload;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 
 import javax.persistence.*;
 
+@Configuration
 @ConfigurationProperties(prefix = "file")
 @Entity
 @Table(name = "bookstore_management_dockuments")

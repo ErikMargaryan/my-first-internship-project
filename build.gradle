@@ -18,10 +18,14 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web-services'
     runtimeOnly 'mysql:mysql-connector-java'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    compile group: 'org.jbpm', name: 'jbpm-document', version: '7.6.0.Final'
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 }
 
 test {
     useJUnitPlatform()
 }
+dependencies {
+    compile group: 'org.jbpm', name: 'jbpm-document', version: '7.6.0.Final'
+}
+compileJava.inputs.files(processResources)
 

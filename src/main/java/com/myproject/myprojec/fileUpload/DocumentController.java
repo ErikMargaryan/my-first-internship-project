@@ -18,8 +18,11 @@ import java.io.IOException;
 @RestController
 public class DocumentController {
 
+    private final DocumentStorageService documentStorageService;
     @Autowired
-    private DocumentStorageService documentStorageService;
+    public DocumentController(DocumentStorageService documentStorageService) {
+        this.documentStorageService = documentStorageService;
+    }
 
     @PostMapping("/uploadFile")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file,
