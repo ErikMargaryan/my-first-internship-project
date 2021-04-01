@@ -1,7 +1,10 @@
 package com.myproject.myprojec.controller;
 
 import com.myproject.myprojec.dto.BookDto;
+import com.myproject.myprojec.model.BookWrapper;
+import com.myproject.myprojec.model.QueryResponseWrapper;
 import com.myproject.myprojec.service.BookService;
+import com.myproject.myprojec.service.criteria.SearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +26,13 @@ public class BookController {
         BookDto book = bookService.getBook(id);
         return book;
     }
-    //read validate annotation
 
+    @GetMapping("/with-pagination")
+    public QueryResponseWrapper<BookWrapper> getBooks(SearchCriteria searchCriteria) {
+        return bookService.getBooks(searchCriteria);
+    }
+
+    //read validate annotation
     @PostMapping()
     public ResponseEntity<BookDto> addBook(@RequestBody BookDto dto) throws Exception {
         if (dto.getTitle() == null) {

@@ -2,9 +2,13 @@ package com.myproject.myprojec.service;
 
 import com.myproject.myprojec.dto.BookDto;
 import com.myproject.myprojec.mapper.BookMapper;
+import com.myproject.myprojec.model.BookWrapper;
+import com.myproject.myprojec.model.QueryResponseWrapper;
 import com.myproject.myprojec.model.entity.BookEntity;
 import com.myproject.myprojec.rpository.BookRepository;
+import com.myproject.myprojec.service.criteria.SearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,6 +35,12 @@ public class BookService {
                 .orElseThrow(() -> new Exception("Book not found"));
         return BookMapper.mapEntityToDto(bookEntity);
     }
+
+    public QueryResponseWrapper<BookWrapper> getBooks(SearchCriteria searchCriteria) {
+        Page<BookWrapper> content = bookRepository.findALLWithPagination(searchCriteria.composePageRequest());
+        return new QueryResponseWrapper<>(content.getTotalElements(), content.getContent());
+    }
+
 
     public BookDto updateBookData(Long id, BookDto dto) throws Exception {
         BookEntity bookEntity = bookRepository.findById(id)
