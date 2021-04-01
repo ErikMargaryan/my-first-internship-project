@@ -27,7 +27,7 @@ public class BookController {
         return book;
     }
 
-        @GetMapping("/with-pagination")
+    @GetMapping("/with-pagination")
     public QueryResponseWrapper<BookWrapper> getBooks(SearchCriteria searchCriteria) {
         return bookService.getBooks(searchCriteria);
     }

@@ -1,8 +1,11 @@
 package com.myproject.myprojec.controller;
 
 import com.myproject.myprojec.dto.UserDto;
+import com.myproject.myprojec.model.QueryResponseWrapper;
+import com.myproject.myprojec.model.UserWrapper;
 import com.myproject.myprojec.model.entity.UserEntity;
 import com.myproject.myprojec.service.UserService;
+import com.myproject.myprojec.service.criteria.SearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +28,10 @@ public class UserController {
         return user;
     }
 
-//    @GetMapping("/with-pagination")
+    @GetMapping("/with-pagination")
+    public QueryResponseWrapper<UserWrapper> getBooks(SearchCriteria searchCriteria) {
+        return userService.getUsers(searchCriteria);
+    }
 
     @PostMapping()
     public ResponseEntity<UserDto> addUser(@RequestBody UserDto dto) throws Exception {
