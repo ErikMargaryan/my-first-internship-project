@@ -22,7 +22,7 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public BookDto getBook(@PathVariable() Long id) throws Exception {
+    public BookDto getBook(@PathVariable("id") Long id) throws Exception {
         BookDto book = bookService.getBook(id);
         return book;
     }
