@@ -29,7 +29,7 @@ public class UserService {
         return UserMapper.mapEntityToDto(userEntity);
     }
 
-    public UserDto getUser(Long id, UserDto dto) throws Exception {
+    public UserDto getUser(Long id) throws Exception {
         UserEntity userEntity = userRepository.findById(id)
                 .orElseThrow(() -> new Exception("User not found"));
         return UserMapper.mapEntityToDto(userEntity);

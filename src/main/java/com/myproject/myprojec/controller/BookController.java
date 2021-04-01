@@ -27,7 +27,7 @@ public class BookController {
         return book;
     }
 
-    @GetMapping("/with-pagination")
+        @GetMapping("/with-pagination")
     public QueryResponseWrapper<BookWrapper> getBooks(SearchCriteria searchCriteria) {
         return bookService.getBooks(searchCriteria);
     }
@@ -38,6 +38,7 @@ public class BookController {
         if (dto.getTitle() == null) {
             throw new Exception("Title is required");
         }
+
         BookDto book = bookService.createBook(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(book);
     }
@@ -53,7 +54,7 @@ public class BookController {
     }
 
     @DeleteMapping("/{id}")
-    public void addUser(@PathVariable("id") Long id) {
+    public void deleteBook(@PathVariable("id") Long id) {
         bookService.deleteBook(id);
     }
 

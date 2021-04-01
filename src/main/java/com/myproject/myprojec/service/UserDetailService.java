@@ -27,7 +27,7 @@ public class UserDetailService {
         return UserDetailMapper.mapEntityToDto(userDetailEntity);
     }
 
-    public UserDetailDto getUserDetail(Long id, UserDetailDto dto) throws Exception {
+    public UserDetailDto getUserDetail(Long id) throws Exception {
         UserDetailEntity userDetailEntity = userDetailRepository.findById(id)
                 .orElseThrow(() -> new Exception("User Dedtails not found"));
         return UserDetailMapper.mapEntityToDto(userDetailEntity);

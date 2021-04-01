@@ -25,7 +25,7 @@ public class UsersRatedBooksService {
         return UsersRatedBooksMapper.mapEntityToDto(usersRatedBooksEntity);
     }
 
-    public UsersRatedBooksDto getUsersRatedBooks(Long id, UsersRatedBooksDto dto) throws Exception {
+    public UsersRatedBooksDto getUsersRatedBooks(Long id) throws Exception {
         UsersRatedBooksEntity usersRatedBooksEntity = usersRatedBooksRepository.findById(id)
                 .orElseThrow(() -> new Exception("User rate not found"));
         return UsersRatedBooksMapper.mapEntityToDto(usersRatedBooksEntity);
