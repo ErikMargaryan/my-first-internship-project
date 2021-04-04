@@ -1,10 +1,18 @@
 package com.myproject.myprojec.service;
 
 import com.myproject.myprojec.dto.BookDto;
+import com.myproject.myprojec.model.QueryResponseWrapper;
 import com.myproject.myprojec.persistence.entity.BookEntity;
 import com.myproject.myprojec.persistence.rpository.BookRepository;
+import com.myproject.myprojec.service.criteria.SearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BookService {
@@ -34,12 +42,12 @@ public class BookService {
         return BookDto.mapEntityToDto(bookEntity);
     }
 
-//    public QueryResponseWrapper<BookDto> getBooks(SearchCriteria searchCriteria) {
-//         Page<BookEntity> content = bookRepository.findALLWithPagination(searchCriteria.composePageRequest());
-//        List<BookEntity> content1 = content.getContent();
-//        //content1 map to dto list
-//        return new QueryResponseWrapper<>(content.getTotalElements(), content1);
-//    }
+    public QueryResponseWrapper<BookDto> getBooks(SearchCriteria searchCriteria) {
+         Page<BookEntity> content = bookRepository.findALLWithPagination(searchCriteria.composePageRequest());
+        List<BookEntity> content1 = content.getContent();
+        //content1 map to dto list
+        return new QueryResponseWrapper<>(content.getTotalElements(), content1);
+    }
 
 
     public BookDto updateBookData(Long id, BookDto dto) throws Exception {

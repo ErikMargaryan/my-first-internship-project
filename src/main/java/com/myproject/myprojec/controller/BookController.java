@@ -27,10 +27,10 @@ public class BookController {
         return book;
     }
 
-//    @GetMapping
-//    public QueryResponseWrapper<BookDto> getBooks(SearchCriteria searchCriteria) {
-//        return bookService.getBooks(searchCriteria);
-//    }
+    @GetMapping
+    public QueryResponseWrapper<BookDto> getBooks(SearchCriteria searchCriteria) {
+        return bookService.getBooks(searchCriteria);
+    }
 
     //read validate annotation
     @PostMapping()
