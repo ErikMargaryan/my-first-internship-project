@@ -1,7 +1,7 @@
-package com.myproject.myprojec.rpository;
+package com.myproject.myprojec.persistence.rpository;
 
 //import com.myproject.myprojec.model.BookWrapper;
-import com.myproject.myprojec.model.entity.BookEntity;
+import com.myproject.myprojec.persistence.entity.BookEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

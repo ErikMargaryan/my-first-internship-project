@@ -1,9 +1,8 @@
 package com.myproject.myprojec.service;
 
 import com.myproject.myprojec.dto.UserDetailDto;
-//import com.myproject.myprojec.mapper.UserDetailMapper;
-import com.myproject.myprojec.model.entity.UserDetailEntity;
-import com.myproject.myprojec.rpository.UserDetailRepository;
+import com.myproject.myprojec.persistence.entity.UserDetailEntity;
+import com.myproject.myprojec.persistence.rpository.UserDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

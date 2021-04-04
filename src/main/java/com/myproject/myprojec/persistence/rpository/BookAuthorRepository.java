@@ -1,6 +1,6 @@
-package com.myproject.myprojec.rpository;
+package com.myproject.myprojec.persistence.rpository;
 
-import com.myproject.myprojec.model.entity.BookAuthorEntity;
+import com.myproject.myprojec.persistence.entity.BookAuthorEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

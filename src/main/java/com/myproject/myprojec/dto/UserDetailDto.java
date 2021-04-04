@@ -1,6 +1,6 @@
 package com.myproject.myprojec.dto;
 
-import com.myproject.myprojec.model.entity.UserDetailEntity;
+import com.myproject.myprojec.persistence.entity.UserDetailEntity;
 
 public class UserDetailDto {
 
@@ -71,5 +71,17 @@ public class UserDetailDto {
         dto.setAddress(entity.getAddress());
         dto.setPhoneNumber(entity.getPhoneNumber());
         return dto;
+    }
+
+    public static UserDetailEntity mapDtoToEntity(UserDetailDto dto) {
+        if (dto == null) {
+            return null;
+        }
+        UserDetailEntity entity = new UserDetailEntity();
+        entity.setId(dto.getId());
+        entity.setAge(dto.getAge());
+        entity.setAddress(dto.getAddress());
+        entity.setPhoneNumber(dto.getPhoneNumber());
+        return entity;
     }
 }

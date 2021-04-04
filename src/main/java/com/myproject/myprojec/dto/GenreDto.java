@@ -1,8 +1,7 @@
 package com.myproject.myprojec.dto;
 
-import com.myproject.myprojec.mapper.BookGenreMapper;
-import com.myproject.myprojec.model.entity.BookGenreEntity;
-import com.myproject.myprojec.model.entity.GenreEntity;
+import com.myproject.myprojec.persistence.entity.BookGenreEntity;
+import com.myproject.myprojec.persistence.entity.GenreEntity;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
@@ -59,5 +58,19 @@ public class GenreDto {
             dto.setBookGenreDtoList(bookGenreEntityList.stream().map(BookGenreDto::mapEntityToDto).collect(Collectors.toList()));
         }
         return dto;
+    }
+
+    public static GenreEntity mapDtoToEntity(GenreDto dto) {
+        if (dto == null) {
+            return null;
+        }
+        GenreEntity entity = new GenreEntity();
+        entity.setId(entity.getId());
+        entity.setGenres(entity.getGenres());
+        List<BookGenreDto> bookGenreDtoList = dto.getBookGenreDtoList();
+        if (!CollectionUtils.isEmpty(bookGenreDtoList)) {
+            entity.setBookGenreEntityList(bookGenreDtoList.stream().map(BookGenreDto::mapDtoToEntity).collect(Collectors.toList()));
+        }
+        return entity;
     }
 }

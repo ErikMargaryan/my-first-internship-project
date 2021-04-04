@@ -1,8 +1,7 @@
 package com.myproject.myprojec.dto;
 
-import com.myproject.myprojec.mapper.UsersRatedBooksMapper;
-import com.myproject.myprojec.model.entity.UserEntity;
-import com.myproject.myprojec.model.entity.UserRatedBookEntity;
+import com.myproject.myprojec.persistence.entity.UserEntity;
+import com.myproject.myprojec.persistence.entity.UserRatedBookEntity;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
@@ -113,5 +112,23 @@ public class UserDto {
             dto.setUsersRatedBooksDtoList(userRatedBookEntityList.stream().map(UserRatedBookDto::mapEntityToDto).collect(Collectors.toList()));
         }
         return dto;
+    }
+
+    public static UserEntity mapDtoToEntity(UserDto dto) {
+        if (dto == null) {
+            return null;
+        }
+        UserEntity entity = new UserEntity();
+        entity.setId(dto.getId());
+        entity.setFirstName(dto.getFirstName());
+        entity.setLastName(dto.getLastName());
+        entity.setEmail(dto.getEmail());
+        entity.setUsername(dto.getUsername());
+        entity.setPassword(dto.getPassword());
+        List<UserRatedBookDto> userRatedBookDtoList = dto.getUsersRatedBooksDtoList();
+        if (!CollectionUtils.isEmpty(userRatedBookDtoList)) {
+            entity.setUsersRatedBooksList(userRatedBookDtoList.stream().map(UserRatedBookDto::mapDtoToEntity).collect(Collectors.toList()));
+        }
+        return entity;
     }
 }

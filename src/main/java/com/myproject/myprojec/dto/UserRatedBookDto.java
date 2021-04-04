@@ -1,6 +1,6 @@
 package com.myproject.myprojec.dto;
 
-import com.myproject.myprojec.model.entity.UserRatedBookEntity;
+import com.myproject.myprojec.persistence.entity.UserRatedBookEntity;
 
 public class UserRatedBookDto {
 
@@ -59,5 +59,15 @@ public class UserRatedBookDto {
         dto.setId(entity.getId());
         dto.setBookRating(entity.getBookRating());
         return dto;
+    }
+
+    public static UserRatedBookEntity mapDtoToEntity(UserRatedBookDto dto) {
+        if (dto == null) {
+            return null;
+        }
+        UserRatedBookEntity entity = new UserRatedBookEntity();
+        entity.setId(dto.getId());
+        entity.setBookRating(dto.getBookRating());
+        return entity;
     }
 }

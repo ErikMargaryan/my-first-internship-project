@@ -1,6 +1,7 @@
 package com.myproject.myprojec.dto;
 
-import com.myproject.myprojec.model.entity.BookGenreEntity;
+import com.myproject.myprojec.persistence.entity.BookAuthorEntity;
+import com.myproject.myprojec.persistence.entity.BookGenreEntity;
 
 public class BookGenreDto {
 
@@ -49,5 +50,14 @@ public class BookGenreDto {
         dto.setId(entity.getId());
         //??
         return dto;
+    }
+
+    public static BookGenreEntity mapDtoToEntity(BookGenreDto dto) {
+        if (dto == null) {
+            return null;
+        }
+        BookGenreEntity entity = new BookGenreEntity();
+        entity.setId(dto.getId());
+        return entity;
     }
 }

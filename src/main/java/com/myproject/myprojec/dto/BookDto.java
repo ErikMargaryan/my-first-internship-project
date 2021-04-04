@@ -1,12 +1,9 @@
 package com.myproject.myprojec.dto;
 
-import com.myproject.myprojec.mapper.BookAuthorMapper;
-import com.myproject.myprojec.mapper.BookGenreMapper;
-import com.myproject.myprojec.mapper.UsersRatedBooksMapper;
-import com.myproject.myprojec.model.entity.BookAuthorEntity;
-import com.myproject.myprojec.model.entity.BookEntity;
-import com.myproject.myprojec.model.entity.BookGenreEntity;
-import com.myproject.myprojec.model.entity.UserRatedBookEntity;
+import com.myproject.myprojec.persistence.entity.BookAuthorEntity;
+import com.myproject.myprojec.persistence.entity.BookEntity;
+import com.myproject.myprojec.persistence.entity.BookGenreEntity;
+import com.myproject.myprojec.persistence.entity.UserRatedBookEntity;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
@@ -124,5 +121,31 @@ public class BookDto {
         dto.setPublisher(entity.getPublisher());
         dto.setYearOfPublication(entity.getYearOfPublication());
         return dto;
+    }
+
+    public static BookEntity mapDtoToEntity(BookDto dto) {
+        if (dto == null) {
+            return null;
+        }
+        BookEntity entity = new BookEntity();
+        entity.setId(dto.getId());
+        entity.setTitle(dto.getTitle());
+        List<BookAuthorDto> bookAuthorDtoList = dto.getBookAuthorDtoList();
+        if (!CollectionUtils.isEmpty(bookAuthorDtoList)) {
+            entity.setBookAuthorEntityList(bookAuthorDtoList.stream().map(BookAuthorDto::mapDtoToEntity).collect(Collectors.toList()));
+        }
+        entity.setIsbn(dto.getIsbn());
+        List<UserRatedBookDto> userRatedBookDtoList = dto.getUsersRatedBooksDtoList();
+        if (!CollectionUtils.isEmpty(userRatedBookDtoList)) {
+            entity.setUsersRatedBooksList(userRatedBookDtoList.stream().map(UserRatedBookDto::mapDtoToEntity).collect(Collectors.toList()));
+        }
+        List<BookGenreDto> bookGenreDtoList = dto.getBookGenreDtoList();
+        if (!CollectionUtils.isEmpty(bookGenreDtoList)) {
+            entity.setBookGenreEntityList(bookGenreDtoList.stream().map(BookGenreDto::mapDtoToEntity).collect(Collectors.toList()));
+        }
+        entity.setPublisher(dto.getPublisher());
+        entity.setYearOfPublication(dto.getYearOfPublication());
+
+        return entity;
     }
 }

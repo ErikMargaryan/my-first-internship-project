@@ -1,14 +1,10 @@
 package com.myproject.myprojec.service;
 
 import com.myproject.myprojec.dto.UserDto;
-//import com.myproject.myprojec.mapper.UserMapper;
-import com.myproject.myprojec.model.QueryResponseWrapper;
 //import com.myproject.myprojec.model.UserWrapper;
-import com.myproject.myprojec.model.entity.UserEntity;
-import com.myproject.myprojec.rpository.UserRepository;
-import com.myproject.myprojec.service.criteria.SearchCriteria;
+import com.myproject.myprojec.persistence.entity.UserEntity;
+import com.myproject.myprojec.persistence.rpository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 @Service

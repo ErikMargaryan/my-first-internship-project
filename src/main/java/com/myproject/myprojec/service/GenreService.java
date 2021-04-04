@@ -1,9 +1,8 @@
 package com.myproject.myprojec.service;
 
 import com.myproject.myprojec.dto.GenreDto;
-//import com.myproject.myprojec.mapper.GenresMapper;
-import com.myproject.myprojec.model.entity.GenreEntity;
-import com.myproject.myprojec.rpository.GenreRepository;
+import com.myproject.myprojec.persistence.entity.GenreEntity;
+import com.myproject.myprojec.persistence.rpository.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

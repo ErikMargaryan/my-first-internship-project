@@ -1,8 +1,7 @@
 package com.myproject.myprojec.dto;
 
-import com.myproject.myprojec.mapper.BookAuthorMapper;
-import com.myproject.myprojec.model.entity.AuthorEntity;
-import com.myproject.myprojec.model.entity.BookAuthorEntity;
+import com.myproject.myprojec.persistence.entity.AuthorEntity;
+import com.myproject.myprojec.persistence.entity.BookAuthorEntity;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
@@ -70,5 +69,20 @@ public class AuthorDto {
             dto.setBookAuthorDtoList(bookAuthorEntityList.stream().map(BookAuthorDto::mapEntityToDto).collect(Collectors.toList()));
         }
         return dto;
+    }
+
+    public static AuthorEntity mapDtoToEntity(AuthorDto dto) {
+        if (dto == null) {
+            return null;
+        }
+        AuthorEntity entity = new AuthorEntity();
+        entity.setId(dto.getId());
+        entity.setFirstName(dto.getFirstName());
+        entity.setLastName(dto.getLastName());
+        List<BookAuthorDto> bookAuthorDtoList = dto.getBookAuthorDtoList();
+        if (!CollectionUtils.isEmpty(bookAuthorDtoList)) {
+            entity.setBookAuthorEntityList(bookAuthorDtoList.stream().map(BookAuthorDto::mapDtoToEntity).collect(Collectors.toList()));
+        }
+        return entity;
     }
 }

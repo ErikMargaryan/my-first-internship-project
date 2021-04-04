@@ -1,9 +1,8 @@
 package com.myproject.myprojec.service;
 
 import com.myproject.myprojec.dto.UserRatedBookDto;
-//import com.myproject.myprojec.mapper.UsersRatedBooksMapper;
-import com.myproject.myprojec.model.entity.UserRatedBookEntity;
-import com.myproject.myprojec.rpository.UserRatedBookRepository;
+import com.myproject.myprojec.persistence.entity.UserRatedBookEntity;
+import com.myproject.myprojec.persistence.rpository.UserRatedBookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
