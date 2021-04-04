@@ -42,12 +42,12 @@ public class BookService {
         return BookDto.mapEntityToDto(bookEntity);
     }
 
-    public QueryResponseWrapper<BookDto> getBooks(SearchCriteria searchCriteria) {
-         Page<BookEntity> content = bookRepository.findALLWithPagination(searchCriteria.composePageRequest());
-        List<BookEntity> content1 = content.getContent();
-        //content1 map to dto list
-        return new QueryResponseWrapper<>(content.getTotalElements(), content1);
-    }
+//    public QueryResponseWrapper<BookDto> getBooks(SearchCriteria searchCriteria) {
+//         Page<BookEntity> content = bookRepository.findALLWithPagination(searchCriteria.composePageRequest());
+//        List<BookEntity> content1 = content.getContent();
+//        //content1 map to dto list
+//        return new QueryResponseWrapper<>(content.getTotalElements(), content1);
+//    }
 
 
     public BookDto updateBookData(Long id, BookDto dto) throws Exception {
