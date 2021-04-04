@@ -18,8 +18,9 @@ public class GenreService {
 
     public GenreDto createGenres(GenreDto dto) {
         GenreEntity genreEntity = new GenreEntity();
-        genreEntity.setGenres(dto.getGenres());
-        genreEntity = genreRepository.save(genreEntity);
+//        genreEntity.setGenres(dto.getGenres());
+//        genreEntity = genreRepository.save(genreEntity);
+        GenreDto.mapDtoToEntity(dto);
         return GenreDto.mapEntityToDto(genreEntity);
     }
 

@@ -18,7 +18,8 @@ public class UserRatedBookService {
 
     public UserRatedBookDto createUsersRatedBooks(UserRatedBookDto dto) {
         UserRatedBookEntity userRatedBookEntity = new UserRatedBookEntity();
-        userRatedBookEntity.setBookRating(dto.getBookRating());
+//        userRatedBookEntity.setBookRating(dto.getBookRating());
+        UserRatedBookDto.mapDtoToEntity(dto);
         userRatedBookEntity = userRatedBookRepository.save(userRatedBookEntity);
         return UserRatedBookDto.mapEntityToDto(userRatedBookEntity);
     }

@@ -19,11 +19,12 @@ public class UserService {
 
     public UserDto creatUser(UserDto dto) {
         UserEntity userEntity = new UserEntity();
-        userEntity.setFirstName(dto.getFirstName());
-        userEntity.setLastName(dto.getLastName());
-        userEntity.setEmail(dto.getEmail());
-        userEntity.setUsername(dto.getUsername());
-        userEntity.setPassword(dto.getPassword());
+//        userEntity.setFirstName(dto.getFirstName());
+//        userEntity.setLastName(dto.getLastName());
+//        userEntity.setEmail(dto.getEmail());
+//        userEntity.setUsername(dto.getUsername());
+//        userEntity.setPassword(dto.getPassword());
+        UserDto.mapDtoToEntity(dto);
 
         userEntity=userRepository.save(userEntity);
         return UserDto.mapEntityToDto(userEntity);

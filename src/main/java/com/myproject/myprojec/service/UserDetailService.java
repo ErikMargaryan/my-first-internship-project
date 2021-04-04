@@ -18,10 +18,10 @@ public class UserDetailService {
 
     public UserDetailDto createUserDetail(UserDetailDto dto) {
         UserDetailEntity userDetailEntity = new UserDetailEntity();
-        userDetailEntity.setAge(dto.getAge());
-        userDetailEntity.setAddress(dto.getAddress());
-        userDetailEntity.setPhoneNumber(dto.getPhoneNumber());
-
+//        userDetailEntity.setAge(dto.getAge());
+//        userDetailEntity.setAddress(dto.getAddress());
+//        userDetailEntity.setPhoneNumber(dto.getPhoneNumber());
+        UserDetailDto.mapDtoToEntity(dto);
         userDetailEntity = userDetailRepository.save(userDetailEntity);
         return UserDetailDto.mapEntityToDto(userDetailEntity);
     }

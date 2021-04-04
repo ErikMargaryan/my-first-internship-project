@@ -18,10 +18,11 @@ public class BookService {
 
     public BookDto createBook(BookDto dto) {
         BookEntity bookEntity = new BookEntity();
-        bookEntity.setTitle(dto.getTitle());
-        bookEntity.setIsbn(dto.getIsbn());
-        bookEntity.setPublisher(dto.getPublisher());
-        bookEntity.setYearOfPublication(dto.getYearOfPublication());
+//        bookEntity.setTitle(dto.getTitle());
+//        bookEntity.setIsbn(dto.getIsbn());
+//        bookEntity.setPublisher(dto.getPublisher());
+//        bookEntity.setYearOfPublication(dto.getYearOfPublication());
+        BookDto.mapDtoToEntity(dto);
 
         bookEntity = bookRepository.save(bookEntity);
         return BookDto.mapEntityToDto(bookEntity);

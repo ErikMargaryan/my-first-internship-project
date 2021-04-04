@@ -18,8 +18,9 @@ public class AuthorService {
 
     public AuthorDto createAuthor(AuthorDto dto) {
         AuthorEntity authorEntity = new AuthorEntity();
-        authorEntity.setFirstName(dto.getFirstName());
-        authorEntity.setLastName(dto.getLastName());
+//        authorEntity.setFirstName(dto.getFirstName());
+//        authorEntity.setLastName(dto.getLastName());
+        AuthorDto.mapDtoToEntity(dto);
 
         authorEntity = authorRepository.save(authorEntity);
         return AuthorDto.mapEntityToDto(authorEntity);
