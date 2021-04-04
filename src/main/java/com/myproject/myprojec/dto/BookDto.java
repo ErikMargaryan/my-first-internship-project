@@ -1,6 +1,16 @@
 package com.myproject.myprojec.dto;
 
+import com.myproject.myprojec.mapper.BookAuthorMapper;
+import com.myproject.myprojec.mapper.BookGenreMapper;
+import com.myproject.myprojec.mapper.UsersRatedBooksMapper;
+import com.myproject.myprojec.model.entity.BookAuthorEntity;
+import com.myproject.myprojec.model.entity.BookEntity;
+import com.myproject.myprojec.model.entity.BookGenreEntity;
+import com.myproject.myprojec.model.entity.UserRatedBookEntity;
+import org.springframework.util.CollectionUtils;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BookDto {
 
@@ -89,5 +99,30 @@ public class BookDto {
 
     public void setYearOfPublication(int yearOfPublication) {
         this.yearOfPublication = yearOfPublication;
+    }
+
+    public static BookDto mapEntityToDto(BookEntity entity) {
+        if (entity == null) {
+            return null;
+        }
+        BookDto dto = new BookDto();
+        dto.setId(entity.getId());
+        dto.setTitle(entity.getTitle());
+        List<BookAuthorEntity> bookAuthorEntityList = entity.getBookAuthorEntityList();
+        if (!CollectionUtils.isEmpty(bookAuthorEntityList)) {
+            dto.setBookAuthorDtoList(bookAuthorEntityList.stream().map(BookAuthorDto::mapEntityToDto).collect(Collectors.toList()));
+        }
+        dto.setIsbn(entity.getIsbn());
+        List<UserRatedBookEntity> userRatedBookEntityList = entity.getUsersRatedBooksList();
+        if (!CollectionUtils.isEmpty(userRatedBookEntityList)) {
+            dto.setUsersRatedBooksDtoList(userRatedBookEntityList.stream().map(UserRatedBookDto::mapEntityToDto).collect(Collectors.toList()));
+        }
+        List<BookGenreEntity> bookGenreEntityList = entity.getBookGenreEntityList();
+        if (!CollectionUtils.isEmpty(bookGenreEntityList)) {
+            dto.setBookGenreDtoList(bookGenreEntityList.stream().map(BookGenreDto::mapEntityToDto).collect(Collectors.toList()));
+        }
+        dto.setPublisher(entity.getPublisher());
+        dto.setYearOfPublication(entity.getYearOfPublication());
+        return dto;
     }
 }

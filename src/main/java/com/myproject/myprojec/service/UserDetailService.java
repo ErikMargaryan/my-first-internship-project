@@ -1,7 +1,7 @@
 package com.myproject.myprojec.service;
 
 import com.myproject.myprojec.dto.UserDetailDto;
-import com.myproject.myprojec.mapper.UserDetailMapper;
+//import com.myproject.myprojec.mapper.UserDetailMapper;
 import com.myproject.myprojec.model.entity.UserDetailEntity;
 import com.myproject.myprojec.rpository.UserDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +24,13 @@ public class UserDetailService {
         userDetailEntity.setPhoneNumber(dto.getPhoneNumber());
 
         userDetailEntity = userDetailRepository.save(userDetailEntity);
-        return UserDetailMapper.mapEntityToDto(userDetailEntity);
+        return UserDetailDto.mapEntityToDto(userDetailEntity);
     }
 
     public UserDetailDto getUserDetail(Long id) throws Exception {
         UserDetailEntity userDetailEntity = userDetailRepository.findById(id)
                 .orElseThrow(() -> new Exception("User Dedtails not found"));
-        return UserDetailMapper.mapEntityToDto(userDetailEntity);
+        return UserDetailDto.mapEntityToDto(userDetailEntity);
     }
 
     public UserDetailDto updateUserDetail(Long id, UserDetailDto dto) throws Exception {
@@ -44,7 +44,7 @@ public class UserDetailService {
             userDetailEntity.setAddress(dto.getAddress());
         }
         userDetailEntity = userDetailRepository.save(userDetailEntity);
-        return UserDetailMapper.mapEntityToDto(userDetailEntity);
+        return UserDetailDto.mapEntityToDto(userDetailEntity);
     }
 
     public void deleteUserDetail(Long id) {

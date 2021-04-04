@@ -1,6 +1,12 @@
 package com.myproject.myprojec.dto;
 
+import com.myproject.myprojec.mapper.BookAuthorMapper;
+import com.myproject.myprojec.model.entity.AuthorEntity;
+import com.myproject.myprojec.model.entity.BookAuthorEntity;
+import org.springframework.util.CollectionUtils;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AuthorDto {
 
@@ -49,5 +55,20 @@ public class AuthorDto {
 
     public void setBookAuthorDtoList(List<BookAuthorDto> bookAuthorDtoList) {
         this.bookAuthorDtoList = bookAuthorDtoList;
+    }
+
+    public static AuthorDto mapEntityToDto(AuthorEntity entity) {
+        if (entity == null) {
+            return null;
+        }
+        AuthorDto dto = new AuthorDto();
+        dto.setId(entity.getId());
+        dto.setFirstName(entity.getFirstName());
+        dto.setLastName(entity.getLastName());
+        List<BookAuthorEntity> bookAuthorEntityList = entity.getBookAuthorEntityList();
+        if (!CollectionUtils.isEmpty(bookAuthorEntityList)) {
+            dto.setBookAuthorDtoList(bookAuthorEntityList.stream().map(BookAuthorDto::mapEntityToDto).collect(Collectors.toList()));
+        }
+        return dto;
     }
 }

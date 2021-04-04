@@ -1,7 +1,7 @@
 package com.myproject.myprojec.service;
 
 import com.myproject.myprojec.dto.GenreDto;
-import com.myproject.myprojec.mapper.GenresMapper;
+//import com.myproject.myprojec.mapper.GenresMapper;
 import com.myproject.myprojec.model.entity.GenreEntity;
 import com.myproject.myprojec.rpository.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +21,13 @@ public class GenreService {
         GenreEntity genreEntity = new GenreEntity();
         genreEntity.setGenres(dto.getGenres());
         genreEntity = genreRepository.save(genreEntity);
-        return GenresMapper.mapEntityToDto(genreEntity);
+        return GenreDto.mapEntityToDto(genreEntity);
     }
 
     public GenreDto getGenres(Long id) throws Exception {
         GenreEntity genreEntity = genreRepository.findById(id)
                 .orElseThrow(() -> new Exception("Genres not found about that name"));
-        return GenresMapper.mapEntityToDto(genreEntity);
+        return GenreDto.mapEntityToDto(genreEntity);
     }
 
     public GenreDto updateGenres(Long id, GenreDto dto) throws Exception {
@@ -37,7 +37,7 @@ public class GenreService {
             genreEntity.setGenres(dto.getGenres());
         }
         genreEntity = genreRepository.save(genreEntity);
-        return GenresMapper.mapEntityToDto(genreEntity);
+        return GenreDto.mapEntityToDto(genreEntity);
     }
 
     public void deleteGenres(Long id) {

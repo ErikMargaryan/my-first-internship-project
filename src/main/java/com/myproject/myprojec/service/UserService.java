@@ -1,7 +1,7 @@
 package com.myproject.myprojec.service;
 
 import com.myproject.myprojec.dto.UserDto;
-import com.myproject.myprojec.mapper.UserMapper;
+//import com.myproject.myprojec.mapper.UserMapper;
 import com.myproject.myprojec.model.QueryResponseWrapper;
 //import com.myproject.myprojec.model.UserWrapper;
 import com.myproject.myprojec.model.entity.UserEntity;
@@ -30,13 +30,13 @@ public class UserService {
         userEntity.setPassword(dto.getPassword());
 
         userEntity=userRepository.save(userEntity);
-        return UserMapper.mapEntityToDto(userEntity);
+        return UserDto.mapEntityToDto(userEntity);
     }
 
     public UserDto getUser(Long id) throws Exception {
         UserEntity userEntity = userRepository.findById(id)
                 .orElseThrow(() -> new Exception("User not found"));
-        return UserMapper.mapEntityToDto(userEntity);
+        return UserDto.mapEntityToDto(userEntity);
     }
 
 //    public QueryResponseWrapper<UserWrapper> getUsers(SearchCriteria searchCriteria) {
@@ -63,7 +63,7 @@ public class UserService {
             userEntity.setPassword(dto.getPassword());
         }
         userEntity = userRepository.save(userEntity);
-        return UserMapper.mapEntityToDto(userEntity);
+        return UserDto.mapEntityToDto(userEntity);
     }
 
     public void deleteUser(Long id) {

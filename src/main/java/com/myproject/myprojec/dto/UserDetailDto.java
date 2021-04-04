@@ -1,5 +1,7 @@
 package com.myproject.myprojec.dto;
 
+import com.myproject.myprojec.model.entity.UserDetailEntity;
+
 public class UserDetailDto {
 
     private Long id;
@@ -57,5 +59,17 @@ public class UserDetailDto {
 
     public void setUser(UserDto user) {
         this.user = user;
+    }
+
+    public static UserDetailDto mapEntityToDto(UserDetailEntity entity) {
+        if (entity == null) {
+            return null;
+        }
+        UserDetailDto dto = new UserDetailDto();
+        dto.setId(entity.getId());
+        dto.setAge(entity.getAge());
+        dto.setAddress(entity.getAddress());
+        dto.setPhoneNumber(entity.getPhoneNumber());
+        return dto;
     }
 }

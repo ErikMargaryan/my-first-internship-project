@@ -1,5 +1,7 @@
 package com.myproject.myprojec.dto;
 
+import com.myproject.myprojec.model.entity.BookAuthorEntity;
+
 public class BookAuthorDto {
 
     private Long id;
@@ -37,5 +39,18 @@ public class BookAuthorDto {
 
     public void setAuthors(AuthorDto authors) {
         this.authors = authors;
+    }
+
+    public static BookAuthorDto mapEntityToDto(BookAuthorEntity entity) {
+        if (entity == null) {
+            return null;
+        }
+        BookAuthorDto dto = new BookAuthorDto();
+        dto.setId(entity.getId());
+//        BookEntity books = entity.getBooks();
+//        if (books != null) {
+//            dto.setBooks(books);
+//        }
+        return dto;
     }
 }

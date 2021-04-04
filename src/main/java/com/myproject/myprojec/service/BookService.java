@@ -1,8 +1,9 @@
 package com.myproject.myprojec.service;
 
 import com.myproject.myprojec.dto.BookDto;
-import com.myproject.myprojec.mapper.BookMapper;
+//import com.myproject.myprojec.mapper.BookMapper;
 //import com.myproject.myprojec.model.BookWrapper;
+import com.myproject.myprojec.mapper.BookMapper;
 import com.myproject.myprojec.model.QueryResponseWrapper;
 import com.myproject.myprojec.model.entity.BookEntity;
 import com.myproject.myprojec.rpository.BookRepository;
@@ -31,13 +32,13 @@ public class BookService {
         bookEntity.setYearOfPublication(dto.getYearOfPublication());
 
         bookEntity = bookRepository.save(bookEntity);
-        return BookMapper.mapEntityToDto(bookEntity);
+        return BookDto.mapEntityToDto(bookEntity);
     }
 
     public BookDto getBook(Long id) throws Exception {
         BookEntity bookEntity = bookRepository.findById(id)
                 .orElseThrow(() -> new Exception("Book not found"));
-        return BookMapper.mapEntityToDto(bookEntity);
+        return BookDto.mapEntityToDto(bookEntity);
     }
 
 //    public QueryResponseWrapper<BookDto> getBooks(SearchCriteria searchCriteria) {
@@ -64,7 +65,7 @@ public class BookService {
         bookEntity.setYearOfPublication(dto.getYearOfPublication());
 
         bookEntity = bookRepository.save(bookEntity);
-        return BookMapper.mapEntityToDto(bookEntity);
+        return BookDto.mapEntityToDto(bookEntity);
     }
 
     public void deleteBook(Long id) {

@@ -1,5 +1,7 @@
 package com.myproject.myprojec.dto;
 
+import com.myproject.myprojec.model.entity.UserRatedBookEntity;
+
 public class UserRatedBookDto {
 
     private Long id;
@@ -47,5 +49,15 @@ public class UserRatedBookDto {
 
     public void setBookRating(int bookRating) {
         this.bookRating = bookRating;
+    }
+
+    public static UserRatedBookDto mapEntityToDto(UserRatedBookEntity entity) {
+        if (entity == null) {
+            return null;
+        }
+        UserRatedBookDto dto = new UserRatedBookDto();
+        dto.setId(entity.getId());
+        dto.setBookRating(entity.getBookRating());
+        return dto;
     }
 }

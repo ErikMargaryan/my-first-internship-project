@@ -1,5 +1,7 @@
 package com.myproject.myprojec.dto;
 
+import com.myproject.myprojec.model.entity.BookGenreEntity;
+
 public class BookGenreDto {
 
     private Long id;
@@ -37,5 +39,15 @@ public class BookGenreDto {
 
     public void setGenres(GenreDto genres) {
         this.genres = genres;
+    }
+
+    public static BookGenreDto mapEntityToDto(BookGenreEntity entity) {
+        if (entity == null) {
+            return null;
+        }
+        BookGenreDto dto = new BookGenreDto();
+        dto.setId(entity.getId());
+        //??
+        return dto;
     }
 }

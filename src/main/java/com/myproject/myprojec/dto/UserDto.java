@@ -1,6 +1,12 @@
 package com.myproject.myprojec.dto;
 
+import com.myproject.myprojec.mapper.UsersRatedBooksMapper;
+import com.myproject.myprojec.model.entity.UserEntity;
+import com.myproject.myprojec.model.entity.UserRatedBookEntity;
+import org.springframework.util.CollectionUtils;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserDto {
 
@@ -89,5 +95,23 @@ public class UserDto {
 
     public void setUserDetailDto(UserDetailDto userDetailDto) {
         this.userDetailDto = userDetailDto;
+    }
+
+    public static UserDto mapEntityToDto(UserEntity entity) {
+        if (entity == null) {
+            return null;
+        }
+        UserDto dto = new UserDto();
+        dto.setId(entity.getId());
+        dto.setFirstName(entity.getFirstName());
+        dto.setLastName(entity.getLastName());
+        dto.setEmail(entity.getEmail());
+        dto.setUsername(entity.getUsername());
+        dto.setPassword(entity.getPassword());
+        List<UserRatedBookEntity> userRatedBookEntityList = entity.getUsersRatedBooksList();
+        if (!CollectionUtils.isEmpty(userRatedBookEntityList)) {
+            dto.setUsersRatedBooksDtoList(userRatedBookEntityList.stream().map(UserRatedBookDto::mapEntityToDto).collect(Collectors.toList()));
+        }
+        return dto;
     }
 }

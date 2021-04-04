@@ -1,6 +1,12 @@
 package com.myproject.myprojec.dto;
 
+import com.myproject.myprojec.mapper.BookGenreMapper;
+import com.myproject.myprojec.model.entity.BookGenreEntity;
+import com.myproject.myprojec.model.entity.GenreEntity;
+import org.springframework.util.CollectionUtils;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class GenreDto {
 
@@ -39,5 +45,19 @@ public class GenreDto {
 
     public void setBookGenreDtoList(List<BookGenreDto> bookGenreDtoList) {
         this.bookGenreDtoList = bookGenreDtoList;
+    }
+
+    public static GenreDto mapEntityToDto(GenreEntity entity) {
+        if (entity == null) {
+            return null;
+        }
+        GenreDto dto = new GenreDto();
+        dto.setId(entity.getId());
+        dto.setGenres(entity.getGenres());
+        List<BookGenreEntity> bookGenreEntityList = entity.getBookGenreEntityList();
+        if (!CollectionUtils.isEmpty(bookGenreEntityList)) {
+            dto.setBookGenreDtoList(bookGenreEntityList.stream().map(BookGenreDto::mapEntityToDto).collect(Collectors.toList()));
+        }
+        return dto;
     }
 }

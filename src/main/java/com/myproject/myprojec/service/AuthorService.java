@@ -1,7 +1,7 @@
 package com.myproject.myprojec.service;
 
 import com.myproject.myprojec.dto.AuthorDto;
-import com.myproject.myprojec.mapper.AuthorMapper;
+//import com.myproject.myprojec.mapper.AuthorMapper;
 import com.myproject.myprojec.model.entity.AuthorEntity;
 import com.myproject.myprojec.rpository.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +23,13 @@ public class AuthorService {
         authorEntity.setLastName(dto.getLastName());
 
         authorEntity = authorRepository.save(authorEntity);
-        return AuthorMapper.mapEntityToDto(authorEntity);
+        return AuthorDto.mapEntityToDto(authorEntity);
     }
 
     public AuthorDto getAuthor(Long id) throws Exception {
         AuthorEntity authorEntity = authorRepository.findById(id)
                 .orElseThrow(() -> new Exception("Author not found"));
-        return AuthorMapper.mapEntityToDto(authorEntity);
+        return AuthorDto.mapEntityToDto(authorEntity);
     }
 
     public AuthorDto updateAuthorData(Long id, AuthorDto dto) throws Exception {
@@ -42,7 +42,7 @@ public class AuthorService {
             authorEntity.setLastName(dto.getLastName());
         }
         authorEntity = authorRepository.save(authorEntity);
-        return AuthorMapper.mapEntityToDto(authorEntity);
+        return AuthorDto.mapEntityToDto(authorEntity);
     }
 
     public void delete(Long id) {
