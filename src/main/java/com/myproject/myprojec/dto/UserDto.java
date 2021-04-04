@@ -10,20 +10,20 @@ public class UserDto {
     private String email;
     private String username;
     private String password;
-    private List<UsersRatedBooksDto> usersRatedBooksDtoList;
+    private List<UserRatedBookDto> userRatedBookDtoList;
     private UserDetailDto userDetailDto;
 
     public UserDto() {
     }
 
-    public UserDto(Long id, String firstName, String lastName, String email, String username, String password, List<UsersRatedBooksDto> usersRatedBooksDtoList, UserDetailDto userDetailDto) {
+    public UserDto(Long id, String firstName, String lastName, String email, String username, String password, List<UserRatedBookDto> userRatedBookDtoList, UserDetailDto userDetailDto) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.username = username;
         this.password = password;
-        this.usersRatedBooksDtoList = usersRatedBooksDtoList;
+        this.userRatedBookDtoList = userRatedBookDtoList;
         this.userDetailDto = userDetailDto;
     }
 
@@ -75,12 +75,12 @@ public class UserDto {
         this.password = password;
     }
 
-    public List<UsersRatedBooksDto> getUsersRatedBooksDtoList() {
-        return usersRatedBooksDtoList;
+    public List<UserRatedBookDto> getUsersRatedBooksDtoList() {
+        return userRatedBookDtoList;
     }
 
-    public void setUsersRatedBooksDtoList(List<UsersRatedBooksDto> usersRatedBooksDtoList) {
-        this.usersRatedBooksDtoList = usersRatedBooksDtoList;
+    public void setUsersRatedBooksDtoList(List<UserRatedBookDto> userRatedBookDtoList) {
+        this.userRatedBookDtoList = userRatedBookDtoList;
     }
 
     public UserDetailDto getUserDetailDto() {

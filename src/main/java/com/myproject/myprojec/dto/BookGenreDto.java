@@ -4,12 +4,12 @@ public class BookGenreDto {
 
     private Long id;
     private BookDto books;
-    private GenresDto genres;
+    private GenreDto genres;
 
     public BookGenreDto() {
     }
 
-    public BookGenreDto(Long id, BookDto books, GenresDto genres) {
+    public BookGenreDto(Long id, BookDto books, GenreDto genres) {
         this.id = id;
         this.books = books;
         this.genres = genres;
@@ -31,11 +31,11 @@ public class BookGenreDto {
         this.books = books;
     }
 
-    public GenresDto getGenres() {
+    public GenreDto getGenres() {
         return genres;
     }
 
-    public void setGenres(GenresDto genres) {
+    public void setGenres(GenreDto genres) {
         this.genres = genres;
     }
 }

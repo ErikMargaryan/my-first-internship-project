@@ -2,16 +2,16 @@ package com.myproject.myprojec.dto;
 
 import java.util.List;
 
-public class GenresDto {
+public class GenreDto {
 
     private Long id;
     private String genres;
     private List<BookGenreDto> bookGenreDtoList;
 
-    public GenresDto() {
+    public GenreDto() {
     }
 
-    public GenresDto(Long id, String genres, List<BookGenreDto> bookGenreDtoList) {
+    public GenreDto(Long id, String genres, List<BookGenreDto> bookGenreDtoList) {
         this.id = id;
         this.genres = genres;
         this.bookGenreDtoList = bookGenreDtoList;

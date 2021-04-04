@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "books")
+@Table(name = "book")
 public class BookEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,24 +14,32 @@ public class BookEntity {
     private String title;
     @OneToMany(mappedBy = "books")
     private List<BookAuthorEntity> bookAuthorEntityList;
-    @Column(name = "price", nullable = false)
-    private double price;
+    @Column(name = "isbn")
+    private Double isbn;
     @OneToMany(mappedBy = "books")
-    private List<UsersRatedBooksEntity> usersRatedBooksEntityList;
+    private List<UserRatedBookEntity> userRatedBookEntityList;
     @OneToMany(mappedBy = "books")
     private List<BookGenreEntity> bookGenreEntityList;
+    @Column(name = "publisher", nullable = false)
+    private String publisher;
+    @Column(name = "year_of_publication", nullable = false)
+    private int yearOfPublication;
 
 
     public BookEntity() {
     }
 
-    public BookEntity(Long id, String title, List<BookAuthorEntity> bookAuthorEntityList, double price, List<UsersRatedBooksEntity> usersRatedBooksEntityList, List<BookGenreEntity> bookGenreEntityList) {
+    public BookEntity(Long id, String title, List<BookAuthorEntity> bookAuthorEntityList,
+                      Double isbn, List<UserRatedBookEntity> userRatedBookEntityList,
+                      List<BookGenreEntity> bookGenreEntityList, String publisher, int yearOfPublication) {
         this.id = id;
         this.title = title;
         this.bookAuthorEntityList = bookAuthorEntityList;
-        this.price = price;
-        this.usersRatedBooksEntityList = usersRatedBooksEntityList;
+        this.isbn = isbn;
+        this.userRatedBookEntityList = userRatedBookEntityList;
         this.bookGenreEntityList = bookGenreEntityList;
+        this.publisher = publisher;
+        this.yearOfPublication = yearOfPublication;
     }
 
     public Long getId() {
@@ -50,12 +58,12 @@ public class BookEntity {
         this.title = title;
     }
 
-    public double getPrice() {
-        return price;
+    public Double getIsbn() {
+        return isbn;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setIsbn(Double isbn) {
+        this.isbn = isbn;
     }
 
     public List<BookAuthorEntity> getBookAuthorEntityList() {
@@ -66,12 +74,12 @@ public class BookEntity {
         this.bookAuthorEntityList = bookAuthorEntityList;
     }
 
-    public List<UsersRatedBooksEntity> getUsersRatedBooksList() {
-        return usersRatedBooksEntityList;
+    public List<UserRatedBookEntity> getUsersRatedBooksList() {
+        return userRatedBookEntityList;
     }
 
-    public void setUsersRatedBooksList(List<UsersRatedBooksEntity> usersRatedBooksEntityList) {
-        this.usersRatedBooksEntityList = usersRatedBooksEntityList;
+    public void setUsersRatedBooksList(List<UserRatedBookEntity> userRatedBookEntityList) {
+        this.userRatedBookEntityList = userRatedBookEntityList;
     }
 
     public List<BookGenreEntity> getBookGenreEntityList() {
@@ -82,12 +90,30 @@ public class BookEntity {
         this.bookGenreEntityList = bookGenreEntityList;
     }
 
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
+    public int getYearOfPublication() {
+        return yearOfPublication;
+    }
+
+    public void setYearOfPublication(int yearOfPublication) {
+        this.yearOfPublication = yearOfPublication;
+    }
+
     @Override
     public String toString() {
         return "BookEntity{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", price=" + price +
+                ", ISBN=" + isbn +
+                ", publisher='" + publisher + '\'' +
+                ", yearOfPublication=" + yearOfPublication +
                 '}';
     }
 }

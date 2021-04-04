@@ -17,12 +17,12 @@ public class BookGenreEntity {
 
     @ManyToOne
     @JoinColumn(name = "genre_id")
-    private GenresEntity genres;
+    private GenreEntity genres;
 
     public BookGenreEntity() {
     }
 
-    public BookGenreEntity(Long id, BookEntity books, GenresEntity genres) {
+    public BookGenreEntity(Long id, BookEntity books, GenreEntity genres) {
         this.id = id;
         this.books = books;
         this.genres = genres;
@@ -44,11 +44,11 @@ public class BookGenreEntity {
         this.books = books;
     }
 
-    public GenresEntity getGenres() {
+    public GenreEntity getGenres() {
         return genres;
     }
 
-    public void setGenres(GenresEntity genres) {
+    public void setGenres(GenreEntity genres) {
         this.genres = genres;
     }
 }

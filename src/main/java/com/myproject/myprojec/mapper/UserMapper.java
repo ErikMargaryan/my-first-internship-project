@@ -1,9 +1,8 @@
 package com.myproject.myprojec.mapper;
 
 import com.myproject.myprojec.dto.UserDto;
-import com.myproject.myprojec.dto.UsersRatedBooksDto;
 import com.myproject.myprojec.model.entity.UserEntity;
-import com.myproject.myprojec.model.entity.UsersRatedBooksEntity;
+import com.myproject.myprojec.model.entity.UserRatedBookEntity;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
@@ -21,9 +20,9 @@ public class UserMapper {
         dto.setEmail(entity.getEmail());
         dto.setUsername(entity.getUsername());
         dto.setPassword(entity.getPassword());
-        List<UsersRatedBooksEntity> usersRatedBooksEntityList = entity.getUsersRatedBooksList();
-        if (!CollectionUtils.isEmpty(usersRatedBooksEntityList)) {
-            dto.setUsersRatedBooksDtoList(usersRatedBooksEntityList.stream().map(UsersRatedBooksMapper::mapEntityToDto).collect(Collectors.toList()));
+        List<UserRatedBookEntity> userRatedBookEntityList = entity.getUsersRatedBooksList();
+        if (!CollectionUtils.isEmpty(userRatedBookEntityList)) {
+            dto.setUsersRatedBooksDtoList(userRatedBookEntityList.stream().map(UsersRatedBooksMapper::mapEntityToDto).collect(Collectors.toList()));
         }
         return dto;
     }

@@ -1,7 +1,7 @@
 package com.myproject.myprojec.controller;
 
 import com.myproject.myprojec.dto.BookDto;
-import com.myproject.myprojec.model.BookWrapper;
+//import com.myproject.myprojec.model.BookWrapper;
 import com.myproject.myprojec.model.QueryResponseWrapper;
 import com.myproject.myprojec.service.BookService;
 import com.myproject.myprojec.service.criteria.SearchCriteria;
@@ -27,16 +27,22 @@ public class BookController {
         return book;
     }
 
-    @GetMapping("/with-pagination")
-    public QueryResponseWrapper<BookWrapper> getBooks(SearchCriteria searchCriteria) {
-        return bookService.getBooks(searchCriteria);
-    }
+//    @GetMapping
+//    public QueryResponseWrapper<BookDto> getBooks(SearchCriteria searchCriteria) {
+//        return bookService.getBooks(searchCriteria);
+//    }
 
     //read validate annotation
     @PostMapping()
     public ResponseEntity<BookDto> addBook(@RequestBody BookDto dto) throws Exception {
         if (dto.getTitle() == null) {
             throw new Exception("Title is required");
+        }
+        if (dto.getIsbn() == null) {
+            throw new Exception("ISBN is required");
+        }
+        if (dto.getPublisher() == null) {
+            throw new Exception("Publisher is required");
         }
 
         BookDto book = bookService.createBook(dto);

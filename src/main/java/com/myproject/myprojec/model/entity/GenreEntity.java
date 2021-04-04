@@ -4,8 +4,8 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "genres")
-public class GenresEntity {
+@Table(name = "genre")
+public class GenreEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,10 +18,10 @@ public class GenresEntity {
     @OneToMany(mappedBy = "genres")
     private List<BookGenreEntity> bookGenreEntityList;
 
-    public GenresEntity() {
+    public GenreEntity() {
     }
 
-    public GenresEntity(Long id, String genres, List<BookGenreEntity> bookGenreEntityList) {
+    public GenreEntity(Long id, String genres, List<BookGenreEntity> bookGenreEntityList) {
         this.id = id;
         this.genres = genres;
         this.bookGenreEntityList = bookGenreEntityList;

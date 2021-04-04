@@ -1,21 +1,19 @@
 package com.myproject.myprojec.dto;
 
-public class UsersRatedBooksDto {
+public class UserRatedBookDto {
 
     private Long id;
     private BookDto books;
     private UserDto users;
-    private String ISBN;
     private int bookRating;
 
-    public UsersRatedBooksDto() {
+    public UserRatedBookDto() {
     }
 
-    public UsersRatedBooksDto(Long id, BookDto books, UserDto users, String ISBN, int bookRating) {
+    public UserRatedBookDto(Long id, BookDto books, UserDto users, int bookRating) {
         this.id = id;
         this.books = books;
         this.users = users;
-        this.ISBN = ISBN;
         this.bookRating = bookRating;
     }
 
@@ -41,14 +39,6 @@ public class UsersRatedBooksDto {
 
     public void setUsers(UserDto users) {
         this.users = users;
-    }
-
-    public String getISBN() {
-        return ISBN;
-    }
-
-    public void setISBN(String ISBN) {
-        this.ISBN = ISBN;
     }
 
     public int getBookRating() {

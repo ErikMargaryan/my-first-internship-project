@@ -2,7 +2,7 @@ package com.myproject.myprojec.service;
 
 import com.myproject.myprojec.dto.BookDto;
 import com.myproject.myprojec.mapper.BookMapper;
-import com.myproject.myprojec.model.BookWrapper;
+//import com.myproject.myprojec.model.BookWrapper;
 import com.myproject.myprojec.model.QueryResponseWrapper;
 import com.myproject.myprojec.model.entity.BookEntity;
 import com.myproject.myprojec.rpository.BookRepository;
@@ -10,6 +10,8 @@ import com.myproject.myprojec.service.criteria.SearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class BookService {
@@ -24,7 +26,9 @@ public class BookService {
     public BookDto createBook(BookDto dto) {
         BookEntity bookEntity = new BookEntity();
         bookEntity.setTitle(dto.getTitle());
-        bookEntity.setPrice(dto.getPrice());
+        bookEntity.setIsbn(dto.getIsbn());
+        bookEntity.setPublisher(dto.getPublisher());
+        bookEntity.setYearOfPublication(dto.getYearOfPublication());
 
         bookEntity = bookRepository.save(bookEntity);
         return BookMapper.mapEntityToDto(bookEntity);
@@ -36,10 +40,12 @@ public class BookService {
         return BookMapper.mapEntityToDto(bookEntity);
     }
 
-    public QueryResponseWrapper<BookWrapper> getBooks(SearchCriteria searchCriteria) {
-        Page<BookWrapper> content = bookRepository.findALLWithPagination(searchCriteria.composePageRequest());
-        return new QueryResponseWrapper<>(content.getTotalElements(), content.getContent());
-    }
+//    public QueryResponseWrapper<BookDto> getBooks(SearchCriteria searchCriteria) {
+//         Page<BookEntity> content = bookRepository.findALLWithPagination(searchCriteria.composePageRequest());
+//        List<BookEntity> content1 = content.getContent();
+//        //content1 map to dto list
+//        return new QueryResponseWrapper<>(content.getTotalElements(), content1);
+//    }
 
 
     public BookDto updateBookData(Long id, BookDto dto) throws Exception {
@@ -49,8 +55,13 @@ public class BookService {
         if (dto.getTitle() != null) {
             bookEntity.setTitle(dto.getTitle());
         }
-        //Price type is double
-        bookEntity.setPrice(dto.getPrice());
+        if (dto.getIsbn() != null) {
+            bookEntity.setIsbn(dto.getIsbn());
+        }
+        if (dto.getPublisher() != null) {
+            bookEntity.setPublisher(dto.getPublisher());
+        }
+        bookEntity.setYearOfPublication(dto.getYearOfPublication());
 
         bookEntity = bookRepository.save(bookEntity);
         return BookMapper.mapEntityToDto(bookEntity);
@@ -60,4 +71,7 @@ public class BookService {
         bookRepository.deleteById(id);
     }
 
+//    public List<List<BookDto>> getEntitiesFromCsv(MultipartFile csvFile, BookDto.class) {
+//
+//    }
 }

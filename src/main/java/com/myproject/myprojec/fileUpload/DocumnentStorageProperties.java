@@ -15,7 +15,7 @@
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    @Column(name = "document_id")
 //    private Integer documentId;
-//
+//many to one for user
 //    @Column(name = "user_id")
 //    private Integer userId;
 //

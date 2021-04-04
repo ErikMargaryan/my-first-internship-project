@@ -1,16 +1,15 @@
 package com.myproject.myprojec.mapper;
 
-import com.myproject.myprojec.dto.UsersRatedBooksDto;
-import com.myproject.myprojec.model.entity.UsersRatedBooksEntity;
+import com.myproject.myprojec.dto.UserRatedBookDto;
+import com.myproject.myprojec.model.entity.UserRatedBookEntity;
 
 public class UsersRatedBooksMapper {
-    public static UsersRatedBooksDto mapEntityToDto(UsersRatedBooksEntity entity) {
+    public static UserRatedBookDto mapEntityToDto(UserRatedBookEntity entity) {
         if (entity == null) {
             return null;
         }
-        UsersRatedBooksDto dto = new UsersRatedBooksDto();
+        UserRatedBookDto dto = new UserRatedBookDto();
         dto.setId(entity.getId());
-        dto.setISBN(entity.getISBN());
         dto.setBookRating(entity.getBookRating());
         return dto;
     }

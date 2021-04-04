@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 public class UserEntity {
 
     @Id
@@ -28,7 +28,7 @@ public class UserEntity {
     private String password;
 
     @OneToMany(mappedBy = "users")
-    private List<UsersRatedBooksEntity> usersRatedBooksEntityList;
+    private List<UserRatedBookEntity> userRatedBookEntityList;
 
     @OneToOne(mappedBy = "user")
     private UserDetailEntity userDetailEntity;
@@ -36,14 +36,14 @@ public class UserEntity {
     public UserEntity() {
     }
 
-    public UserEntity(Long id, String firstName, String lastName, String email, String username, String password, List<UsersRatedBooksEntity> usersRatedBooksEntityList, UserDetailEntity userDetailEntity) {
+    public UserEntity(Long id, String firstName, String lastName, String email, String username, String password, List<UserRatedBookEntity> userRatedBookEntityList, UserDetailEntity userDetailEntity) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.username = username;
         this.password = password;
-        this.usersRatedBooksEntityList = usersRatedBooksEntityList;
+        this.userRatedBookEntityList = userRatedBookEntityList;
         this.userDetailEntity = userDetailEntity;
     }
 
@@ -95,12 +95,12 @@ public class UserEntity {
         return email;
     }
 
-    public List<UsersRatedBooksEntity> getUsersRatedBooksList() {
-        return usersRatedBooksEntityList;
+    public List<UserRatedBookEntity> getUsersRatedBooksList() {
+        return userRatedBookEntityList;
     }
 
-    public void setUsersRatedBooksList(List<UsersRatedBooksEntity> usersRatedBooksEntityList) {
-        this.usersRatedBooksEntityList = usersRatedBooksEntityList;
+    public void setUsersRatedBooksList(List<UserRatedBookEntity> userRatedBookEntityList) {
+        this.userRatedBookEntityList = userRatedBookEntityList;
     }
 
     public UserDetailEntity getUserDetailEntity() {

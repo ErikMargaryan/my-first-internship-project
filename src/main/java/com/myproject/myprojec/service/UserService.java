@@ -3,7 +3,7 @@ package com.myproject.myprojec.service;
 import com.myproject.myprojec.dto.UserDto;
 import com.myproject.myprojec.mapper.UserMapper;
 import com.myproject.myprojec.model.QueryResponseWrapper;
-import com.myproject.myprojec.model.UserWrapper;
+//import com.myproject.myprojec.model.UserWrapper;
 import com.myproject.myprojec.model.entity.UserEntity;
 import com.myproject.myprojec.rpository.UserRepository;
 import com.myproject.myprojec.service.criteria.SearchCriteria;
@@ -39,10 +39,10 @@ public class UserService {
         return UserMapper.mapEntityToDto(userEntity);
     }
 
-    public QueryResponseWrapper<UserWrapper> getUsers(SearchCriteria searchCriteria) {
-        Page<UserWrapper> content = userRepository.findALLWithPagination(searchCriteria.composePageRequest());
-        return new QueryResponseWrapper<>(content.getTotalElements(), content.getContent());
-    }
+//    public QueryResponseWrapper<UserWrapper> getUsers(SearchCriteria searchCriteria) {
+//        Page<UserWrapper> content = userRepository.findALLWithPagination(searchCriteria.composePageRequest());
+//        return new QueryResponseWrapper<>(content.getTotalElements(), content.getContent());
+//    }
 
     public UserDto updateUser(Long id, UserDto dto) throws Exception {
         UserEntity userEntity = userRepository.findById(id)

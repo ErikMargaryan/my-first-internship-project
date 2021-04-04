@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "user_rated_book")
-public class UsersRatedBooksEntity {
+public class UserRatedBookEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -18,20 +18,16 @@ public class UsersRatedBooksEntity {
     @JoinColumn(name = "user_id")
     private UserEntity users;
 
-    @Column(name = "isbn")
-    private String ISBN;
-
     @Column(name = "book_rating")
     private int bookRating;
 
-    public UsersRatedBooksEntity() {
+    public UserRatedBookEntity() {
     }
 
-    public UsersRatedBooksEntity(Long id, BookEntity books, UserEntity users, String ISBN, int bookRating) {
+    public UserRatedBookEntity(Long id, BookEntity books, UserEntity users, int bookRating) {
         this.id = id;
         this.books = books;
         this.users = users;
-        this.ISBN = ISBN;
         this.bookRating = bookRating;
     }
 
@@ -59,14 +55,6 @@ public class UsersRatedBooksEntity {
         this.users = users;
     }
 
-    public String getISBN() {
-        return ISBN;
-    }
-
-    public void setISBN(String ISBN) {
-        this.ISBN = ISBN;
-    }
-
     public int getBookRating() {
         return bookRating;
     }
@@ -79,7 +67,6 @@ public class UsersRatedBooksEntity {
     public String toString() {
         return "UsersRatedBooksEntity{" +
                 "id=" + id +
-                ", ISBN='" + ISBN + '\'' +
                 ", bookRating=" + bookRating +
                 '}';
     }
