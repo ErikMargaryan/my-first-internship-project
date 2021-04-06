@@ -9,6 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("books")
@@ -48,6 +52,18 @@ public class BookController {
         BookDto book = bookService.createBook(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(book);
     }
+
+//    @PostMapping("/import-from-csv")
+//    public ResponseEntity<?> uploadCsvFile(@RequestParam(name = "file")MultipartFile csvFile) throws Exception {
+//        if (csvFile.isEmpty()) {
+//            return ResponseEntity.badRequest().body(Map.of("message", "Required request part 'file' is ..."));
+//        }
+//        if (!Objects.equals(csvFile.getContentType(), "text/csv")) {
+//            return ResponseEntity.badRequest().body(Map.of("message", "The file must be in csv format"));
+//        }
+//        Map<String, Integer> result = bookService.parseCsv(csvFile);
+//        return ResponseEntity.ok().body(result);
+//    }
 
     @PutMapping("/{id}")
     public ResponseEntity<BookDto> updateBook(@PathVariable("id") Long id,

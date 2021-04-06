@@ -42,6 +42,13 @@ public class BookEntity {
         this.yearOfPublication = yearOfPublication;
     }
 
+    public BookEntity(Double isbn, String title, String publisher, int yearOfPublication) {
+        this.isbn = isbn;
+        this.title = title;
+        this.publisher = publisher;
+        this.yearOfPublication = yearOfPublication;
+    }
+
     public Long getId() {
         return id;
     }
