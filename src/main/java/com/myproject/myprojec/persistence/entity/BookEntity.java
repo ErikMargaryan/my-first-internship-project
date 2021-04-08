@@ -15,7 +15,7 @@ public class BookEntity {
     @OneToMany(mappedBy = "books")
     private List<BookAuthorEntity> bookAuthorEntityList;
     @Column(name = "isbn", nullable = false)
-    private Double isbn;
+    private String isbn;
     @OneToMany(mappedBy = "books")
     private List<UserRatedBookEntity> userRatedBookEntityList;
     @OneToMany(mappedBy = "books")
@@ -23,15 +23,15 @@ public class BookEntity {
     @Column(name = "publisher", nullable = false)
     private String publisher;
     @Column(name = "year_of_publication", nullable = false)
-    private int yearOfPublication;
+    private Integer yearOfPublication;
 
 
     public BookEntity() {
     }
 
     public BookEntity(Long id, String title, List<BookAuthorEntity> bookAuthorEntityList,
-                      Double isbn, List<UserRatedBookEntity> userRatedBookEntityList,
-                      List<BookGenreEntity> bookGenreEntityList, String publisher, int yearOfPublication) {
+                      String isbn, List<UserRatedBookEntity> userRatedBookEntityList,
+                      List<BookGenreEntity> bookGenreEntityList, String publisher, Integer yearOfPublication) {
         this.id = id;
         this.title = title;
         this.bookAuthorEntityList = bookAuthorEntityList;
@@ -43,7 +43,7 @@ public class BookEntity {
     }
 
     //For CSV upload
-    public BookEntity(Double isbn, String title, String publisher, int yearOfPublication) {
+    public BookEntity(String isbn, String title, String publisher, Integer yearOfPublication) {
         this.isbn = isbn;
         this.title = title;
         this.publisher = publisher;
@@ -66,11 +66,11 @@ public class BookEntity {
         this.title = title;
     }
 
-    public Double getIsbn() {
+    public String getIsbn() {
         return isbn;
     }
 
-    public void setIsbn(Double isbn) {
+    public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
 
@@ -106,11 +106,11 @@ public class BookEntity {
         this.publisher = publisher;
     }
 
-    public int getYearOfPublication() {
+    public Integer getYearOfPublication() {
         return yearOfPublication;
     }
 
-    public void setYearOfPublication(int yearOfPublication) {
+    public void setYearOfPublication(Integer yearOfPublication) {
         this.yearOfPublication = yearOfPublication;
     }
 

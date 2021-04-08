@@ -14,16 +14,16 @@ public class BookDto {
     private Long id;
     private String title;
     private List<BookAuthorDto> bookAuthorDtoList;
-    private Double isbn;
+    private String isbn;
     private List<UserRatedBookDto> userRatedBookDtoList;
     private List<BookGenreDto> bookGenreDtoList;
     private String publisher;
-    private int yearOfPublication;
+    private Integer yearOfPublication;
 
     public BookDto() {
     }
 
-    public BookDto(Long id, String title, List<BookAuthorDto> bookAuthorDtoList, Double isbn, List<UserRatedBookDto> userRatedBookDtoList, List<BookGenreDto> bookGenreDtoList, String publisher, int yearOfPublication) {
+    public BookDto(Long id, String title, List<BookAuthorDto> bookAuthorDtoList, String isbn, List<UserRatedBookDto> userRatedBookDtoList, List<BookGenreDto> bookGenreDtoList, String publisher, Integer yearOfPublication) {
         this.id = id;
         this.title = title;
         this.bookAuthorDtoList = bookAuthorDtoList;
@@ -34,7 +34,7 @@ public class BookDto {
         this.yearOfPublication = yearOfPublication;
     }
 
-    public BookDto(String title, Double isbn, String publisher, int yearOfPublication) {
+    public BookDto(String title, String isbn, String publisher, Integer yearOfPublication) {
         this.title = title;
         this.isbn = isbn;
         this.publisher = publisher;
@@ -65,11 +65,11 @@ public class BookDto {
         this.bookAuthorDtoList = bookAuthorDtoList;
     }
 
-    public Double getIsbn() {
+    public String getIsbn() {
         return isbn;
     }
 
-    public void setIsbn(Double isbn) {
+    public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
 
@@ -97,11 +97,11 @@ public class BookDto {
         this.publisher = publisher;
     }
 
-    public int getYearOfPublication() {
+    public Integer getYearOfPublication() {
         return yearOfPublication;
     }
 
-    public void setYearOfPublication(int yearOfPublication) {
+    public void setYearOfPublication(Integer yearOfPublication) {
         this.yearOfPublication = yearOfPublication;
     }
 

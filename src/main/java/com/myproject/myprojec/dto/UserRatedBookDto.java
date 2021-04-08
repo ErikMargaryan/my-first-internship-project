@@ -7,19 +7,19 @@ public class UserRatedBookDto {
     private Long id;
     private BookDto books;
     private UserDto users;
-    private int bookRating;
+    private Integer bookRating;
 
     public UserRatedBookDto() {
     }
 
-    public UserRatedBookDto(Long id, BookDto books, UserDto users, int bookRating) {
+    public UserRatedBookDto(Long id, BookDto books, UserDto users, Integer bookRating) {
         this.id = id;
         this.books = books;
         this.users = users;
         this.bookRating = bookRating;
     }
 
-    public UserRatedBookDto(Long id, int bookRating) {
+    public UserRatedBookDto(Long id, Integer bookRating) {
         this.id = id;
         this.bookRating = bookRating;
     }
@@ -48,11 +48,11 @@ public class UserRatedBookDto {
         this.users = users;
     }
 
-    public int getBookRating() {
+    public Integer getBookRating() {
         return bookRating;
     }
 
-    public void setBookRating(int bookRating) {
+    public void setBookRating(Integer bookRating) {
         this.bookRating = bookRating;
     }
 

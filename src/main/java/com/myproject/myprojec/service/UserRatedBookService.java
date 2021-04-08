@@ -1,10 +1,16 @@
 package com.myproject.myprojec.service;
 
+import com.myproject.myprojec.csvUpload.csvHelper.UserRatedBookHelper;
 import com.myproject.myprojec.dto.UserRatedBookDto;
 import com.myproject.myprojec.persistence.entity.UserRatedBookEntity;
 import com.myproject.myprojec.persistence.rpository.UserRatedBookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.List;
 
 @Service
 public class UserRatedBookService {
@@ -40,5 +46,25 @@ public class UserRatedBookService {
 
     public void deleteUsersRate(Long id) {
         userRatedBookRepository.deleteById(id);
+    }
+
+    //for CSV upload
+    public void save(MultipartFile file) {
+        try {
+            List<UserRatedBookEntity> entities = UserRatedBookHelper.csvToUserRatedBookEntity(file.getInputStream());
+            userRatedBookRepository.saveAll(entities);
+        } catch (IOException e) {
+            throw new RuntimeException("fail to store csv data: " + e.getMessage());
+        }
+    }
+
+    public ByteArrayInputStream load() {
+        List<UserRatedBookEntity> entities = userRatedBookRepository.findAll();
+        ByteArrayInputStream in = UserRatedBookHelper.userRatedBookEntityToCSV(entities);
+        return in;
+    }
+
+    public List<UserRatedBookEntity> getAllUserRates() {
+        return userRatedBookRepository.findAll();
     }
 }

@@ -1,10 +1,16 @@
 package com.myproject.myprojec.service;
 
+import com.myproject.myprojec.csvUpload.csvHelper.AuthorHelper;
 import com.myproject.myprojec.dto.AuthorDto;
 import com.myproject.myprojec.persistence.entity.AuthorEntity;
 import com.myproject.myprojec.persistence.rpository.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.List;
 
 @Service
 public class AuthorService {
@@ -42,6 +48,26 @@ public class AuthorService {
 
     public void delete(Long id) {
         authorRepository.deleteById(id);
+    }
+
+    //for CSV upload
+        public void save(MultipartFile file) {
+            try {
+            List<AuthorEntity> entities = AuthorHelper.csvToAuthorEntity(file.getInputStream());
+            authorRepository.saveAll(entities);
+        } catch (IOException e) {
+            throw new RuntimeException("fail to store csv data: " + e.getMessage());
+        }
+    }
+
+    public ByteArrayInputStream load() {
+        List<AuthorEntity> entities = authorRepository.findAll();
+        ByteArrayInputStream in = AuthorHelper.authorEntityToCSV(entities);
+        return in;
+    }
+
+    public List<AuthorEntity> getAllAuthors() {
+        return authorRepository.findAll();
     }
 
 }

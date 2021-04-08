@@ -1,10 +1,17 @@
 package com.myproject.myprojec.service;
 
+import com.myproject.myprojec.csvUpload.csvHelper.AuthorHelper;
+import com.myproject.myprojec.csvUpload.csvHelper.BookHelper;
 import com.myproject.myprojec.dto.BookDto;
 import com.myproject.myprojec.persistence.entity.BookEntity;
 import com.myproject.myprojec.persistence.rpository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.List;
 
 @Service
 public class BookService {
@@ -56,7 +63,9 @@ public class BookService {
         if (dto.getPublisher() != null) {
             bookEntity.setPublisher(dto.getPublisher());
         }
-        bookEntity.setYearOfPublication(dto.getYearOfPublication());
+        if (dto.getYearOfPublication() != null) {
+            bookEntity.setYearOfPublication(dto.getYearOfPublication());
+        }
 
         bookEntity = bookRepository.save(bookEntity);
         return BookDto.mapEntityToDto(bookEntity);
@@ -64,6 +73,26 @@ public class BookService {
 
     public void deleteBook(Long id) {
         bookRepository.deleteById(id);
+    }
+
+    //for CSV upload
+    public void save(MultipartFile file) {
+        try {
+            List<BookEntity> entities = BookHelper.csvToBookEntity(file.getInputStream());
+            bookRepository.saveAll(entities);
+        } catch (IOException e) {
+            throw new RuntimeException("fail to store csv data: " + e.getMessage());
+        }
+    }
+
+    public ByteArrayInputStream load() {
+        List<BookEntity> entities = bookRepository.findAll();
+        ByteArrayInputStream in = BookHelper.bookEntityToCSV(entities);
+        return in;
+    }
+
+    public List<BookEntity> getAllBooks() {
+        return bookRepository.findAll();
     }
 
 }

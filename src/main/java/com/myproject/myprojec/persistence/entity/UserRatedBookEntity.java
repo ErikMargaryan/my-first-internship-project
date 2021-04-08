@@ -19,12 +19,12 @@ public class UserRatedBookEntity {
     private UserEntity users;
 
     @Column(name = "book_rating")
-    private int bookRating;
+    private Integer bookRating;
 
     public UserRatedBookEntity() {
     }
 
-    public UserRatedBookEntity(Long id, BookEntity books, UserEntity users, int bookRating) {
+    public UserRatedBookEntity(Long id, BookEntity books, UserEntity users, Integer bookRating) {
         this.id = id;
         this.books = books;
         this.users = users;
@@ -32,7 +32,7 @@ public class UserRatedBookEntity {
     }
 
     //For upload
-    public UserRatedBookEntity(Long id, int bookRating) {
+    public UserRatedBookEntity(Long id, Integer bookRating) {
         this.id = id;
         this.bookRating = bookRating;
     }
@@ -61,11 +61,11 @@ public class UserRatedBookEntity {
         this.users = users;
     }
 
-    public int getBookRating() {
+    public Integer getBookRating() {
         return bookRating;
     }
 
-    public void setBookRating(int bookRating) {
+    public void setBookRating(Integer bookRating) {
         this.bookRating = bookRating;
     }
 

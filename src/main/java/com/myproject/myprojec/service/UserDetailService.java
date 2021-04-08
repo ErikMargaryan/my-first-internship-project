@@ -1,10 +1,16 @@
 package com.myproject.myprojec.service;
 
+import com.myproject.myprojec.csvUpload.csvHelper.UserDetailHelper;
 import com.myproject.myprojec.dto.UserDetailDto;
 import com.myproject.myprojec.persistence.entity.UserDetailEntity;
 import com.myproject.myprojec.persistence.rpository.UserDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.List;
 
 @Service
 public class UserDetailService {
@@ -48,5 +54,25 @@ public class UserDetailService {
 
     public void deleteUserDetail(Long id) {
         userDetailRepository.deleteById(id);
+    }
+
+    //for CSV upload
+    public void save(MultipartFile file) {
+        try {
+            List<UserDetailEntity> entities = UserDetailHelper.csvToUserDetailEntity(file.getInputStream());
+            userDetailRepository.saveAll(entities);
+        } catch (IOException e) {
+            throw new RuntimeException("fail to store csv data: " + e.getMessage());
+        }
+    }
+
+    public ByteArrayInputStream load() {
+        List<UserDetailEntity> entities = userDetailRepository.findAll();
+        ByteArrayInputStream in = UserDetailHelper.genreEntityToCSV(entities);
+        return in;
+    }
+
+    public List<UserDetailEntity> getAllUserDetails() {
+        return userDetailRepository.findAll();
     }
 }

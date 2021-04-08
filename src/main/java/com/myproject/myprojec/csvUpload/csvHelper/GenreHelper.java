@@ -1,8 +1,7 @@
 package com.myproject.myprojec.csvUpload.csvHelper;
 
-import com.myproject.myprojec.persistence.entity.AuthorEntity;
+import com.myproject.myprojec.persistence.entity.GenreEntity;
 import org.apache.commons.csv.*;
-import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
@@ -10,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class AuthorHelper {
+public class GenreHelper {
 
     public static String TYPE = "text/csv";
 
@@ -24,34 +23,30 @@ public class AuthorHelper {
         return false;
     }
 
-    public static List<AuthorEntity> csvToAuthorEntity(InputStream is) {
+    public  static List<GenreEntity> csvToGenreEntity(InputStream is) {
         try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
              CSVParser csvParser = new CSVParser(fileReader,
                      CSVFormat.DEFAULT.withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim());) {
-            List<AuthorEntity> authorEntityList = new ArrayList<>();
+            List<GenreEntity> genreEntityList = new ArrayList<>();
             Iterable<CSVRecord> csvRecords = csvParser.getRecords();
             for (CSVRecord csvRecord : csvRecords) {
-                AuthorEntity authorEntity = new AuthorEntity(
-                        csvRecord.get("Book-Author")
+                GenreEntity genreEntity = new GenreEntity(
+                        csvRecord.get("Genre")
                 );
-                authorEntityList.add(authorEntity);
+                genreEntityList.add(genreEntity);
             }
-            return authorEntityList;
+            return genreEntityList;
         } catch (IOException e) {
             throw new RuntimeException("fail to parse CSV file: " + e.getMessage());
         }
     }
-
-    public static ByteArrayInputStream authorEntityToCSV(List<AuthorEntity> authorEntityList) {
+    public static ByteArrayInputStream genreEntityToCSV(List<GenreEntity> genreEntityList) {
         final CSVFormat format = CSVFormat.DEFAULT.withQuoteMode(QuoteMode.MINIMAL);
-
         try (ByteArrayOutputStream out = new ByteArrayOutputStream();
              CSVPrinter csvPrinter = new CSVPrinter(new PrintWriter(out), format);) {
-
-            for (AuthorEntity authorEntity : authorEntityList) {
+            for (GenreEntity genreEntity : genreEntityList) {
                 List<String> data = Arrays.asList(
-                        String.valueOf(authorEntity.getId()),
-                        authorEntity.getName()
+                        genreEntity.getGenres()
                 );
                 csvPrinter.printRecord(data);
             }
@@ -61,5 +56,4 @@ public class AuthorHelper {
             throw new RuntimeException("fail to import data to CSV file: " + e.getMessage());
         }
     }
-
 }
