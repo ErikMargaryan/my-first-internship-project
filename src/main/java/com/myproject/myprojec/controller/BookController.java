@@ -53,18 +53,6 @@ public class BookController {
         return ResponseEntity.status(HttpStatus.CREATED).body(book);
     }
 
-//    @PostMapping("/import-from-csv")
-//    public ResponseEntity<?> uploadCsvFile(@RequestParam(name = "file")MultipartFile csvFile) throws Exception {
-//        if (csvFile.isEmpty()) {
-//            return ResponseEntity.badRequest().body(Map.of("message", "Required request part 'file' is ..."));
-//        }
-//        if (!Objects.equals(csvFile.getContentType(), "text/csv")) {
-//            return ResponseEntity.badRequest().body(Map.of("message", "The file must be in csv format"));
-//        }
-//        Map<String, Integer> result = bookService.parseCsv(csvFile);
-//        return ResponseEntity.ok().body(result);
-//    }
-
     @PutMapping("/{id}")
     public ResponseEntity<BookDto> updateBook(@PathVariable("id") Long id,
                                               @RequestBody BookDto dto) throws Exception {
