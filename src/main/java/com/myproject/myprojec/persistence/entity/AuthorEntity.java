@@ -14,11 +14,8 @@ public class AuthorEntity {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "first_name", nullable = false)
-    private String firstName;
-
-    @Column(name = "last_name", nullable = false)
-    private String lastName;
+    @Column(name = "name", nullable = false)
+    private String name;
 
     @OneToMany(mappedBy = "authors")
     private List<BookAuthorEntity> bookAuthorEntityList;
@@ -26,11 +23,15 @@ public class AuthorEntity {
     public AuthorEntity() {
     }
 
-    public AuthorEntity(Long id, String firstName, String lastName, List<BookAuthorEntity> bookAuthorEntityList) {
+    public AuthorEntity(Long id, String name, List<BookAuthorEntity> bookAuthorEntityList) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.name = name;
         this.bookAuthorEntityList = bookAuthorEntityList;
+    }
+
+    //for CSV upload
+    public AuthorEntity(String name) {
+        this.name = name;
     }
 
     public Long getId() {
@@ -41,20 +42,12 @@ public class AuthorEntity {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public List<BookAuthorEntity> getBookAuthorEntityList() {
@@ -69,8 +62,7 @@ public class AuthorEntity {
     public String toString() {
         return "AuthorEntity{" +
                 "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
+                ", name='" + name + '\'' +
                 '}';
     }
 }

@@ -18,8 +18,6 @@ public class AuthorService {
 
     public AuthorDto createAuthor(AuthorDto dto) {
         AuthorEntity authorEntity = new AuthorEntity();
-//        authorEntity.setFirstName(dto.getFirstName());
-//        authorEntity.setLastName(dto.getLastName());
         AuthorDto.mapDtoToEntity(dto);
 
         authorEntity = authorRepository.save(authorEntity);
@@ -35,11 +33,8 @@ public class AuthorService {
     public AuthorDto updateAuthorData(Long id, AuthorDto dto) throws Exception {
         AuthorEntity authorEntity = authorRepository.findById(id)
                 .orElseThrow(() -> new Exception("Author not found"));
-        if (dto.getFirstName() != null) {
-            authorEntity.setFirstName(dto.getFirstName());
-        }
-        if (dto.getLastName() != null) {
-            authorEntity.setLastName(dto.getLastName());
+        if (dto.getName() != null) {
+            authorEntity.setName(dto.getName());
         }
         authorEntity = authorRepository.save(authorEntity);
         return AuthorDto.mapEntityToDto(authorEntity);

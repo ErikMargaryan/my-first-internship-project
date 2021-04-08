@@ -14,7 +14,7 @@ public class BookEntity {
     private String title;
     @OneToMany(mappedBy = "books")
     private List<BookAuthorEntity> bookAuthorEntityList;
-    @Column(name = "isbn")
+    @Column(name = "isbn", nullable = false)
     private Double isbn;
     @OneToMany(mappedBy = "books")
     private List<UserRatedBookEntity> userRatedBookEntityList;
@@ -42,6 +42,7 @@ public class BookEntity {
         this.yearOfPublication = yearOfPublication;
     }
 
+    //For CSV upload
     public BookEntity(Double isbn, String title, String publisher, int yearOfPublication) {
         this.isbn = isbn;
         this.title = title;

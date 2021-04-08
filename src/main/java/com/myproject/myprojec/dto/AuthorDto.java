@@ -10,18 +10,20 @@ import java.util.stream.Collectors;
 public class AuthorDto {
 
     private Long id;
-    private String firstName;
-    private String lastName;
+    private String name;
     private List<BookAuthorDto> bookAuthorDtoList;
 
     public AuthorDto() {
     }
 
-    public AuthorDto(Long id, String firstName, String lastName, List<BookAuthorDto> bookAuthorDtoList) {
+    public AuthorDto(Long id, String name, List<BookAuthorDto> bookAuthorDtoList) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.name = name;
         this.bookAuthorDtoList = bookAuthorDtoList;
+    }
+
+    public AuthorDto(String name) {
+        this.name = name;
     }
 
     public Long getId() {
@@ -32,20 +34,12 @@ public class AuthorDto {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public List<BookAuthorDto> getBookAuthorDtoList() {
@@ -62,8 +56,7 @@ public class AuthorDto {
         }
         AuthorDto dto = new AuthorDto();
         dto.setId(entity.getId());
-        dto.setFirstName(entity.getFirstName());
-        dto.setLastName(entity.getLastName());
+        dto.setName(entity.getName());
         List<BookAuthorEntity> bookAuthorEntityList = entity.getBookAuthorEntityList();
         if (!CollectionUtils.isEmpty(bookAuthorEntityList)) {
             dto.setBookAuthorDtoList(bookAuthorEntityList.stream().map(BookAuthorDto::mapEntityToDto).collect(Collectors.toList()));
@@ -77,8 +70,7 @@ public class AuthorDto {
         }
         AuthorEntity entity = new AuthorEntity();
         entity.setId(dto.getId());
-        entity.setFirstName(dto.getFirstName());
-        entity.setLastName(dto.getLastName());
+        entity.setName(dto.getName());
         List<BookAuthorDto> bookAuthorDtoList = dto.getBookAuthorDtoList();
         if (!CollectionUtils.isEmpty(bookAuthorDtoList)) {
             entity.setBookAuthorEntityList(bookAuthorDtoList.stream().map(BookAuthorDto::mapDtoToEntity).collect(Collectors.toList()));

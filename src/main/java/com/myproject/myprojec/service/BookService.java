@@ -1,19 +1,10 @@
 package com.myproject.myprojec.service;
 
 import com.myproject.myprojec.dto.BookDto;
-import com.myproject.myprojec.model.QueryResponseWrapper;
 import com.myproject.myprojec.persistence.entity.BookEntity;
 import com.myproject.myprojec.persistence.rpository.BookRepository;
-import com.myproject.myprojec.service.criteria.SearchCriteria;
-import org.apache.commons.csv.CSVParser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
-
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class BookService {
@@ -75,7 +66,4 @@ public class BookService {
         bookRepository.deleteById(id);
     }
 
-//    public List<List<BookDto>> getEntitiesFromCsv(MultipartFile csvFile, BookDto.class) {
-//
-//    }
 }

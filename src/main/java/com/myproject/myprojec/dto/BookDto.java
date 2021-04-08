@@ -34,6 +34,13 @@ public class BookDto {
         this.yearOfPublication = yearOfPublication;
     }
 
+    public BookDto(String title, Double isbn, String publisher, int yearOfPublication) {
+        this.title = title;
+        this.isbn = isbn;
+        this.publisher = publisher;
+        this.yearOfPublication = yearOfPublication;
+    }
+
     public Long getId() {
         return id;
     }

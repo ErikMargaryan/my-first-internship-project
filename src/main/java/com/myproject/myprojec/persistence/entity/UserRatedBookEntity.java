@@ -31,6 +31,12 @@ public class UserRatedBookEntity {
         this.bookRating = bookRating;
     }
 
+    //For upload
+    public UserRatedBookEntity(Long id, int bookRating) {
+        this.id = id;
+        this.bookRating = bookRating;
+    }
+
     public Long getId() {
         return id;
     }

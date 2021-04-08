@@ -17,12 +17,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-web-services'
     runtimeOnly 'mysql:mysql-connector-java'
-    // https://mvnrepository.com/artifact/org.apache.commons/commons-csv
-    implementation group: 'org.apache.commons', name: 'commons-csv', version: '1.8'
-    // https://mvnrepository.com/artifact/javax.inject/javax.inject
-    implementation group: 'javax.inject', name: 'javax.inject', version: '1'
-
-
+    compile group: 'com.opencsv', name: 'opencsv', version: '5.2'
 }
 
 test {
@@ -30,6 +25,9 @@ test {
 }
 dependencies {
     compile group: 'org.jbpm', name: 'jbpm-document', version: '7.6.0.Final'
+    // https://mvnrepository.com/artifact/org.apache.commons/commons-csv
+    implementation group: 'org.apache.commons', name: 'commons-csv', version: '1.8'
+
 }
 
 compileJava.inputs.files(processResources)

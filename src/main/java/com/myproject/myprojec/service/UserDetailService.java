@@ -39,9 +39,9 @@ public class UserDetailService {
         if (dto.getAddress() != null) {
             userDetailEntity.setAddress(dto.getAddress());
         }
-        if (dto.getPhoneNumber() != null) {
-            userDetailEntity.setAddress(dto.getAddress());
-        }
+//        if (dto.getPhoneNumber() != null) {
+            userDetailEntity.setPhoneNumber(dto.getPhoneNumber());
+//        }
         userDetailEntity = userDetailRepository.save(userDetailEntity);
         return UserDetailDto.mapEntityToDto(userDetailEntity);
     }

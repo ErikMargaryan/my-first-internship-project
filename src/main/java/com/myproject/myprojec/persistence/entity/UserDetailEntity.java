@@ -11,13 +11,13 @@ public class UserDetailEntity {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "age")
+    @Column(name = "age", nullable = true)
     private int age;
 
-    @Column(name = "address")
+    @Column(name = "address", nullable = false)
     private String address;
 
-    @Column(name = "phone_number")
+    @Column(name = "phone_number", nullable = true)
     private String phoneNumber;
 
     @OneToOne
@@ -33,6 +33,13 @@ public class UserDetailEntity {
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.user = user;
+    }
+
+    //for CSV upload without phone number
+    public UserDetailEntity(Long id, int age, String address) {
+        this.id = id;
+        this.age = age;
+        this.address = address;
     }
 
     public Long getId() {

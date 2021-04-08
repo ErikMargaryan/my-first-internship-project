@@ -19,6 +19,11 @@ public class UserRatedBookDto {
         this.bookRating = bookRating;
     }
 
+    public UserRatedBookDto(Long id, int bookRating) {
+        this.id = id;
+        this.bookRating = bookRating;
+    }
+
     public Long getId() {
         return id;
     }
