@@ -1,18 +1,15 @@
 package com.myproject.myprojec.service;
 
 //import com.myproject.myprojec.csvUpload.csvHelper.GenreHelper;
-import com.myproject.myprojec.dto.GenreDto;
-import com.myproject.myprojec.model.QueryResponseWrapper;
 import com.myproject.myprojec.persistence.entity.GenreEntity;
 import com.myproject.myprojec.persistence.rpository.GenreRepository;
 import com.myproject.myprojec.service.criteria.SearchCriteria;
+import com.myproject.myprojec.service.dto.GenreDto;
+import com.myproject.myprojec.service.model.QueryResponseWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -64,6 +61,7 @@ public class GenreService {
 //    //for CSV
 //    public void save(MultipartFile file) {
 //        try {
+//
 //            List<GenreEntity> entities = GenreHelper.csvToGenreEntity(file.getInputStream());
 //            genreRepository.saveAll(entities);
 //        } catch (IOException e) {

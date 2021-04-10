@@ -2,23 +2,14 @@ package com.myproject.myprojec.controller;
 
 //import com.myproject.myprojec.csvUpload.ResponseMessage;
 //import com.myproject.myprojec.csvUpload.csvHelper.GenreHelper;
-import com.myproject.myprojec.dto.GenreDto;
-import com.myproject.myprojec.model.QueryResponseWrapper;
-import com.myproject.myprojec.persistence.entity.GenreEntity;
 import com.myproject.myprojec.service.GenreService;
 import com.myproject.myprojec.service.criteria.SearchCriteria;
+import com.myproject.myprojec.service.dto.GenreDto;
+import com.myproject.myprojec.service.model.QueryResponseWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("genres")

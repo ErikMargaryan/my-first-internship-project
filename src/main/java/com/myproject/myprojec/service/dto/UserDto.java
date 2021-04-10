@@ -1,4 +1,4 @@
-package com.myproject.myprojec.dto;
+package com.myproject.myprojec.service.dto;
 
 import com.myproject.myprojec.persistence.entity.UserEntity;
 import com.myproject.myprojec.persistence.entity.UserRatedBookEntity;

@@ -3,9 +3,14 @@ package com.myproject.myprojec.service.criteria;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 public class SearchCriteria implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     private Integer page;
     private Integer size;
 

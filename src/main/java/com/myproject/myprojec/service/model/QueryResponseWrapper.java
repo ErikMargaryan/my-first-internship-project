@@ -1,4 +1,4 @@
-package com.myproject.myprojec.model;
+package com.myproject.myprojec.service.model;
 
 import java.util.List;
 

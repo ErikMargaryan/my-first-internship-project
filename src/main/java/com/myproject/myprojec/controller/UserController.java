@@ -1,9 +1,8 @@
 package com.myproject.myprojec.controller;
 
-import com.myproject.myprojec.dto.UserDto;
+import com.myproject.myprojec.service.dto.UserDto;
 //import com.myproject.myprojec.model.UserWrapper;
-import com.myproject.myprojec.model.QueryResponseWrapper;
-import com.myproject.myprojec.persistence.entity.UserEntity;
+import com.myproject.myprojec.service.model.QueryResponseWrapper;
 import com.myproject.myprojec.service.UserService;
 import com.myproject.myprojec.service.criteria.SearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;

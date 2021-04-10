@@ -1,7 +1,7 @@
 package com.myproject.myprojec.service;
 
-import com.myproject.myprojec.dto.UserDto;
-import com.myproject.myprojec.model.QueryResponseWrapper;
+import com.myproject.myprojec.service.dto.UserDto;
+import com.myproject.myprojec.service.model.QueryResponseWrapper;
 import com.myproject.myprojec.persistence.entity.UserEntity;
 import com.myproject.myprojec.persistence.rpository.UserRepository;
 import com.myproject.myprojec.service.criteria.SearchCriteria;

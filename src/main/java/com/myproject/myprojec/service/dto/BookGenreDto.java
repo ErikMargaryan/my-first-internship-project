@@ -1,6 +1,5 @@
-package com.myproject.myprojec.dto;
+package com.myproject.myprojec.service.dto;
 
-import com.myproject.myprojec.persistence.entity.BookAuthorEntity;
 import com.myproject.myprojec.persistence.entity.BookGenreEntity;
 
 public class BookGenreDto {
