@@ -1,17 +1,22 @@
 package com.myproject.myprojec.service;
 
-import com.myproject.myprojec.csvUpload.csvHelper.AuthorHelper;
-import com.myproject.myprojec.csvUpload.csvHelper.BookHelper;
+//import com.myproject.myprojec.csvUpload.csvHelper.AuthorHelper;
+//import com.myproject.myprojec.csvUpload.csvHelper.BookHelper;
+
 import com.myproject.myprojec.dto.BookDto;
+import com.myproject.myprojec.model.QueryResponseWrapper;
 import com.myproject.myprojec.persistence.entity.BookEntity;
 import com.myproject.myprojec.persistence.rpository.BookRepository;
+import com.myproject.myprojec.service.criteria.SearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BookService {
@@ -25,10 +30,6 @@ public class BookService {
 
     public BookDto createBook(BookDto dto) {
         BookEntity bookEntity = new BookEntity();
-//        bookEntity.setTitle(dto.getTitle());
-//        bookEntity.setIsbn(dto.getIsbn());
-//        bookEntity.setPublisher(dto.getPublisher());
-//        bookEntity.setYearOfPublication(dto.getYearOfPublication());
         BookDto.mapDtoToEntity(dto);
 
         bookEntity = bookRepository.save(bookEntity);
@@ -42,12 +43,12 @@ public class BookService {
         return BookDto.mapEntityToDto(bookEntity);
     }
 
-//    public QueryResponseWrapper<BookDto> getBooks(SearchCriteria searchCriteria) {
-//         Page<BookEntity> content = bookRepository.findALLWithPagination(searchCriteria.composePageRequest());
-//        List<BookEntity> content1 = content.getContent();
-//        //content1 map to dto list
-//        return new QueryResponseWrapper<>(content.getTotalElements(), content1);
-//    }
+    public QueryResponseWrapper<BookDto> getBooks(SearchCriteria searchCriteria) {
+        Page<BookEntity> page = bookRepository.findALLWithPagination(searchCriteria.composePageRequest());
+        List<BookEntity> content = page.getContent();
+        List<BookDto> dtos = content.stream().map(BookDto::mapEntityToDto).collect(Collectors.toList());
+        return new QueryResponseWrapper<>(page.getTotalElements(), dtos);
+    }
 
 
     public BookDto updateBookData(Long id, BookDto dto) throws Exception {
@@ -75,24 +76,24 @@ public class BookService {
         bookRepository.deleteById(id);
     }
 
-    //for CSV upload
-    public void save(MultipartFile file) {
-        try {
-            List<BookEntity> entities = BookHelper.csvToBookEntity(file.getInputStream());
-            bookRepository.saveAll(entities);
-        } catch (IOException e) {
-            throw new RuntimeException("fail to store csv data: " + e.getMessage());
-        }
-    }
-
-    public ByteArrayInputStream load() {
-        List<BookEntity> entities = bookRepository.findAll();
-        ByteArrayInputStream in = BookHelper.bookEntityToCSV(entities);
-        return in;
-    }
-
-    public List<BookEntity> getAllBooks() {
-        return bookRepository.findAll();
-    }
+//    //for CSV upload
+//    public void save(MultipartFile file) {
+//        try {
+//            List<BookEntity> entities = BookHelper.csvToBookEntity(file.getInputStream());
+//            bookRepository.saveAll(entities);
+//        } catch (IOException e) {
+//            throw new RuntimeException("fail to store csv data: " + e.getMessage());
+//        }
+//    }
+//
+//    public ByteArrayInputStream load() {
+//        List<BookEntity> entities = bookRepository.findAll();
+//        ByteArrayInputStream in = BookHelper.bookEntityToCSV(entities);
+//        return in;
+//    }
+//
+//    public List<BookEntity> getAllBooks() {
+//        return bookRepository.findAll();
+//    }
 
 }

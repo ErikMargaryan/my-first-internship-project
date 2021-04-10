@@ -1,11 +1,16 @@
 package com.myproject.myprojec.service;
 
 import com.myproject.myprojec.dto.UserDto;
-//import com.myproject.myprojec.model.UserWrapper;
+import com.myproject.myprojec.model.QueryResponseWrapper;
 import com.myproject.myprojec.persistence.entity.UserEntity;
 import com.myproject.myprojec.persistence.rpository.UserRepository;
+import com.myproject.myprojec.service.criteria.SearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -19,14 +24,9 @@ public class UserService {
 
     public UserDto creatUser(UserDto dto) {
         UserEntity userEntity = new UserEntity();
-//        userEntity.setFirstName(dto.getFirstName());
-//        userEntity.setLastName(dto.getLastName());
-//        userEntity.setEmail(dto.getEmail());
-//        userEntity.setUsername(dto.getUsername());
-//        userEntity.setPassword(dto.getPassword());
         UserDto.mapDtoToEntity(dto);
 
-        userEntity=userRepository.save(userEntity);
+        userEntity = userRepository.save(userEntity);
         return UserDto.mapEntityToDto(userEntity);
     }
 
@@ -36,10 +36,12 @@ public class UserService {
         return UserDto.mapEntityToDto(userEntity);
     }
 
-//    public QueryResponseWrapper<UserWrapper> getUsers(SearchCriteria searchCriteria) {
-//        Page<UserWrapper> content = userRepository.findALLWithPagination(searchCriteria.composePageRequest());
-//        return new QueryResponseWrapper<>(content.getTotalElements(), content.getContent());
-//    }
+    public QueryResponseWrapper<UserDto> getUsers(SearchCriteria searchCriteria) {
+        Page<UserEntity> page = userRepository.findALLWithPagination(searchCriteria.composePageRequest());
+        List<UserEntity> content = page.getContent();
+        List<UserDto> dtos = content.stream().map(UserDto::mapEntityToDto).collect(Collectors.toList());
+        return new QueryResponseWrapper<>(page.getTotalElements(), dtos);
+    }
 
     public UserDto updateUser(Long id, UserDto dto) throws Exception {
         UserEntity userEntity = userRepository.findById(id)

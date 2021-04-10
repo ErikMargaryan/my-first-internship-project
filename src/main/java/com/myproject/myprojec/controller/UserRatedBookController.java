@@ -1,11 +1,13 @@
 package com.myproject.myprojec.controller;
 
 //import com.myproject.myprojec.csvUpload.ResponseMessage;
-//import com.myproject.myprojec.csvUpload.csvHelper.UserDetailHelper;
-import com.myproject.myprojec.dto.UserDetailDto;
+//import com.myproject.myprojec.csvUpload.csvHelper.AuthorHelper;
+//import com.myproject.myprojec.csvUpload.csvHelper.UserRatedBookHelper;
+import com.myproject.myprojec.dto.UserRatedBookDto;
 import com.myproject.myprojec.model.QueryResponseWrapper;
-import com.myproject.myprojec.persistence.entity.UserDetailEntity;
-import com.myproject.myprojec.service.UserDetailService;
+import com.myproject.myprojec.persistence.entity.AuthorEntity;
+import com.myproject.myprojec.persistence.entity.UserRatedBookEntity;
+import com.myproject.myprojec.service.UserRatedBookService;
 import com.myproject.myprojec.service.criteria.SearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -21,31 +23,31 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.util.List;
 
 @RestController
-@RequestMapping("user-detail")
-public class UserDetailController {
+@RequestMapping("user-rated-book")
+public class UserRatedBookController {
 
-    private final UserDetailService userDetailService;
+    private final UserRatedBookService userRatedBookService;
 
     @Autowired
-    public UserDetailController(UserDetailService userDetailService) {
-        this.userDetailService = userDetailService;
+    public UserRatedBookController(UserRatedBookService userRatedBookService) {
+        this.userRatedBookService = userRatedBookService;
     }
 
     @GetMapping("/{id}")
-    public UserDetailDto getUserDetail(@PathVariable("id") Long id) throws Exception {
-        UserDetailDto user = userDetailService.getUserDetail(id);
-        return user;
+    public UserRatedBookDto getRate(@PathVariable("id") Long id) throws Exception {
+        UserRatedBookDto userRated = userRatedBookService.getUsersRatedBooks(id);
+        return userRated;
     }
 
     @GetMapping
-    public QueryResponseWrapper<UserDetailDto> getUserDetails(SearchCriteria searchCriteria) {
-        return userDetailService.getUserDetails(searchCriteria);
+    public QueryResponseWrapper<UserRatedBookDto> getUserRates(SearchCriteria searchCriteria) {
+        return userRatedBookService.getUserRates(searchCriteria);
     }
 
 //    @GetMapping("json-format")
-//    public ResponseEntity<List<UserDetailEntity>>  getAllAuthors() {
+//    public ResponseEntity<List<UserRatedBookEntity>> getAllAuthors() {
 //        try {
-//            List<UserDetailEntity> entities = userDetailService.getAllUserDetails();
+//            List<UserRatedBookEntity> entities = userRatedBookService.getAllUserRates();
 //            if (entities.isEmpty()) {
 //                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 //            }
@@ -57,7 +59,7 @@ public class UserDetailController {
 //
 //    @GetMapping("/download/{fileName:.+}")
 //    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName) {
-//        InputStreamResource file = new InputStreamResource(userDetailService.load());
+//        InputStreamResource file = new InputStreamResource(userRatedBookService.load());
 //
 //        return ResponseEntity.ok()
 //                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName)
@@ -66,24 +68,19 @@ public class UserDetailController {
 //    }
 
     @PostMapping()
-    public ResponseEntity<UserDetailDto> addUserDetail(@RequestBody UserDetailDto dto) throws Exception {
-        if (dto.getAddress() == null) {
-            throw new Exception("Address is required");
-        }
-        if (dto.getPhoneNumber() == null) {
-            throw new Exception("Phone number is required");
-        }
-        UserDetailDto userDetail = userDetailService.createUserDetail(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(userDetail);
+    public ResponseEntity<UserRatedBookDto> addRate(@RequestBody UserRatedBookDto dto) throws Exception {
+        UserRatedBookDto usersRatedBooks = userRatedBookService.createUsersRatedBooks(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(usersRatedBooks);
     }
 
 //    //upload CSV
 //    @PostMapping("/upload")
 //    public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) {
 //        String message = "";
-//        if (UserDetailHelper.hasCSVFormat(file)) {
+//
+//        if (UserRatedBookHelper.hasCSVFormat(file)) {
 //            try {
-//                userDetailService.save(file);
+//                userRatedBookService.save(file);
 //                message = "Uploaded the file successfully: " + file.getOriginalFilename();
 //                String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
 //                        .path("/api/csv/download/")
@@ -96,22 +93,23 @@ public class UserDetailController {
 //                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message,""));
 //            }
 //        }
+//
 //        message = "Please upload a csv file!";
 //        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message,""));
 //    }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDetailDto> updateUserDetail(@PathVariable("id") Long id,
-                                                          @RequestBody UserDetailDto dto) throws Exception {
-        UserDetailDto userDetail = userDetailService.updateUserDetail(id, dto);
-        if (userDetail == null) {
+    public ResponseEntity<UserRatedBookDto> updateBooksRates(@PathVariable("id") Long id,
+                                                             @RequestBody UserRatedBookDto dto) throws Exception {
+        UserRatedBookDto usersRated = userRatedBookService.updateUsersRate(id, dto);
+        if (usersRated == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(userDetail);
+        return ResponseEntity.ok(usersRated);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteUserDetail(@PathVariable("id") Long id) {
-        userDetailService.deleteUserDetail(id);
+    public void deleteRate(@PathVariable("id") Long id) {
+        userRatedBookService.deleteUsersRate(id);
     }
 }

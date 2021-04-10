@@ -1,7 +1,7 @@
 package com.myproject.myprojec.controller;
 
-import com.myproject.myprojec.csvUpload.ResponseMessage;
-import com.myproject.myprojec.csvUpload.csvHelper.BookHelper;
+//import com.myproject.myprojec.csvUpload.ResponseMessage;
+//import com.myproject.myprojec.csvUpload.csvHelper.BookHelper;
 import com.myproject.myprojec.dto.BookDto;
 //import com.myproject.myprojec.model.BookWrapper;
 import com.myproject.myprojec.model.QueryResponseWrapper;
@@ -43,33 +43,33 @@ public class BookController {
         return book;
     }
 
-//    @GetMapping
-//    public QueryResponseWrapper<BookDto> getBooks(SearchCriteria searchCriteria) {
-//        return bookService.getBooks(searchCriteria);
+    @GetMapping
+    public QueryResponseWrapper<BookDto> getBooks(SearchCriteria searchCriteria) {
+        return bookService.getBooks(searchCriteria);
+    }
+
+//    @GetMapping("json-format")
+//    public ResponseEntity<List<BookEntity>> getAllBooks() {
+//        try {
+//            List<BookEntity> entities = bookService.getAllBooks();
+//            if (entities.isEmpty()) {
+//                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//            }
+//            return new ResponseEntity<>(entities, HttpStatus.OK);
+//        } catch (Exception e) {
+//            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
 //    }
-
-    @GetMapping("json-format")
-    public ResponseEntity<List<BookEntity>> getAllBooks() {
-        try {
-            List<BookEntity> entities = bookService.getAllBooks();
-            if (entities.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-            return new ResponseEntity<>(entities, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @GetMapping("/download/{fileName:.+}")
-    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName) {
-        InputStreamResource file = new InputStreamResource(bookService.load());
-
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName)
-                .contentType(MediaType.parseMediaType("application/csv"))
-                .body(file);
-    }
+//
+//    @GetMapping("/download/{fileName:.+}")
+//    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName) {
+//        InputStreamResource file = new InputStreamResource(bookService.load());
+//
+//        return ResponseEntity.ok()
+//                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName)
+//                .contentType(MediaType.parseMediaType("application/csv"))
+//                .body(file);
+//    }
 
     //read validate annotation
     @PostMapping()
@@ -88,31 +88,31 @@ public class BookController {
         return ResponseEntity.status(HttpStatus.CREATED).body(book);
     }
 
-    //upload CSV
-    @PostMapping("/upload")
-    public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) {
-        String message = "";
-
-        if (BookHelper.hasCSVFormat(file)) {
-            try {
-                bookService.save(file);
-                message = "Uploaded the file successfully: " + file.getOriginalFilename();
-                String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                        .path("/api/csv/download/")
-                        .path(Objects.requireNonNull(file.getOriginalFilename()))
-                        .toUriString();
-
-                return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message, fileDownloadUri));
-            } catch (Exception e) {
-                message = "Could not upload the file: " + file.getOriginalFilename() + "!";
-                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message, ""));
-            }
-        }
-
-        message = "Please upload a csv file!";
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message, ""));
-
-    }
+//    //upload CSV
+//    @PostMapping("/upload")
+//    public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) {
+//        String message = "";
+//
+//        if (BookHelper.hasCSVFormat(file)) {
+//            try {
+//                bookService.save(file);
+//                message = "Uploaded the file successfully: " + file.getOriginalFilename();
+//                String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+//                        .path("/api/csv/download/")
+//                        .path(Objects.requireNonNull(file.getOriginalFilename()))
+//                        .toUriString();
+//
+//                return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message, fileDownloadUri));
+//            } catch (Exception e) {
+//                message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+//                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message, ""));
+//            }
+//        }
+//
+//        message = "Please upload a csv file!";
+//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message, ""));
+//
+//    }
 
     @PutMapping("/{id}")
     public ResponseEntity<BookDto> updateBook(@PathVariable("id") Long id,

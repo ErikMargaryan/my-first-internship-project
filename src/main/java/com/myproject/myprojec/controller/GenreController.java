@@ -1,10 +1,12 @@
 package com.myproject.myprojec.controller;
 
-import com.myproject.myprojec.csvUpload.ResponseMessage;
-import com.myproject.myprojec.csvUpload.csvHelper.GenreHelper;
+//import com.myproject.myprojec.csvUpload.ResponseMessage;
+//import com.myproject.myprojec.csvUpload.csvHelper.GenreHelper;
 import com.myproject.myprojec.dto.GenreDto;
+import com.myproject.myprojec.model.QueryResponseWrapper;
 import com.myproject.myprojec.persistence.entity.GenreEntity;
 import com.myproject.myprojec.service.GenreService;
+import com.myproject.myprojec.service.criteria.SearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -35,18 +37,23 @@ public class GenreController {
         return dto;
     }
 
-    @GetMapping("json-format")
-    public ResponseEntity<List<GenreEntity>> getAllGenres() {
-        try {
-            List<GenreEntity> entities = genreService.getAllGenres();
-            if (entities.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-            return new ResponseEntity<>(entities, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    @GetMapping
+    public QueryResponseWrapper<GenreDto> getGenres(SearchCriteria searchCriteria) {
+        return genreService.getGenres(searchCriteria);
     }
+
+//    @GetMapping("json-format")
+//    public ResponseEntity<List<GenreEntity>> getAllGenres() {
+//        try {
+//            List<GenreEntity> entities = genreService.getAllGenres();
+//            if (entities.isEmpty()) {
+//                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//            }
+//            return new ResponseEntity<>(entities, HttpStatus.OK);
+//        } catch (Exception e) {
+//            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
 
     @PostMapping()
     public ResponseEntity<GenreDto> createGenre(@RequestBody GenreDto dto) throws Exception {
@@ -57,40 +64,40 @@ public class GenreController {
         return ResponseEntity.status(HttpStatus.CREATED).body(genre);
     }
 
-    @GetMapping("/download/{fileName:.+}")
-    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName) {
-        InputStreamResource file = new InputStreamResource(genreService.load());
+//    @GetMapping("/download/{fileName:.+}")
+//    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName) {
+//        InputStreamResource file = new InputStreamResource(genreService.load());
+//
+//        return ResponseEntity.ok()
+//                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName)
+//                .contentType(MediaType.parseMediaType("application/csv"))
+//                .body(file);
+//    }
 
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName)
-                .contentType(MediaType.parseMediaType("application/csv"))
-                .body(file);
-    }
-
-    //upload CSV
-    @PostMapping("/upload")
-    public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) {
-        String message = "";
-        if (GenreHelper.hasCSVFormat(file)) {
-            try {
-                genreService.save(file);
-                message = "Uploaded the file successfully: " + file.getOriginalFilename();
-                String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                        .path("/api/csv/download/")
-                        .path(file.getOriginalFilename())
-                        .toUriString();
-
-                return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message, fileDownloadUri));
-            } catch (Exception e) {
-                message = "Could not upload the file: " + file.getOriginalFilename() + "!";
-                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message, ""));
-            }
-        }
-
-        message = "Please upload a csv file!";
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message, ""));
-
-    }
+//    //upload CSV
+//    @PostMapping("/upload")
+//    public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) {
+//        String message = "";
+//        if (GenreHelper.hasCSVFormat(file)) {
+//            try {
+//                genreService.save(file);
+//                message = "Uploaded the file successfully: " + file.getOriginalFilename();
+//                String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+//                        .path("/api/csv/download/")
+//                        .path(file.getOriginalFilename())
+//                        .toUriString();
+//
+//                return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message, fileDownloadUri));
+//            } catch (Exception e) {
+//                message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+//                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message, ""));
+//            }
+//        }
+//
+//        message = "Please upload a csv file!";
+//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message, ""));
+//
+//    }
 
 
     @PutMapping("/{id}")
