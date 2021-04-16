@@ -21,12 +21,6 @@ public class UserDetailDto {
         this.user = user;
     }
 
-    public UserDetailDto(Long id, Integer age, String address) {
-        this.id = id;
-        this.age = age;
-        this.address = address;
-    }
-
     public Long getId() {
         return id;
     }

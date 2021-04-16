@@ -27,10 +27,6 @@ public class GenreEntity {
         this.bookGenreEntityList = bookGenreEntityList;
     }
 
-    public GenreEntity(String genres) {
-        this.genres = genres;
-    }
-
     public Long getId() {
         return id;
     }

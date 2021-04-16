@@ -18,12 +18,16 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web-services'
     runtimeOnly 'mysql:mysql-connector-java'
     compile group: 'com.opencsv', name: 'opencsv', version: '5.2'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.security:spring-security-test'
 }
 
 test {
     useJUnitPlatform()
 }
 dependencies {
+
+    implementation 'org.projectlombok:lombok:1.18.18'
     compile group: 'org.jbpm', name: 'jbpm-document', version: '7.6.0.Final'
     // https://mvnrepository.com/artifact/org.apache.commons/commons-csv
     implementation group: 'org.apache.commons', name: 'commons-csv', version: '1.8'

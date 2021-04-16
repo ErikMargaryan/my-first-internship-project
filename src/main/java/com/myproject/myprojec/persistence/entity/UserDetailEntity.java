@@ -35,13 +35,6 @@ public class UserDetailEntity {
         this.user = user;
     }
 
-    //for CSV upload without phone number
-    public UserDetailEntity(Long id, Integer age, String address) {
-        this.id = id;
-        this.age = age;
-        this.address = address;
-    }
-
     public Long getId() {
         return id;
     }

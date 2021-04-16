@@ -28,8 +28,6 @@ public class AuthorEntity {
         this.name = name;
         this.bookAuthorEntityList = bookAuthorEntityList;
     }
-
-    //for CSV upload
     public AuthorEntity(String name) {
         this.name = name;
     }

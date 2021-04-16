@@ -22,10 +22,6 @@ public class AuthorDto {
         this.bookAuthorDtoList = bookAuthorDtoList;
     }
 
-    public AuthorDto(String name) {
-        this.name = name;
-    }
-
     public Long getId() {
         return id;
     }

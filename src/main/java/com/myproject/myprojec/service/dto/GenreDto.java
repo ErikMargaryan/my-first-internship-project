@@ -22,10 +22,6 @@ public class GenreDto {
         this.bookGenreDtoList = bookGenreDtoList;
     }
 
-    public GenreDto(String genres) {
-        this.genres = genres;
-    }
-
     public Long getId() {
         return id;
     }

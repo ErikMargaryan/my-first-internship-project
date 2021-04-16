@@ -75,4 +75,5 @@ public class UserRatedBookService {
 //    public List<UserRatedBookEntity> getAllUserRates() {
 //        return userRatedBookRepository.findAll();
 //    }
+
 }

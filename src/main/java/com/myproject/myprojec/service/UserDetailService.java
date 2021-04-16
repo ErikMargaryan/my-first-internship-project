@@ -1,6 +1,7 @@
 package com.myproject.myprojec.service;
 
 //import com.myproject.myprojec.csvUpload.csvHelper.UserDetailHelper;
+
 import com.myproject.myprojec.persistence.entity.UserDetailEntity;
 import com.myproject.myprojec.persistence.rpository.UserDetailRepository;
 import com.myproject.myprojec.service.criteria.SearchCriteria;
@@ -51,7 +52,7 @@ public class UserDetailService {
             userDetailEntity.setAddress(dto.getAddress());
         }
 //        if (dto.getPhoneNumber() != null) {
-            userDetailEntity.setPhoneNumber(dto.getPhoneNumber());
+        userDetailEntity.setPhoneNumber(dto.getPhoneNumber());
 //        }
         userDetailEntity = userDetailRepository.save(userDetailEntity);
         return UserDetailDto.mapEntityToDto(userDetailEntity);
@@ -61,7 +62,7 @@ public class UserDetailService {
         userDetailRepository.deleteById(id);
     }
 
-//    //for CSV upload
+    //    //for CSV upload
 //    public void save(MultipartFile file) {
 //        try {
 //            List<UserDetailEntity> entities = UserDetailHelper.csvToUserDetailEntity(file.getInputStream());
