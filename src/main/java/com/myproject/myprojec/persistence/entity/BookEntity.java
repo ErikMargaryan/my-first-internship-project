@@ -1,7 +1,5 @@
 package com.myproject.myprojec.persistence.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -26,18 +24,13 @@ public class BookEntity {
     private String publisher;
     @Column(name = "year_of_publication", nullable = false)
     private Integer yearOfPublication;
-    @JsonIgnore
-    @Column(name = "image_URL")
-    @ElementCollection
-    private List<String> imageURL;
-
 
     public BookEntity() {
     }
 
     public BookEntity(Long id, String title, List<BookAuthorEntity> bookAuthorEntityList,
                       String isbn, List<UserRatedBookEntity> userRatedBookEntityList,
-                      List<BookGenreEntity> bookGenreEntityList, String publisher, Integer yearOfPublication, List<String> imageURL) {
+                      List<BookGenreEntity> bookGenreEntityList, String publisher, Integer yearOfPublication) {
         this.id = id;
         this.title = title;
         this.bookAuthorEntityList = bookAuthorEntityList;
@@ -46,16 +39,7 @@ public class BookEntity {
         this.bookGenreEntityList = bookGenreEntityList;
         this.publisher = publisher;
         this.yearOfPublication = yearOfPublication;
-        this.imageURL = imageURL;
     }
-
-//    //For CSV upload
-//    public BookEntity(String isbn, String title, String publisher, Integer yearOfPublication) {
-//        this.isbn = isbn;
-//        this.title = title;
-//        this.publisher = publisher;
-//        this.yearOfPublication = yearOfPublication;
-//    }
 
     public Long getId() {
         return id;
@@ -132,11 +116,4 @@ public class BookEntity {
                 '}';
     }
 
-    public List<String> getImageURL() {
-        return imageURL;
-    }
-
-    public void setImageURL(List<String> imageURL) {
-        this.imageURL = imageURL;
-    }
 }
