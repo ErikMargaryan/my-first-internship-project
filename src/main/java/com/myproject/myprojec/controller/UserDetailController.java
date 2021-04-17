@@ -2,6 +2,7 @@ package com.myproject.myprojec.controller;
 
 //import com.myproject.myprojec.csvUpload.ResponseMessage;
 //import com.myproject.myprojec.csvUpload.csvHelper.UserDetailHelper;
+
 import com.myproject.myprojec.service.UserDetailService;
 import com.myproject.myprojec.service.criteria.SearchCriteria;
 import com.myproject.myprojec.service.dto.UserDetailDto;
@@ -105,4 +106,37 @@ public class UserDetailController {
     public void deleteUserDetail(@PathVariable("id") Long id) {
         userDetailService.deleteUserDetail(id);
     }
+
+
+//    @PostMapping("/upload-csv-file")
+//    public ResponseEntity<UserDetailDto> uploadCSVFile(@RequestParam("file") MultipartFile file) throws IOException {
+//
+//            // parse CSV file to create a list of `User` objects
+//            try(Reader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
+//
+//                // create csv bean reader
+//                CsvToBean<UserDetail> csvToBean = new CsvToBeanBuilder(reader)
+//                        .withType(UserDetail.class)
+//                        .withIgnoreLeadingWhiteSpace(true)
+//                        .build();
+//
+//                // convert `CsvToBean` object to list of userDetails
+//                List<UserDetail> userDetails = csvToBean.parse();
+//                // TODO: save users in DB?
+//                List<UserDetailDto> list = new ArrayList<>();
+//                for (UserDetail userDetail : userDetails) {
+//                    UserDetailDto dto = UserDetail.mapCsvToDto(userDetail);
+//                    list.add(dto);
+//                }
+//                UserDetailDto userDetailDto = userDetailService.createUserDetail(list);
+//                    return ResponseEntity.status(HttpStatus.CREATED).body(userDetailDto);
+//            } catch (IOException e) {
+//                System.out.println(e);
+//        }
+//            //??
+//            UserDetailDto dto = new UserDetailDto();
+//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(dto);
+//    }
+
+
 }

@@ -81,4 +81,5 @@ public class UserDetailService {
 //    public List<UserDetailEntity> getAllUserDetails() {
 //        return userDetailRepository.findAll();
 //    }
+
 }

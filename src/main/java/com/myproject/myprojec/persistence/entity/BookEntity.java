@@ -41,6 +41,14 @@ public class BookEntity {
         this.yearOfPublication = yearOfPublication;
     }
 
+//    //for Csv Upload
+//    public BookEntity(String title, String isbn, Integer yearOfPublication, String publisher) {
+//        this.title = title;
+//        this.isbn = isbn;
+//        this.yearOfPublication = yearOfPublication;
+//        this.publisher = publisher;
+//    }
+
     public Long getId() {
         return id;
     }

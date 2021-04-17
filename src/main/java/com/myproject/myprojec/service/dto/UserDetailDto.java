@@ -21,6 +21,13 @@ public class UserDetailDto {
         this.user = user;
     }
 
+//    //for upload
+//    public UserDetailDto(Long id, Integer age, String address) {
+//        this.id = id;
+//        this.age = age;
+//        this.address = address;
+//    }
+
     public Long getId() {
         return id;
     }
@@ -72,6 +79,18 @@ public class UserDetailDto {
         dto.setPhoneNumber(entity.getPhoneNumber());
         return dto;
     }
+
+//    //for upload
+//    public static UserDetailDto mapCsvEntityToDto(UserDetailEntity entity) {
+//        if (entity == null) {
+//            return null;
+//        }
+//        UserDetailDto dto = new UserDetailDto();
+//        dto.setId(entity.getId());
+//        dto.setAge(entity.getAge());
+//        dto.setAddress(entity.getAddress());
+//        return dto;
+//    }
 
     public static UserDetailEntity mapDtoToEntity(UserDetailDto dto) {
         if (dto == null) {
