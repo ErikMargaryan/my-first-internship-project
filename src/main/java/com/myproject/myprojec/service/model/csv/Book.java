@@ -1,6 +1,7 @@
 package com.myproject.myprojec.service.model.csv;
 
 import com.myproject.myprojec.persistence.entity.BookEntity;
+import com.opencsv.bean.CsvBindAndSplitByName;
 import com.opencsv.bean.CsvBindByName;
 
 import java.util.Collection;
@@ -10,6 +11,8 @@ import java.util.stream.Collectors;
 public class Book {
     @CsvBindByName(column = "Book-Title")
     private String title;
+    @CsvBindAndSplitByName(column = "Book-Author", elementType = String.class, splitOn = ",")
+    private List<String> name;
     @CsvBindByName(column = "ISBN")
     private String isbn;
     @CsvBindByName(column = "Year-Of-Publication")
@@ -20,8 +23,9 @@ public class Book {
     public Book() {
     }
 
-    public Book(String title, String isbn, Integer yearOfPublication, String publisher) {
+    public Book(String title, List<String> name, String isbn, Integer yearOfPublication, String publisher) {
         this.title = title;
+        this.name = name;
         this.isbn = isbn;
         this.yearOfPublication = yearOfPublication;
         this.publisher = publisher;
@@ -82,5 +86,13 @@ public class Book {
                 ", yearOfPublication=" + yearOfPublication +
                 ", publisher='" + publisher + '\'' +
                 '}';
+    }
+
+    public List<String> getName() {
+        return name;
+    }
+
+    public void setName(List<String> name) {
+        this.name = name;
     }
 }

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Author {
+
     @CsvBindByName(column = "Book-Author")
     private String name;
 

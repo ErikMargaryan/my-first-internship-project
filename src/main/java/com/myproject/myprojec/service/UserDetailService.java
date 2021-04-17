@@ -82,4 +82,51 @@ public class UserDetailService {
 //        return userDetailRepository.findAll();
 //    }
 
+//    public void batchStore(List<UserDetailEntity> userDetailEntityList) {
+//        userDetailRepository.save(userDetailEntityList);
+//    }
+//
+//    public List<UserDetailEntity> getUSerDetails() {
+//        return userDetailRepository.findAll();
+//    }
+//
+//    public List<UserDetailEntity> uploadFile(MultipartFile multipartFile) throws IOException {
+//
+//        File file = convertMultiPartToFile(multipartFile);
+//
+//        List<UserDetailEntity> mandatoryMissedList = new ArrayList<>();
+//
+//        try (Reader reader = new FileReader(file);) {
+//            @SuppressWarnings("unchecked")
+//            CsvToBean<UserDetailEntity> csvToBean = new CsvToBeanBuilder<UserDetailEntity>(reader).withType(UserDetailEntity.class)
+//                    .withIgnoreLeadingWhiteSpace(true).build();
+//            List<UserDetailEntity> studentList = csvToBean.parse();
+//
+//            Iterator<UserDetailEntity> studentListClone = studentList.iterator();
+//
+//            while (studentListClone.hasNext()) {
+//
+//                UserDetailEntity userDetail = studentListClone.next();
+//
+//                    mandatoryMissedList.add(userDetail);
+//                    studentListClone.remove();
+//
+//            }
+//
+//            studentDAO.batchStore(studentList);
+//        }
+//        return mandatoryMissedList;
+//    }
+//
+//    private File convertMultiPartToFile(MultipartFile file) throws IOException {
+//        File convFile = new File(file.getOriginalFilename());
+//        FileOutputStream fos = new FileOutputStream(convFile);
+//        fos.write(file.getBytes());
+//        fos.close();
+//        return convFile;
+//    }
+//
+//    public List<Student> getStudents() {
+//        return studentDAO.getStudents();
+//    }
 }

@@ -4,10 +4,12 @@ import com.myproject.myprojec.service.BookService;
 import com.myproject.myprojec.service.criteria.SearchCriteria;
 import com.myproject.myprojec.service.dto.BookDto;
 import com.myproject.myprojec.service.model.QueryResponseWrapper;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("books")
@@ -110,6 +112,11 @@ public class BookController {
     @DeleteMapping("/{id}")
     public void deleteBook(@PathVariable("id") Long id) {
         bookService.deleteBook(id);
+    }
+
+    @PostMapping("/upload-book-csv")
+    public void uploadBook(@RequestParam(name = "file") MultipartFile file) throws NotFoundException {
+        bookService.parseCsv(file);
     }
 
 }

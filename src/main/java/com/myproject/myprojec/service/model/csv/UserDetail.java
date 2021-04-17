@@ -3,6 +3,7 @@ package com.myproject.myprojec.service.model.csv;
 import com.opencsv.bean.CsvBindByName;
 
 public class UserDetail {
+
     @CsvBindByName(column = "User-ID")
     private Long id;
     @CsvBindByName(column = "Age")

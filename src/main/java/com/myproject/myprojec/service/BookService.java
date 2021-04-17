@@ -5,12 +5,16 @@ package com.myproject.myprojec.service;
 
 import com.myproject.myprojec.persistence.entity.BookEntity;
 import com.myproject.myprojec.persistence.rpository.BookRepository;
+import com.myproject.myprojec.service.control.CsvControl;
 import com.myproject.myprojec.service.criteria.SearchCriteria;
 import com.myproject.myprojec.service.dto.BookDto;
 import com.myproject.myprojec.service.model.QueryResponseWrapper;
+import com.myproject.myprojec.service.model.csv.Book;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,10 +23,12 @@ import java.util.stream.Collectors;
 public class BookService {
 
     private final BookRepository bookRepository;
+    private final CsvControl<Book> csvControl;
 
     @Autowired
-    public BookService(BookRepository bookRepository) {
+    public BookService(BookRepository bookRepository, CsvControl<Book> csvControl) {
         this.bookRepository = bookRepository;
+        this.csvControl = csvControl;
     }
 
     public BookDto createBook(BookDto dto) {
@@ -92,6 +98,14 @@ public class BookService {
 //    public List<BookEntity> getAllBooks() {
 //        return bookRepository.findAll();
 //    }
+
+    public void parseCsv(MultipartFile file) throws NotFoundException {
+        List<List<Book>> entitiesFromCsv = csvControl.getEntitiesFromCsv(file, Book.class);
+        List<List<BookEntity>> collect = entitiesFromCsv.stream().map(books -> books.stream().map(Book::mapCsvToEntity).collect(Collectors.toList())).collect(Collectors.toList());
+
+        collect.forEach(bookRepository::saveAll);
+        System.out.println(121);
+    }
 
 
 }
