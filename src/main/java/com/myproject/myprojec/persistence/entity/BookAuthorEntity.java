@@ -28,6 +28,11 @@ public class BookAuthorEntity {
         this.authors = authors;
     }
 
+    public BookAuthorEntity(BookEntity books, AuthorEntity authors) {
+        this.books = books;
+        this.authors = authors;
+    }
+
     public Long getId() {
         return id;
     }

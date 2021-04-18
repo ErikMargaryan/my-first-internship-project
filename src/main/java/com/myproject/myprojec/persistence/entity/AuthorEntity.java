@@ -28,10 +28,10 @@ public class AuthorEntity {
         this.name = name;
         this.bookAuthorEntityList = bookAuthorEntityList;
     }
-//    //for Csv Upload
-//    public AuthorEntity(String name) {
-//        this.name = name;
-//    }
+
+    public AuthorEntity(String name) {
+        this.name = name;
+    }
 
     public Long getId() {
         return id;

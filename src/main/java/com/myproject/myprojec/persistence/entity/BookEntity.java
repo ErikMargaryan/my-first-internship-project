@@ -41,12 +41,16 @@ public class BookEntity {
         this.yearOfPublication = yearOfPublication;
     }
 
-//    //for Csv Upload
-//    public BookEntity(String title, String isbn, Integer yearOfPublication, String publisher) {
+//    public BookEntity(String title, List<BookAuthorEntity> bookAuthorEntityList,
+//                      String isbn, List<UserRatedBookEntity> userRatedBookEntityList,
+//                      List<BookGenreEntity> bookGenreEntityList, String publisher, Integer yearOfPublication) {
 //        this.title = title;
+//        this.bookAuthorEntityList = bookAuthorEntityList;
 //        this.isbn = isbn;
-//        this.yearOfPublication = yearOfPublication;
+//        this.userRatedBookEntityList = userRatedBookEntityList;
+//        this.bookGenreEntityList = bookGenreEntityList;
 //        this.publisher = publisher;
+//        this.yearOfPublication = yearOfPublication;
 //    }
 
     public Long getId() {

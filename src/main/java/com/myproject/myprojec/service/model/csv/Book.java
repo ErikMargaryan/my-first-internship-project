@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Book {
+    private Long id;
     @CsvBindByName(column = "Book-Title")
     private String title;
     @CsvBindAndSplitByName(column = "Book-Author", elementType = String.class, splitOn = ",")
@@ -23,7 +24,8 @@ public class Book {
     public Book() {
     }
 
-    public Book(String title, List<String> name, String isbn, Integer yearOfPublication, String publisher) {
+    public Book(Long id, String title, List<String> name, String isbn, Integer yearOfPublication, String publisher) {
+        this.id = id;
         this.title = title;
         this.name = name;
         this.isbn = isbn;
@@ -65,6 +67,7 @@ public class Book {
 
     public static BookEntity mapCsvToEntity(Book csv) {
         BookEntity entity = new BookEntity();
+        entity.setId(csv.getId());
         entity.setIsbn(csv.getIsbn());
         entity.setTitle(csv.getTitle());
         entity.setYearOfPublication(csv.getYearOfPublication());
@@ -81,7 +84,8 @@ public class Book {
     @Override
     public String toString() {
         return "Book{" +
-                "title='" + title + '\'' +
+                "Id=" + id + '\'' +
+                ", title='" + title + '\'' +
                 ", isbn='" + isbn + '\'' +
                 ", yearOfPublication=" + yearOfPublication +
                 ", publisher='" + publisher + '\'' +
@@ -94,5 +98,13 @@ public class Book {
 
     public void setName(List<String> name) {
         this.name = name;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
