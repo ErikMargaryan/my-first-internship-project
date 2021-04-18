@@ -21,7 +21,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 @Service
@@ -118,37 +121,53 @@ public class BookService {
 //                .collect(Collectors.toList());
 //        booksList.forEach(bookRepository::saveAll);
 //        System.out.println(121);
-        List<AuthorEntity> authors = new ArrayList<>(authorRepository.findAll());
+        Set<AuthorEntity> authors = new HashSet<>(authorRepository.findAll());
         books.forEach(bookList -> bookList.forEach(book -> {
-            authors.addAll(book.getName().stream().map(AuthorEntity::new).collect(Collectors.toList()));
+            authors.addAll(book.getAuthorsName().stream().map(AuthorEntity::new).collect(Collectors.toList()));
         }));
+        AtomicInteger i = new AtomicInteger();
         List<AuthorEntity> authorEntities = authorRepository.saveAll(authors);
-        List<List<BookEntity>> bookEntitiesList = books.stream()
-                .map(bookList -> bookList.stream()
-//                        .filter(book -> {
-//                            boolean contains = allBooksIsbn.contains(book.getIsbn());
-//                            if (contains) existed.getAndIncrement();
-//                            return !contains;
-//                        })
-                        .map(book -> {
-                            BookEntity bookEntity = Book.mapCsvToEntity(book);
-                            List<BookAuthorEntity> bookAuthorEntityList = authorEntities.stream().filter(entity -> book.getName().contains(entity.getName()))
-                                    .map(authorEntity -> new BookAuthorEntity(bookEntity, authorEntity)).collect(Collectors.toList());
-                            bookEntity.setBookAuthorEntityList(bookAuthorEntityList);
-                            return bookEntity;
-                        })
-                        .collect(Collectors.toList()))
-                .collect(Collectors.toList());
-        for (List<BookEntity> entities : bookEntitiesList) {
-            List<BookEntity> bookEntityList = bookRepository.saveAll(entities);
+
+        books.forEach(bookList -> {
+            List<BookEntity> collect = bookList.stream()
+                    .map(book -> {
+                        BookEntity bookEntity = Book.mapCsvToEntity(book);
+                        List<BookAuthorEntity> bookAuthorEntityList = authorEntities.stream().filter(entity -> book.getAuthorsName().contains(entity.getName()))
+                                .map(authorEntity -> new BookAuthorEntity(bookEntity, authorEntity)).collect(Collectors.toList());
+                        bookEntity.setBookAuthorEntityList(bookAuthorEntityList);
+                        System.out.println(i.incrementAndGet());
+                        return bookEntity;
+                    })
+                    .collect(Collectors.toList());
+
+            List<BookEntity> bookEntityList = bookRepository.saveAll(collect);
             saveRelations(bookEntityList);
-        }
+
+        });
+
+//        List<List<BookEntity>> bookEntitiesList = books.stream()
+//                .map(bookList -> bookList.stream()
+//                        .map(book -> {
+//                            BookEntity bookEntity = Book.mapCsvToEntity(book);
+//                            List<BookAuthorEntity> bookAuthorEntityList = authorEntities.stream().filter(entity -> book.getAuthorsName().contains(entity.getName()))
+//                                    .map(authorEntity -> new BookAuthorEntity(bookEntity, authorEntity)).collect(Collectors.toList());
+//                            bookEntity.setBookAuthorEntityList(bookAuthorEntityList);
+//                            System.out.println(i.incrementAndGet());
+//                            return bookEntity;
+//                        })
+//                        .collect(Collectors.toList()))
+//                .collect(Collectors.toList());
+//        for (List<BookEntity> entities : bookEntitiesList) {
+//            List<BookEntity> bookEntityList = bookRepository.saveAll(entities);
+//            saveRelations(bookEntityList);
+//        }
+
     }
 
     public void saveRelations(List<BookEntity> bookEntities) {
         List<BookAuthorEntity> bookAuthorEntityList = new ArrayList<>();
         bookEntities.forEach(entity -> {
-            bookAuthorEntityList.addAll(entity.getBookAuthorEntityList().stream().peek(bookAuthorEntity -> bookAuthorEntity.getAuthors().setId(entity.getId())).collect(Collectors.toList()));
+            bookAuthorEntityList.addAll(entity.getBookAuthorEntityList().stream().peek(bookAuthorEntity -> bookAuthorEntity.getBooks().setId(entity.getId())).collect(Collectors.toList()));
         });
         bookAuthorRepository.saveAll(bookAuthorEntityList);
 

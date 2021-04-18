@@ -6,14 +6,16 @@ import com.opencsv.bean.CsvBindByName;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Book {
+
     private Long id;
     @CsvBindByName(column = "Book-Title")
     private String title;
     @CsvBindAndSplitByName(column = "Book-Author", elementType = String.class, splitOn = ",")
-    private List<String> name;
+    private Set<String> authorsName;
     @CsvBindByName(column = "ISBN")
     private String isbn;
     @CsvBindByName(column = "Year-Of-Publication")
@@ -24,10 +26,10 @@ public class Book {
     public Book() {
     }
 
-    public Book(Long id, String title, List<String> name, String isbn, Integer yearOfPublication, String publisher) {
+    public Book(Long id, String title, Set<String> authorsName, String isbn, Integer yearOfPublication, String publisher) {
         this.id = id;
         this.title = title;
-        this.name = name;
+        this.authorsName = authorsName;
         this.isbn = isbn;
         this.yearOfPublication = yearOfPublication;
         this.publisher = publisher;
@@ -92,12 +94,12 @@ public class Book {
                 '}';
     }
 
-    public List<String> getName() {
-        return name;
+    public Set<String> getAuthorsName() {
+        return authorsName;
     }
 
-    public void setName(List<String> name) {
-        this.name = name;
+    public void setName(Set<String> authorsName) {
+        this.authorsName = authorsName;
     }
 
     public Long getId() {
