@@ -1,4 +1,4 @@
-package com.myproject.myprojec.service.model.csv;
+package com.myproject.myprojec.csvUpload.csvModel;
 
 public class UserDetail {
 

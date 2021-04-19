@@ -1,19 +1,16 @@
 package com.myproject.myprojec.service;
 
-//import com.myproject.myprojec.csvUpload.csvHelper.AuthorHelper;
-//import com.myproject.myprojec.csvUpload.csvHelper.BookHelper;
-
 import com.myproject.myprojec.persistence.entity.AuthorEntity;
 import com.myproject.myprojec.persistence.entity.BookAuthorEntity;
 import com.myproject.myprojec.persistence.entity.BookEntity;
 import com.myproject.myprojec.persistence.rpository.AuthorRepository;
 import com.myproject.myprojec.persistence.rpository.BookAuthorRepository;
 import com.myproject.myprojec.persistence.rpository.BookRepository;
-import com.myproject.myprojec.service.control.CsvControl;
-import com.myproject.myprojec.service.criteria.SearchCriteria;
+import com.myproject.myprojec.csvUpload.control.CsvControl;
+import com.myproject.myprojec.csvUpload.criteria.SearchCriteria;
 import com.myproject.myprojec.service.dto.BookDto;
 import com.myproject.myprojec.service.model.QueryResponseWrapper;
-import com.myproject.myprojec.service.model.csv.Book;
+import com.myproject.myprojec.csvUpload.csvModel.Book;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -91,29 +88,12 @@ public class BookService {
         bookRepository.deleteById(id);
     }
 
-//    //for CSV upload
-//    public void save(MultipartFile file) {
-//        try {
-//            List<BookEntity> entities = BookHelper.csvToBookEntity(file.getInputStream());
-//            bookRepository.saveAll(entities);
-//        } catch (IOException e) {
-//            throw new RuntimeException("fail to store csv data: " + e.getMessage());
-//        }
-//    }
-//
-//    public ByteArrayInputStream load() {
-//        List<BookEntity> entities = bookRepository.findAll();
-//        ByteArrayInputStream in = BookHelper.bookEntityToCSV(entities);
-//        return in;
-//    }
-//
-//    public List<BookEntity> getAllBooks() {
-//        return bookRepository.findAll();
-//    }
+    public List<BookEntity> getAllBooks() {
+        return bookRepository.findAll();
+    }
 
     public void parseCsv(MultipartFile file) throws NotFoundException {
         List<List<Book>> books = csvControl.getEntitiesFromCsv(file, Book.class);
-//        List<String> allBooksIsbn = bookRepository.findAllBooksIsbn();
 //        AtomicInteger existed = new AtomicInteger();
 //        List<List<BookEntity>> booksList = books.stream().map(book -> book.stream()
 //                .map(Book::mapCsvToEntity)
@@ -144,7 +124,17 @@ public class BookService {
             saveRelations(bookEntityList);
 
         });
+    }
 
+    public void saveRelations(List<BookEntity> bookEntities) {
+        List<BookAuthorEntity> bookAuthorEntityList = new ArrayList<>();
+        bookEntities.forEach(entity -> {
+            bookAuthorEntityList.addAll(entity.getBookAuthorEntityList().stream().peek(bookAuthorEntity -> bookAuthorEntity.getBooks().setId(entity.getId())).collect(Collectors.toList()));
+        });
+        bookAuthorRepository.saveAll(bookAuthorEntityList);
+    }
+
+    ////test
 //        List<List<BookEntity>> bookEntitiesList = books.stream()
 //                .map(bookList -> bookList.stream()
 //                        .map(book -> {
@@ -161,17 +151,5 @@ public class BookService {
 //            List<BookEntity> bookEntityList = bookRepository.saveAll(entities);
 //            saveRelations(bookEntityList);
 //        }
-
-    }
-
-    public void saveRelations(List<BookEntity> bookEntities) {
-        List<BookAuthorEntity> bookAuthorEntityList = new ArrayList<>();
-        bookEntities.forEach(entity -> {
-            bookAuthorEntityList.addAll(entity.getBookAuthorEntityList().stream().peek(bookAuthorEntity -> bookAuthorEntity.getBooks().setId(entity.getId())).collect(Collectors.toList()));
-        });
-        bookAuthorRepository.saveAll(bookAuthorEntityList);
-
-    }
-
 
 }

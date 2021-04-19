@@ -41,18 +41,6 @@ public class BookEntity {
         this.yearOfPublication = yearOfPublication;
     }
 
-//    public BookEntity(String title, List<BookAuthorEntity> bookAuthorEntityList,
-//                      String isbn, List<UserRatedBookEntity> userRatedBookEntityList,
-//                      List<BookGenreEntity> bookGenreEntityList, String publisher, Integer yearOfPublication) {
-//        this.title = title;
-//        this.bookAuthorEntityList = bookAuthorEntityList;
-//        this.isbn = isbn;
-//        this.userRatedBookEntityList = userRatedBookEntityList;
-//        this.bookGenreEntityList = bookGenreEntityList;
-//        this.publisher = publisher;
-//        this.yearOfPublication = yearOfPublication;
-//    }
-
     public Long getId() {
         return id;
     }

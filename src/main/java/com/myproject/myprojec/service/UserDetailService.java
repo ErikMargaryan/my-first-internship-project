@@ -1,10 +1,8 @@
 package com.myproject.myprojec.service;
 
-//import com.myproject.myprojec.csvUpload.csvHelper.UserDetailHelper;
-
 import com.myproject.myprojec.persistence.entity.UserDetailEntity;
 import com.myproject.myprojec.persistence.rpository.UserDetailRepository;
-import com.myproject.myprojec.service.criteria.SearchCriteria;
+import com.myproject.myprojec.csvUpload.criteria.SearchCriteria;
 import com.myproject.myprojec.service.dto.UserDetailDto;
 import com.myproject.myprojec.service.model.QueryResponseWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,71 +60,8 @@ public class UserDetailService {
         userDetailRepository.deleteById(id);
     }
 
-    //    //for CSV upload
-//    public void save(MultipartFile file) {
-//        try {
-//            List<UserDetailEntity> entities = UserDetailHelper.csvToUserDetailEntity(file.getInputStream());
-//            userDetailRepository.saveAll(entities);
-//        } catch (IOException e) {
-//            throw new RuntimeException("fail to store csv data: " + e.getMessage());
-//        }
-//    }
-//
-//    public ByteArrayInputStream load() {
-//        List<UserDetailEntity> entities = userDetailRepository.findAll();
-//        ByteArrayInputStream in = UserDetailHelper.genreEntityToCSV(entities);
-//        return in;
-//    }
-//
-//    public List<UserDetailEntity> getAllUserDetails() {
-//        return userDetailRepository.findAll();
-//    }
+    public List<UserDetailEntity> getAllUserDetails() {
+        return userDetailRepository.findAll();
+    }
 
-//    public void batchStore(List<UserDetailEntity> userDetailEntityList) {
-//        userDetailRepository.save(userDetailEntityList);
-//    }
-//
-//    public List<UserDetailEntity> getUSerDetails() {
-//        return userDetailRepository.findAll();
-//    }
-//
-//    public List<UserDetailEntity> uploadFile(MultipartFile multipartFile) throws IOException {
-//
-//        File file = convertMultiPartToFile(multipartFile);
-//
-//        List<UserDetailEntity> mandatoryMissedList = new ArrayList<>();
-//
-//        try (Reader reader = new FileReader(file);) {
-//            @SuppressWarnings("unchecked")
-//            CsvToBean<UserDetailEntity> csvToBean = new CsvToBeanBuilder<UserDetailEntity>(reader).withType(UserDetailEntity.class)
-//                    .withIgnoreLeadingWhiteSpace(true).build();
-//            List<UserDetailEntity> studentList = csvToBean.parse();
-//
-//            Iterator<UserDetailEntity> studentListClone = studentList.iterator();
-//
-//            while (studentListClone.hasNext()) {
-//
-//                UserDetailEntity userDetail = studentListClone.next();
-//
-//                    mandatoryMissedList.add(userDetail);
-//                    studentListClone.remove();
-//
-//            }
-//
-//            studentDAO.batchStore(studentList);
-//        }
-//        return mandatoryMissedList;
-//    }
-//
-//    private File convertMultiPartToFile(MultipartFile file) throws IOException {
-//        File convFile = new File(file.getOriginalFilename());
-//        FileOutputStream fos = new FileOutputStream(convFile);
-//        fos.write(file.getBytes());
-//        fos.close();
-//        return convFile;
-//    }
-//
-//    public List<Student> getStudents() {
-//        return studentDAO.getStudents();
-//    }
 }

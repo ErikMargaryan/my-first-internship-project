@@ -1,4 +1,4 @@
-package com.myproject.myprojec.service.model.csv;
+package com.myproject.myprojec.csvUpload.csvModel;
 
 import com.myproject.myprojec.persistence.entity.UserRatedBookEntity;
 import com.opencsv.bean.CsvBindByName;

@@ -4,7 +4,7 @@ import com.myproject.myprojec.service.dto.UserDto;
 import com.myproject.myprojec.service.model.QueryResponseWrapper;
 import com.myproject.myprojec.persistence.entity.UserEntity;
 import com.myproject.myprojec.persistence.rpository.UserRepository;
-import com.myproject.myprojec.service.criteria.SearchCriteria;
+import com.myproject.myprojec.csvUpload.criteria.SearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;

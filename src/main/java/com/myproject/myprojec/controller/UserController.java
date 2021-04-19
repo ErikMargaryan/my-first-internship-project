@@ -4,7 +4,7 @@ import com.myproject.myprojec.service.dto.UserDto;
 //import com.myproject.myprojec.model.UserWrapper;
 import com.myproject.myprojec.service.model.QueryResponseWrapper;
 import com.myproject.myprojec.service.UserService;
-import com.myproject.myprojec.service.criteria.SearchCriteria;
+import com.myproject.myprojec.csvUpload.criteria.SearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +23,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     public UserDto getUser(@PathVariable("id") Long id) throws Exception {
-        UserDto user = userService.getUser(id);
-        return user;
+        return userService.getUser(id);
     }
 
     @GetMapping

@@ -2,7 +2,7 @@ package com.myproject.myprojec.service;
 
 import com.myproject.myprojec.persistence.entity.UserRatedBookEntity;
 import com.myproject.myprojec.persistence.rpository.UserRatedBookRepository;
-import com.myproject.myprojec.service.criteria.SearchCriteria;
+import com.myproject.myprojec.csvUpload.criteria.SearchCriteria;
 import com.myproject.myprojec.service.dto.UserRatedBookDto;
 import com.myproject.myprojec.service.model.QueryResponseWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,6 @@ public class UserRatedBookService {
 
     public UserRatedBookDto createUsersRatedBooks(UserRatedBookDto dto) {
         UserRatedBookEntity userRatedBookEntity = new UserRatedBookEntity();
-//        userRatedBookEntity.setBookRating(dto.getBookRating());
         UserRatedBookDto.mapDtoToEntity(dto);
         userRatedBookEntity = userRatedBookRepository.save(userRatedBookEntity);
         return UserRatedBookDto.mapEntityToDto(userRatedBookEntity);
@@ -55,24 +54,8 @@ public class UserRatedBookService {
         userRatedBookRepository.deleteById(id);
     }
 
-//    //for CSV upload
-//    public void save(MultipartFile file) {
-//        try {
-//            List<UserRatedBookEntity> entities = UserRatedBookHelper.csvToUserRatedBookEntity(file.getInputStream());
-//            userRatedBookRepository.saveAll(entities);
-//        } catch (IOException e) {
-//            throw new RuntimeException("fail to store csv data: " + e.getMessage());
-//        }
-//    }
-//
-//    public ByteArrayInputStream load() {
-//        List<UserRatedBookEntity> entities = userRatedBookRepository.findAll();
-//        ByteArrayInputStream in = UserRatedBookHelper.userRatedBookEntityToCSV(entities);
-//        return in;
-//    }
-//
-//    public List<UserRatedBookEntity> getAllUserRates() {
-//        return userRatedBookRepository.findAll();
-//    }
+    public List<UserRatedBookEntity> getAllUserRates() {
+        return userRatedBookRepository.findAll();
+    }
 
 }

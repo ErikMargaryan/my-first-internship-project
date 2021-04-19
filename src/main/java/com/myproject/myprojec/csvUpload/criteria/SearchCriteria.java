@@ -1,4 +1,4 @@
-package com.myproject.myprojec.service.criteria;
+package com.myproject.myprojec.csvUpload.criteria;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

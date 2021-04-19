@@ -1,4 +1,4 @@
-package com.myproject.myprojec.service.parser;
+package com.myproject.myprojec.csvUpload.parser;
 
 import com.opencsv.bean.CsvToBeanBuilder;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +28,7 @@ public class CsvParser<T> {
             log.warn(e.getMessage(), classT.getName());
         } catch (IllegalStateException ex) {
             log.warn(ex.getMessage());
-        }catch (Exception exx) {
+        } catch (Exception exx) {
             System.out.println(exx.getMessage());
         }
         return List.of();

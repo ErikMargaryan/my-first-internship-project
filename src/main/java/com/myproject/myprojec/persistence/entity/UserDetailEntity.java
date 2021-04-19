@@ -40,13 +40,6 @@ public class UserDetailEntity {
         this.user = user;
     }
 
-//    //For csv upload
-//    public UserDetailEntity(Long id, Integer age, String address) {
-//        this.id = id;
-//        this.age = age;
-//        this.address = address;
-//    }
-
     public Long getId() {
         return id;
     }

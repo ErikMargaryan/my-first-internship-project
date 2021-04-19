@@ -1,9 +1,8 @@
 package com.myproject.myprojec.service;
 
-//import com.myproject.myprojec.csvUpload.csvHelper.GenreHelper;
 import com.myproject.myprojec.persistence.entity.GenreEntity;
 import com.myproject.myprojec.persistence.rpository.GenreRepository;
-import com.myproject.myprojec.service.criteria.SearchCriteria;
+import com.myproject.myprojec.csvUpload.criteria.SearchCriteria;
 import com.myproject.myprojec.service.dto.GenreDto;
 import com.myproject.myprojec.service.model.QueryResponseWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +24,6 @@ public class GenreService {
 
     public GenreDto createGenres(GenreDto dto) {
         GenreEntity genreEntity = new GenreEntity();
-//        genreEntity.setGenres(dto.getGenres());
-//        genreEntity = genreRepository.save(genreEntity);
         GenreDto.mapDtoToEntity(dto);
         return GenreDto.mapEntityToDto(genreEntity);
     }
@@ -58,24 +55,8 @@ public class GenreService {
         genreRepository.deleteById(id);
     }
 
-//    //for CSV
-//    public void save(MultipartFile file) {
-//        try {
-//
-//            List<GenreEntity> entities = GenreHelper.csvToGenreEntity(file.getInputStream());
-//            genreRepository.saveAll(entities);
-//        } catch (IOException e) {
-//            throw new RuntimeException("fail to store csv data: " + e.getMessage());
-//        }
-//    }
-//
-//    public ByteArrayInputStream load() {
-//        List<GenreEntity> entities = genreRepository.findAll();
-//        ByteArrayInputStream in = GenreHelper.genreEntityToCSV(entities);
-//        return in;
-//    }
-//
-//    public List<GenreEntity> getAllGenres() {
-//        return genreRepository.findAll();
-//    }
+    public List<GenreEntity> getAllGenres() {
+        return genreRepository.findAll();
+    }
+
 }
