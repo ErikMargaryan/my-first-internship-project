@@ -1,7 +1,5 @@
 package com.myproject.myprojec.persistence.entity;
 
-import com.opencsv.bean.CsvBindByName;
-
 import javax.persistence.*;
 
 @Entity
@@ -10,15 +8,12 @@ public class UserDetailEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @CsvBindByName(column = "User-ID")
     @Column(name = "id")
     private Long id;
 
-    @CsvBindByName(column = "Age")
     @Column(name = "age", nullable = true)
     private Integer age;
 
-    @CsvBindByName(column = "Location")
     @Column(name = "address", nullable = false)
     private String address;
 
