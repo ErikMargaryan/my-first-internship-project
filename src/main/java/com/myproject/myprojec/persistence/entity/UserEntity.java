@@ -18,33 +18,49 @@ public class UserEntity {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
+    @Column(name = "age", nullable = true)
+    private Integer age;
+
+    @Column(name = "address", nullable = false)
+    private String address;
+
+    @Column(name = "phone_number", nullable = true)
+    private String phoneNumber;
+
     @Column(name = "email", nullable = false)
     private String email;
 
     @Column(name = "username", nullable = false)
     private String username;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "password", nullable = false, length = 10485760)
     private String password;
 
     @OneToMany(mappedBy = "users")
     private List<UserRatedBookEntity> userRatedBookEntityList;
 
-    @OneToOne(mappedBy = "user")
-    private UserDetailEntity userDetailEntity;
+    @OneToMany(mappedBy = "user", targetEntity = UserRoleEntity.class, fetch = FetchType.EAGER)
+    private List<UserRoleEntity> listOfUserRole;
+
+//    @OneToOne(mappedBy = "user")
+//    private UserDetailEntity userDetailEntity;
 
     public UserEntity() {
     }
 
-    public UserEntity(Long id, String firstName, String lastName, String email, String username, String password, List<UserRatedBookEntity> userRatedBookEntityList, UserDetailEntity userDetailEntity) {
+    public UserEntity(Long id, String firstName, String lastName, String address, String email, String username, String password, List<UserRatedBookEntity> userRatedBookEntityList, List<UserRoleEntity> listOfUserRole, Integer age, String phoneNumber) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.address = address;
         this.email = email;
         this.username = username;
         this.password = password;
         this.userRatedBookEntityList = userRatedBookEntityList;
-        this.userDetailEntity = userDetailEntity;
+        this.listOfUserRole = listOfUserRole;
+        this.age = age;
+        this.phoneNumber = phoneNumber;
+//        this.userDetailEntity = userDetailEntity;
     }
 
     public Long getId() {
@@ -95,6 +111,30 @@ public class UserEntity {
         return email;
     }
 
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
     public List<UserRatedBookEntity> getUsersRatedBooksList() {
         return userRatedBookEntityList;
     }
@@ -103,22 +143,32 @@ public class UserEntity {
         this.userRatedBookEntityList = userRatedBookEntityList;
     }
 
-    public UserDetailEntity getUserDetailEntity() {
-        return userDetailEntity;
+    public List<UserRoleEntity> getListOfUserRole() {
+        return listOfUserRole;
     }
 
-    public void setUserDetailEntity(UserDetailEntity userDetailEntity) {
-        this.userDetailEntity = userDetailEntity;
+    public void setListOfUserRole(List<UserRoleEntity> listOfUserRole) {
+        this.listOfUserRole = listOfUserRole;
     }
 
+//    public UserDetailEntity getUserDetailEntity() {
+//        return userDetailEntity;
+//    }
+//
+//    public void setUserDetailEntity(UserDetailEntity userDetailEntity) {
+//        this.userDetailEntity = userDetailEntity;
+//    }
 
 
     @Override
     public String toString() {
-        return "User{" +
+        return "UserEntity{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", age=" + age +
+                ", address='" + address + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
                 ", email='" + email + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +

@@ -1,17 +1,23 @@
 package com.myproject.myprojec.controller;
 
-import com.myproject.myprojec.service.dto.UserDto;
-//import com.myproject.myprojec.model.UserWrapper;
-import com.myproject.myprojec.service.model.QueryResponseWrapper;
-import com.myproject.myprojec.service.UserService;
 import com.myproject.myprojec.csvUpload.criteria.SearchCriteria;
+import com.myproject.myprojec.service.UserService;
+import com.myproject.myprojec.service.dto.UserDto;
+import com.myproject.myprojec.service.model.QueryResponseWrapper;
+import com.myproject.myprojec.service.validation.Create;
+import com.myproject.myprojec.service.validation.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import static com.myproject.myprojec.config.session.SessionUser.SESSION_USER_KEY;
+
+@Validated
 @RestController
 @RequestMapping("users")
+@SessionAttributes(SESSION_USER_KEY)
 public class UserController {
 
     private final UserService userService;
@@ -31,13 +37,19 @@ public class UserController {
         return userService.getUsers(searchCriteria);
     }
 
-    @PostMapping()
-    public ResponseEntity<UserDto> addUser(@RequestBody UserDto dto) throws Exception {
+    @PostMapping("/registration")
+    public ResponseEntity<UserDto> addUser(@RequestBody @Validated(Create.class) UserDto dto) throws Exception {
         if (dto.getFirstName() == null) {
             throw new Exception("FirstName is required");
         }
         if (dto.getLastName() == null) {
             throw new Exception("LastName is required");
+        }
+        if (dto.getAddress() == null) {
+            throw new Exception("Address is required");
+        }
+        if (dto.getPhoneNumber() == null) {
+            throw new Exception("Phone number is required");
         }
         if (dto.getEmail() == null) {
             throw new Exception("Email is required");
@@ -54,6 +66,7 @@ public class UserController {
 
     @PutMapping("/{id}")
     public ResponseEntity<UserDto> updateUser(@PathVariable("id") Long id,
+                                              @Validated(Update.class)
                                               @RequestBody UserDto dto) throws Exception {
         UserDto user = userService.updateUser(id, dto);
         if (user == null) {

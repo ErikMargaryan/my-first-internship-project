@@ -5,10 +5,14 @@ import com.myproject.myprojec.service.BookService;
 import com.myproject.myprojec.csvUpload.criteria.SearchCriteria;
 import com.myproject.myprojec.service.dto.BookDto;
 import com.myproject.myprojec.service.model.QueryResponseWrapper;
+import com.myproject.myprojec.service.validation.Create;
+import com.myproject.myprojec.service.validation.Update;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,7 +30,8 @@ public class BookController {
     }
 
     @PostMapping()
-    public ResponseEntity<BookDto> addBook(@RequestBody BookDto dto) throws Exception {
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public ResponseEntity<BookDto> addBook(@RequestBody @Validated(Create.class) BookDto dto) throws Exception {
         if (dto.getTitle() == null) {
             throw new Exception("Title is required");
         }
@@ -65,7 +70,9 @@ public class BookController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<BookDto> updateBook(@PathVariable("id") Long id,
+                                              @Validated(Update.class)
                                               @RequestBody BookDto dto) throws Exception {
         BookDto book = bookService.updateBookData(id, dto);
         if (book == null) {

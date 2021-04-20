@@ -5,9 +5,13 @@ import com.myproject.myprojec.service.AuthorService;
 import com.myproject.myprojec.csvUpload.criteria.SearchCriteria;
 import com.myproject.myprojec.service.dto.AuthorDto;
 import com.myproject.myprojec.service.model.QueryResponseWrapper;
+import com.myproject.myprojec.service.validation.Create;
+import com.myproject.myprojec.service.validation.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -47,7 +51,8 @@ public class AuthorController {
     }
 
     @PostMapping()
-    public ResponseEntity<AuthorDto> addAuthor(@RequestBody AuthorDto dto) throws Exception {
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public ResponseEntity<AuthorDto> addAuthor(@RequestBody @Validated(Create.class) AuthorDto dto) throws Exception {
         if (dto.getName() == null) {
             throw  new Exception("Author's name is required");
         }
@@ -56,7 +61,9 @@ public class AuthorController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<AuthorDto> updateAuthor(@PathVariable("id") Long id,
+                                                  @Validated(Update.class)
                                                   @RequestBody AuthorDto dto) throws Exception {
         AuthorDto author = authorService.updateAuthorData(id, dto);
         if (author == null) {
