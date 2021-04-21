@@ -1,7 +1,9 @@
 package com.myproject.myprojec.service.dto;
 
+import com.myproject.myprojec.persistence.entity.RoleEntity;
 import com.myproject.myprojec.persistence.entity.UserEntity;
 import com.myproject.myprojec.persistence.entity.UserRatedBookEntity;
+import com.myproject.myprojec.persistence.entity.UserRoleEntity;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
@@ -19,12 +21,13 @@ public class UserDto {
     private String username;
     private String password;
     private List<UserRatedBookDto> userRatedBookDtoList;
+    private String role;
 //    private UserDetailDto userDetailDto;
 
     public UserDto() {
     }
 
-    public UserDto(Long id, String firstName, String lastName, Integer age, String address, String phoneNumber, String email, String username, String password, List<UserRatedBookDto> userRatedBookDtoList) {
+    public UserDto(Long id, String firstName, String lastName, Integer age, String address, String phoneNumber, String email, String username, String password, List<UserRatedBookDto> userRatedBookDtoList, String role) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -36,6 +39,7 @@ public class UserDto {
         this.password = password;
         this.userRatedBookDtoList = userRatedBookDtoList;
 //        this.userDetailDto = userDetailDto;
+        this.role = role;
     }
 
     public Long getId() {
@@ -118,7 +122,15 @@ public class UserDto {
         this.userRatedBookDtoList = userRatedBookDtoList;
     }
 
-//    public UserDetailDto getUserDetailDto() {
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    //    public UserDetailDto getUserDetailDto() {
 //        return userDetailDto;
 //    }
 //
@@ -144,6 +156,7 @@ public class UserDto {
         if (!CollectionUtils.isEmpty(userRatedBookEntityList)) {
             dto.setUsersRatedBooksDtoList(userRatedBookEntityList.stream().map(UserRatedBookDto::mapEntityToDto).collect(Collectors.toList()));
         }
+        dto.setRole(getRoles(entity));
         return dto;
     }
 
@@ -165,6 +178,18 @@ public class UserDto {
         if (!CollectionUtils.isEmpty(userRatedBookDtoList)) {
             entity.setUsersRatedBooksList(userRatedBookDtoList.stream().map(UserRatedBookDto::mapDtoToEntity).collect(Collectors.toList()));
         }
+//        List<UserRoleDto> listOfUserRole = dto.getListOfUserRole();
+//        if (!CollectionUtils.isEmpty(listOfUserRole)) {
+//            entity.setListOfUserRole(listOfUserRole.stream().map(UserRoleDto::mapDtoToEntity).collect(Collectors.toList()));
+//        }
         return entity;
+    }
+
+    private static String getRoles(UserEntity entity) {
+
+        return entity.getListOfUserRole().stream()
+                .map(UserRoleEntity::getRole)
+                .map(RoleEntity::getName)
+                .collect(Collectors.joining(", "));
     }
 }

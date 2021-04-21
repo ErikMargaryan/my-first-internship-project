@@ -27,8 +27,17 @@ public class UserService {
 
     public UserDto creatUser(UserDto dto) {
         UserEntity userEntity = new UserEntity();
-        UserDto.mapDtoToEntity(dto);
+        userEntity.setId(dto.getId());
+        userEntity.setFirstName(dto.getFirstName());
+        userEntity.setLastName(dto.getLastName());
+        userEntity.setAge(dto.getAge());
+        userEntity.setAddress(dto.getAddress());
+        userEntity.setPhoneNumber(dto.getPhoneNumber());
+        userEntity.setEmail(dto.getEmail());
+        userEntity.setUsername(dto.getUsername());
         userEntity.setPassword(passwordEncoder.encode(dto.getPassword()));
+
+//        UserDto.mapDtoToEntity(dto);
 
         userEntity = userRepository.save(userEntity);
         return UserDto.mapEntityToDto(userEntity);
@@ -63,7 +72,7 @@ public class UserService {
             userEntity.setUsername(dto.getUsername());
         }
         if (dto.getPassword() != null) {
-            userEntity.setPassword(dto.getPassword());
+            userEntity.setPassword(passwordEncoder.encode(dto.getPassword()));
         }
         userEntity = userRepository.save(userEntity);
         return UserDto.mapEntityToDto(userEntity);

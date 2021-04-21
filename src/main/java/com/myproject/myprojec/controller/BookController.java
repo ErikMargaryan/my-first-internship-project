@@ -47,6 +47,7 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('USER')")
     public BookDto getBook(@PathVariable("id") Long id) throws Exception {
         return bookService.getBook(id);
     }
@@ -70,7 +71,7 @@ public class BookController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'EDITOR')")
     public ResponseEntity<BookDto> updateBook(@PathVariable("id") Long id,
                                               @Validated(Update.class)
                                               @RequestBody BookDto dto) throws Exception {
