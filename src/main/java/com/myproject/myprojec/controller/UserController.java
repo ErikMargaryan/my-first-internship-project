@@ -6,11 +6,13 @@ import com.myproject.myprojec.service.dto.UserDto;
 import com.myproject.myprojec.service.model.QueryResponseWrapper;
 import com.myproject.myprojec.service.validation.Create;
 import com.myproject.myprojec.service.validation.Update;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import static com.myproject.myprojec.config.session.SessionUser.SESSION_USER_KEY;
 
@@ -79,4 +81,10 @@ public class UserController {
     public void deleteUser(@PathVariable("id") Long id) {
         userService.deleteUser(id);
     }
+
+    @PostMapping("/upload-user-csv")
+    public void uploadUser(@RequestParam(name = "file") MultipartFile file) throws NotFoundException {
+        userService.parseCsv(file);
+    }
+
 }
