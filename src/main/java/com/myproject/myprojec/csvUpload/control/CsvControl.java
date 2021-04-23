@@ -18,7 +18,6 @@ public class CsvControl<T> {
 
     @Value("${csv.upload.dir}")
     private String uploadDir;
-    private final int SIZE_OF_FILE_IN_MB = 5;
 
 
     public List<List<T>> getEntitiesFromCsv(MultipartFile csvFile, Class<T> type) throws NotFoundException {
@@ -30,6 +29,7 @@ public class CsvControl<T> {
         if (parentCsv.mkdirs()) {
             try {
                 csvFile.transferTo(parentCsv);
+                int SIZE_OF_FILE_IN_MB = 5;
                 list = fileHelper.splitFile(parentCsv, SIZE_OF_FILE_IN_MB)
                         .stream()
                         .map(file -> csvParser.parse(file, type))

@@ -47,7 +47,6 @@ public class BookGenreDto {
         }
         BookGenreDto dto = new BookGenreDto();
         dto.setId(entity.getId());
-        //??
         return dto;
     }
 

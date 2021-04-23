@@ -31,10 +31,6 @@ public class UserRatedBookEntity {
         this.bookRating = bookRating;
     }
 
-//    public UserRatedBookEntity(Integer bookRating) {
-//        this.bookRating = bookRating;
-//    }
-
     public Long getId() {
         return id;
     }

@@ -18,10 +18,6 @@ public class RoleEntity {
     @OneToMany(mappedBy = "role", targetEntity = UserRoleEntity.class)
     private List<UserRoleEntity> listOfUserRole;
 
-//    @OneToMany(mappedBy = "role", targetEntity = RolePrivilegeEntity.class, fetch = FetchType.EAGER)
-//    private List<RolePrivilegeEntity> listOfRolePrivilege;
-
-
     public RoleEntity() {
     }
 

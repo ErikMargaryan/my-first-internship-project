@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.List;
 
-
 @Slf4j
 @Component
 public class CsvParser<T> {

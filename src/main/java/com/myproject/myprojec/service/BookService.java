@@ -134,22 +134,4 @@ public class BookService {
         bookAuthorRepository.saveAll(bookAuthorEntityList);
     }
 
-    ////test
-//        List<List<BookEntity>> bookEntitiesList = books.stream()
-//                .map(bookList -> bookList.stream()
-//                        .map(book -> {
-//                            BookEntity bookEntity = Book.mapCsvToEntity(book);
-//                            List<BookAuthorEntity> bookAuthorEntityList = authorEntities.stream().filter(entity -> book.getAuthorsName().contains(entity.getName()))
-//                                    .map(authorEntity -> new BookAuthorEntity(bookEntity, authorEntity)).collect(Collectors.toList());
-//                            bookEntity.setBookAuthorEntityList(bookAuthorEntityList);
-//                            System.out.println(i.incrementAndGet());
-//                            return bookEntity;
-//                        })
-//                        .collect(Collectors.toList()))
-//                .collect(Collectors.toList());
-//        for (List<BookEntity> entities : bookEntitiesList) {
-//            List<BookEntity> bookEntityList = bookRepository.saveAll(entities);
-//            saveRelations(bookEntityList);
-//        }
-
 }

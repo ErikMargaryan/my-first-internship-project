@@ -22,7 +22,6 @@ public class UserDto {
     private String password;
     private List<UserRatedBookDto> userRatedBookDtoList;
     private String role;
-//    private UserDetailDto userDetailDto;
 
     public UserDto() {
     }
@@ -38,7 +37,6 @@ public class UserDto {
         this.username = username;
         this.password = password;
         this.userRatedBookDtoList = userRatedBookDtoList;
-//        this.userDetailDto = userDetailDto;
         this.role = role;
     }
 
@@ -130,14 +128,6 @@ public class UserDto {
         this.role = role;
     }
 
-    //    public UserDetailDto getUserDetailDto() {
-//        return userDetailDto;
-//    }
-//
-//    public void setUserDetailDto(UserDetailDto userDetailDto) {
-//        this.userDetailDto = userDetailDto;
-//    }
-
     public static UserDto mapEntityToDto(UserEntity entity) {
         if (entity == null) {
             return null;
@@ -151,7 +141,6 @@ public class UserDto {
         dto.setPhoneNumber(entity.getPhoneNumber());
         dto.setEmail(entity.getEmail());
         dto.setUsername(entity.getUsername());
-//        dto.setPassword(entity.getPassword());
         List<UserRatedBookEntity> userRatedBookEntityList = entity.getUsersRatedBooksList();
         if (!CollectionUtils.isEmpty(userRatedBookEntityList)) {
             dto.setUsersRatedBooksDtoList(userRatedBookEntityList.stream().map(UserRatedBookDto::mapEntityToDto).collect(Collectors.toList()));
@@ -172,15 +161,10 @@ public class UserDto {
         entity.setPhoneNumber(dto.getPhoneNumber());
         entity.setEmail(dto.getEmail());
         entity.setUsername(dto.getUsername());
-//        entity.setPassword(dto.getPassword());
         List<UserRatedBookDto> userRatedBookDtoList = dto.getUsersRatedBooksDtoList();
         if (!CollectionUtils.isEmpty(userRatedBookDtoList)) {
             entity.setUsersRatedBooksList(userRatedBookDtoList.stream().map(UserRatedBookDto::mapDtoToEntity).collect(Collectors.toList()));
         }
-//        List<UserRoleDto> listOfUserRole = dto.getListOfUserRole();
-//        if (!CollectionUtils.isEmpty(listOfUserRole)) {
-//            entity.setListOfUserRole(listOfUserRole.stream().map(UserRoleDto::mapDtoToEntity).collect(Collectors.toList()));
-//        }
         return entity;
     }
 

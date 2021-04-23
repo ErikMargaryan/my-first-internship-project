@@ -42,9 +42,6 @@ public class UserEntity {
     @OneToMany(mappedBy = "user", targetEntity = UserRoleEntity.class, fetch = FetchType.EAGER)
     private List<UserRoleEntity> listOfUserRole;
 
-//    @OneToOne(mappedBy = "user")
-//    private UserDetailEntity userDetailEntity;
-
     public UserEntity() {
     }
 
@@ -162,6 +159,7 @@ public class UserEntity {
                 ", email='" + email + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", role='" + password + '\'' +
                 '}';
     }
 }

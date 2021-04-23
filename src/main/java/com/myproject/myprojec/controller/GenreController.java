@@ -1,7 +1,8 @@
 package com.myproject.myprojec.controller;
 
-import com.myproject.myprojec.service.GenreService;
 import com.myproject.myprojec.csvUpload.criteria.SearchCriteria;
+import com.myproject.myprojec.persistence.entity.GenreEntity;
+import com.myproject.myprojec.service.GenreService;
 import com.myproject.myprojec.service.dto.GenreDto;
 import com.myproject.myprojec.service.model.QueryResponseWrapper;
 import com.myproject.myprojec.service.validation.Create;
@@ -12,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("genres")
@@ -34,18 +37,18 @@ public class GenreController {
         return genreService.getGenres(searchCriteria);
     }
 
-//    @GetMapping("json-format")
-//    public ResponseEntity<List<GenreEntity>> getAllGenres() {
-//        try {
-//            List<GenreEntity> entities = genreService.getAllGenres();
-//            if (entities.isEmpty()) {
-//                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//            }
-//            return new ResponseEntity<>(entities, HttpStatus.OK);
-//        } catch (Exception e) {
-//            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
+    @GetMapping("json-format")
+    public ResponseEntity<List<GenreEntity>> getAllGenres() {
+        try {
+            List<GenreEntity> entities = genreService.getAllGenres();
+            if (entities.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(entities, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     @PostMapping()
     @PreAuthorize("hasAnyRole('ADMIN')")

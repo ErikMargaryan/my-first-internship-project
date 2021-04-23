@@ -1,7 +1,8 @@
 package com.myproject.myprojec.controller;
 
-import com.myproject.myprojec.service.UserRatedBookService;
 import com.myproject.myprojec.csvUpload.criteria.SearchCriteria;
+import com.myproject.myprojec.persistence.entity.UserRatedBookEntity;
+import com.myproject.myprojec.service.UserRatedBookService;
 import com.myproject.myprojec.service.dto.UserRatedBookDto;
 import com.myproject.myprojec.service.model.QueryResponseWrapper;
 import com.myproject.myprojec.service.validation.Create;
@@ -11,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("user-rated-book")
@@ -33,18 +36,18 @@ public class UserRatedBookController {
         return userRatedBookService.getUserRates(searchCriteria);
     }
 
-//    @GetMapping("json-format")
-//    public ResponseEntity<List<UserRatedBookEntity>> getAllAuthors() {
-//        try {
-//            List<UserRatedBookEntity> entities = userRatedBookService.getAllUserRates();
-//            if (entities.isEmpty()) {
-//                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//            }
-//            return new ResponseEntity<>(entities, HttpStatus.OK);
-//        } catch (Exception e) {
-//            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
+    @GetMapping("json-format")
+    public ResponseEntity<List<UserRatedBookEntity>> getAllAuthors() {
+        try {
+            List<UserRatedBookEntity> entities = userRatedBookService.getAllUserRates();
+            if (entities.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(entities, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     @PostMapping()
     public ResponseEntity<UserRatedBookDto> addRate(@RequestBody @Validated(Create.class) UserRatedBookDto dto) throws Exception {
