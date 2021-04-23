@@ -11,6 +11,7 @@ import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -52,7 +53,7 @@ public class GenreController {
     }
 
     @PostMapping()
-//    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<GenreDto> createGenre(@RequestBody @Validated(Create.class) GenreDto dto) throws Exception {
         if (dto.getGenres() == null) {
             throw new Exception("Genre is required");
@@ -62,7 +63,7 @@ public class GenreController {
     }
 
     @PutMapping("/{id}")
-//    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<GenreDto> updateGenre(@PathVariable("id") Long id,
                                                 @Validated(Update.class)
                                                 @RequestBody GenreDto dto) throws Exception {
@@ -74,11 +75,13 @@ public class GenreController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public void deleteGenre(@PathVariable("id") Long id) {
         genreService.deleteGenres(id);
     }
 
     @PostMapping("/upload-genre-csv")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public void uploadGenre(@RequestParam(name = "file") MultipartFile file) throws NotFoundException {
         genreService.parseCsv(file);
     }

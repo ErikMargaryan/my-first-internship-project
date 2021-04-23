@@ -73,6 +73,7 @@ public class AuthorController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public void deleteAuthor(@PathVariable("id") Long id) {
         authorService.delete(id);
     }

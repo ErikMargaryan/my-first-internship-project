@@ -30,7 +30,7 @@ public class BookController {
     }
 
     @PostMapping()
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'EDITOR')")
     public ResponseEntity<BookDto> addBook(@RequestBody @Validated(Create.class) BookDto dto) throws Exception {
         if (dto.getTitle() == null) {
             throw new Exception("Title is required");
@@ -47,7 +47,6 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('USER')")
     public BookDto getBook(@PathVariable("id") Long id) throws Exception {
         return bookService.getBook(id);
     }
@@ -83,11 +82,13 @@ public class BookController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'EDITOR')")
     public void deleteBook(@PathVariable("id") Long id) {
         bookService.deleteBook(id);
     }
 
     @PostMapping("/upload-book-csv")
+    @PreAuthorize("hasAnyRole('ADMIN', 'EDITOR')")
     public void uploadBook(@RequestParam(name = "file") MultipartFile file) throws NotFoundException {
         bookService.parseCsv(file);
     }
