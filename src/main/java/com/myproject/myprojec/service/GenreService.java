@@ -1,13 +1,17 @@
 package com.myproject.myprojec.service;
 
+import com.myproject.myprojec.csvUpload.control.CsvControl;
+import com.myproject.myprojec.csvUpload.criteria.SearchCriteria;
+import com.myproject.myprojec.csvUpload.csvModel.Genre;
 import com.myproject.myprojec.persistence.entity.GenreEntity;
 import com.myproject.myprojec.persistence.rpository.GenreRepository;
-import com.myproject.myprojec.csvUpload.criteria.SearchCriteria;
 import com.myproject.myprojec.service.dto.GenreDto;
 import com.myproject.myprojec.service.model.QueryResponseWrapper;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,10 +20,12 @@ import java.util.stream.Collectors;
 public class GenreService {
 
     private final GenreRepository genreRepository;
+    private final CsvControl<Genre> csvControl;
 
     @Autowired
-    public GenreService(GenreRepository genreRepository) {
+    public GenreService(GenreRepository genreRepository, CsvControl<Genre> csvControl) {
         this.genreRepository = genreRepository;
+        this.csvControl = csvControl;
     }
 
     public GenreDto createGenres(GenreDto dto) {
@@ -57,6 +63,15 @@ public class GenreService {
 
     public List<GenreEntity> getAllGenres() {
         return genreRepository.findAll();
+    }
+
+    public void parseCsv(MultipartFile file) throws NotFoundException {
+        List<List<Genre>> genres = csvControl.getEntitiesFromCsv(file, Genre.class);
+        List<List<GenreEntity>> genresList = genres.stream().map(genre -> genre.stream()
+                .map(Genre::mapCsvToEntity)
+                .collect(Collectors.toList()))
+                .collect(Collectors.toList());
+        genresList.forEach(genreRepository::saveAll);
     }
 
 }

@@ -51,9 +51,14 @@ public class User {
 
     public static UserEntity mapCsvToEntity(User csv) {
         UserEntity entity = new UserEntity();
-//        entity.setId(csv.getId());
+        entity.setId(csv.getId());
         entity.setAge(csv.getAge());
         entity.setAddress(csv.getAddress());
+        entity.setEmail("0");
+        entity.setFirstName("0");
+        entity.setLastName("0");
+        entity.setUsername("0");
+        entity.setPassword("0");
         return entity;
     }
 
