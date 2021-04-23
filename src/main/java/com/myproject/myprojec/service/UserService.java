@@ -32,21 +32,11 @@ public class UserService {
     }
 
     public UserDto creatUser(UserDto dto) {
-        UserEntity userEntity = new UserEntity();
+        UserEntity userEntity = UserDto.mapDtoToEntity(dto, new UserEntity());
         userEntity.setId(dto.getId());
-        userEntity.setFirstName(dto.getFirstName());
-        userEntity.setLastName(dto.getLastName());
-        userEntity.setAge(dto.getAge());
-        userEntity.setAddress(dto.getAddress());
-        userEntity.setPhoneNumber(dto.getPhoneNumber());
-        userEntity.setEmail(dto.getEmail());
-        userEntity.setUsername(dto.getUsername());
         userEntity.setPassword(passwordEncoder.encode(dto.getPassword()));
-
-//        UserDto.mapDtoToEntity(dto);
-
-        userEntity = userRepository.save(userEntity);
-        return UserDto.mapEntityToDto(userEntity);
+        UserEntity entity =userRepository.save(userEntity);
+        return UserDto.mapEntityToDto(entity);
     }
 
     public UserDto getUser(Long id) throws Exception {

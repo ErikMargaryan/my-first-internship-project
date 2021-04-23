@@ -150,16 +150,6 @@ public class UserEntity {
     public void setListOfUserRole(List<UserRoleEntity> listOfUserRole) {
         this.listOfUserRole = listOfUserRole;
     }
-
-//    public UserDetailEntity getUserDetailEntity() {
-//        return userDetailEntity;
-//    }
-//
-//    public void setUserDetailEntity(UserDetailEntity userDetailEntity) {
-//        this.userDetailEntity = userDetailEntity;
-//    }
-
-
     @Override
     public String toString() {
         return "UserEntity{" +

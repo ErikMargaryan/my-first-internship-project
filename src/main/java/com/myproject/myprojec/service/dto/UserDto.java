@@ -160,11 +160,10 @@ public class UserDto {
         return dto;
     }
 
-    public static UserEntity mapDtoToEntity(UserDto dto) {
+    public static UserEntity mapDtoToEntity(UserDto dto, UserEntity entity) {
         if (dto == null) {
             return null;
         }
-        UserEntity entity = new UserEntity();
         entity.setId(dto.getId());
         entity.setFirstName(dto.getFirstName());
         entity.setLastName(dto.getLastName());
