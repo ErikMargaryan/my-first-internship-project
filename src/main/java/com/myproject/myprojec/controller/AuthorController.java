@@ -2,7 +2,7 @@ package com.myproject.myprojec.controller;
 
 import com.myproject.myprojec.persistence.entity.AuthorEntity;
 import com.myproject.myprojec.service.AuthorService;
-import com.myproject.myprojec.csvUpload.criteria.SearchCriteria;
+import com.myproject.myprojec.service.criteria.SearchCriteria;
 import com.myproject.myprojec.service.dto.AuthorDto;
 import com.myproject.myprojec.service.model.QueryResponseWrapper;
 import com.myproject.myprojec.service.validation.Create;

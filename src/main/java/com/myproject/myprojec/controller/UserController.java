@@ -1,6 +1,6 @@
 package com.myproject.myprojec.controller;
 
-import com.myproject.myprojec.csvUpload.criteria.SearchCriteria;
+import com.myproject.myprojec.service.criteria.SearchCriteria;
 import com.myproject.myprojec.service.UserService;
 import com.myproject.myprojec.service.dto.UserDto;
 import com.myproject.myprojec.service.model.QueryResponseWrapper;

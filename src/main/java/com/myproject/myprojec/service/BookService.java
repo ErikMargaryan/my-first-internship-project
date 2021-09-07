@@ -7,7 +7,7 @@ import com.myproject.myprojec.persistence.rpository.AuthorRepository;
 import com.myproject.myprojec.persistence.rpository.BookAuthorRepository;
 import com.myproject.myprojec.persistence.rpository.BookRepository;
 import com.myproject.myprojec.csvUpload.control.CsvControl;
-import com.myproject.myprojec.csvUpload.criteria.SearchCriteria;
+import com.myproject.myprojec.service.criteria.SearchCriteria;
 import com.myproject.myprojec.service.dto.BookDto;
 import com.myproject.myprojec.service.model.QueryResponseWrapper;
 import com.myproject.myprojec.csvUpload.csvModel.Book;

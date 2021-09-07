@@ -1,7 +1,7 @@
 package com.myproject.myprojec.service;
 
 import com.myproject.myprojec.csvUpload.control.CsvControl;
-import com.myproject.myprojec.csvUpload.criteria.SearchCriteria;
+import com.myproject.myprojec.service.criteria.SearchCriteria;
 import com.myproject.myprojec.csvUpload.csvModel.User;
 import com.myproject.myprojec.persistence.entity.UserEntity;
 import com.myproject.myprojec.persistence.rpository.UserRepository;
