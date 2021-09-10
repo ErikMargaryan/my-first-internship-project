@@ -1,9 +1,9 @@
 package com.myproject.myprojec.controller;
 
-import com.myproject.myprojec.service.criteria.SearchCriteria;
+import com.myproject.myprojec.controller.dto.GenreDto;
 import com.myproject.myprojec.persistence.entity.GenreEntity;
 import com.myproject.myprojec.service.GenreService;
-import com.myproject.myprojec.controller.dto.GenreDto;
+import com.myproject.myprojec.service.criteria.SearchCriteria;
 import com.myproject.myprojec.service.model.QueryResponseWrapper;
 import com.myproject.myprojec.service.validation.Create;
 import com.myproject.myprojec.service.validation.Update;
@@ -11,7 +11,6 @@ import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -57,7 +56,6 @@ public class GenreController {
     }
 
     @PostMapping()
-    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<GenreDto> addGenre(@RequestBody @Validated(Create.class) GenreEntity entity) throws Exception {
         if (entity.getGenres() == null) {
             throw new Exception("Genre is required");
@@ -67,7 +65,6 @@ public class GenreController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<GenreDto> updateGenre(@PathVariable("id") Long id,
                                                 @Validated(Update.class)
                                                 @RequestBody GenreEntity entity) throws Exception {
@@ -79,13 +76,11 @@ public class GenreController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN')")
     public void deleteGenre(@PathVariable("id") Long id) {
         genreService.deleteGenres(id);
     }
 
     @PostMapping("/upload-genre-csv")
-    @PreAuthorize("hasAnyRole('ADMIN')")
     public void uploadGenre(@RequestParam(name = "file") MultipartFile file) throws NotFoundException {
         genreService.parseCsv(file);
     }

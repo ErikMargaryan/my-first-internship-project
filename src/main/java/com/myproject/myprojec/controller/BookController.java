@@ -1,9 +1,9 @@
 package com.myproject.myprojec.controller;
 
+import com.myproject.myprojec.controller.dto.BookDto;
 import com.myproject.myprojec.persistence.entity.BookEntity;
 import com.myproject.myprojec.service.BookService;
 import com.myproject.myprojec.service.criteria.SearchCriteria;
-import com.myproject.myprojec.controller.dto.BookDto;
 import com.myproject.myprojec.service.model.QueryResponseWrapper;
 import com.myproject.myprojec.service.validation.Create;
 import com.myproject.myprojec.service.validation.Update;
@@ -11,7 +11,6 @@ import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,7 +30,6 @@ public class BookController {
     }
 
     @PostMapping()
-    @PreAuthorize("hasAnyRole('ADMIN', 'EDITOR')")
     public ResponseEntity<BookDto> addBook(@RequestBody @Validated(Create.class) BookEntity entity) throws Exception {
         if (entity.getTitle() == null) {
             throw new Exception("Title is required");
@@ -74,7 +72,6 @@ public class BookController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'EDITOR')")
     public ResponseEntity<BookDto> updateBook(@PathVariable("id") Long id,
                                               @Validated(Update.class)
                                               @RequestBody BookEntity entity) throws Exception {
@@ -86,13 +83,11 @@ public class BookController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'EDITOR')")
     public void deleteBook(@PathVariable("id") Long id) {
         bookService.deleteBook(id);
     }
 
     @PostMapping("/upload-book-csv")
-    @PreAuthorize("hasAnyRole('ADMIN', 'EDITOR')")
     public void uploadBook(@RequestParam(name = "file") MultipartFile file) throws NotFoundException {
         bookService.parseCsv(file);
     }
