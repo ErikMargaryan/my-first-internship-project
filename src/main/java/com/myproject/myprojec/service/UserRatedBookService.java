@@ -1,16 +1,14 @@
 package com.myproject.myprojec.service;
 
 import com.myproject.myprojec.persistence.entity.UserRatedBookEntity;
-import com.myproject.myprojec.persistence.rpository.UserRatedBookRepository;
+import com.myproject.myprojec.persistence.repository.UserRatedBookRepository;
 import com.myproject.myprojec.service.criteria.SearchCriteria;
-import com.myproject.myprojec.service.dto.UserRatedBookDto;
 import com.myproject.myprojec.service.model.QueryResponseWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class UserRatedBookService {
@@ -22,32 +20,28 @@ public class UserRatedBookService {
         this.userRatedBookRepository = userRatedBookRepository;
     }
 
-    public UserRatedBookDto createUsersRatedBooks(UserRatedBookDto dto) {
-        UserRatedBookEntity userRatedBookEntity = new UserRatedBookEntity();
-        UserRatedBookDto.mapDtoToEntity(dto);
+    public UserRatedBookEntity createUsersRatedBooks(UserRatedBookEntity userRatedBookEntity) {
         userRatedBookEntity = userRatedBookRepository.save(userRatedBookEntity);
-        return UserRatedBookDto.mapEntityToDto(userRatedBookEntity);
+        return userRatedBookEntity;
     }
 
-    public UserRatedBookDto getUsersRatedBooks(Long id) throws Exception {
-        UserRatedBookEntity userRatedBookEntity = userRatedBookRepository.findById(id)
+    public UserRatedBookEntity getById(Long id) throws Exception {
+        return userRatedBookRepository.findById(id)
                 .orElseThrow(() -> new Exception("User rate not found"));
-        return UserRatedBookDto.mapEntityToDto(userRatedBookEntity);
     }
 
-    public QueryResponseWrapper<UserRatedBookDto> getUserRates(SearchCriteria searchCriteria) {
+    public QueryResponseWrapper<UserRatedBookEntity> getUserRates(SearchCriteria searchCriteria) {
         Page<UserRatedBookEntity> page = userRatedBookRepository.findALLWithPagination(searchCriteria.composePageRequest());
         List<UserRatedBookEntity> content = page.getContent();
-        List<UserRatedBookDto> dtos = content.stream().map(UserRatedBookDto::mapEntityToDto).collect(Collectors.toList());
-        return new QueryResponseWrapper<>(page.getTotalElements(), dtos);
+        return new QueryResponseWrapper<>(page.getTotalElements(), content);
     }
 
-    public UserRatedBookDto updateUsersRate(Long id, UserRatedBookDto dto) throws Exception {
+    public UserRatedBookEntity updateUsersRate(Long id, UserRatedBookEntity entity) throws Exception {
         UserRatedBookEntity userRatedBookEntity = userRatedBookRepository.findById(id)
                 .orElseThrow(() -> new Exception("User rate not found"));
-        userRatedBookEntity.setBookRating(dto.getBookRating());
+        userRatedBookEntity.setBookRating(entity.getBookRating());
         userRatedBookEntity = userRatedBookRepository.save(userRatedBookEntity);
-        return UserRatedBookDto.mapEntityToDto(userRatedBookEntity);
+        return userRatedBookEntity;
     }
 
     public void deleteUsersRate(Long id) {

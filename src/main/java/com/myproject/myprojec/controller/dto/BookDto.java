@@ -1,4 +1,4 @@
-package com.myproject.myprojec.service.dto;
+package com.myproject.myprojec.controller.dto;
 
 import com.myproject.myprojec.persistence.entity.BookAuthorEntity;
 import com.myproject.myprojec.persistence.entity.BookEntity;

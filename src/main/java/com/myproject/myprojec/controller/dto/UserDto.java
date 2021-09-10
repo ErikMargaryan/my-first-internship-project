@@ -1,4 +1,4 @@
-package com.myproject.myprojec.service.dto;
+package com.myproject.myprojec.controller.dto;
 
 import com.myproject.myprojec.persistence.entity.RoleEntity;
 import com.myproject.myprojec.persistence.entity.UserEntity;

@@ -3,7 +3,7 @@ package com.myproject.myprojec.controller;
 import com.myproject.myprojec.service.criteria.SearchCriteria;
 import com.myproject.myprojec.persistence.entity.GenreEntity;
 import com.myproject.myprojec.service.GenreService;
-import com.myproject.myprojec.service.dto.GenreDto;
+import com.myproject.myprojec.controller.dto.GenreDto;
 import com.myproject.myprojec.service.model.QueryResponseWrapper;
 import com.myproject.myprojec.service.validation.Create;
 import com.myproject.myprojec.service.validation.Update;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("genres")
@@ -31,22 +32,25 @@ public class GenreController {
 
     @GetMapping("/{id}")
     public GenreDto getGenre(@PathVariable("id") Long id) throws Exception {
-        return genreService.getGenres(id);
+        GenreEntity genreEntity = genreService.getById(id);
+        return GenreDto.mapEntityToDto(genreEntity);
     }
 
     @GetMapping
-    public QueryResponseWrapper<GenreDto> getGenres(SearchCriteria searchCriteria) {
-        return genreService.getGenres(searchCriteria);
+    public List<GenreDto> getGenres(SearchCriteria searchCriteria) {
+        QueryResponseWrapper<GenreEntity> entityQueryResponseWrapper = genreService.getGenres(searchCriteria);
+        List<GenreDto> dtos = entityQueryResponseWrapper.getData().stream().map(GenreDto::mapEntityToDto).collect(Collectors.toList());
+        return dtos;
     }
 
     @GetMapping("json-format")
-    public ResponseEntity<List<GenreEntity>> getAllGenres() {
+    public ResponseEntity<List<GenreDto>> getAllGenres() {
         try {
-            List<GenreEntity> entities = genreService.getAllGenres();
-            if (entities.isEmpty()) {
+            List<GenreDto> dtos = genreService.getAllGenres().stream().map(GenreDto::mapEntityToDto).collect(Collectors.toList());
+            if (dtos.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
-            return new ResponseEntity<>(entities, HttpStatus.OK);
+            return new ResponseEntity<>(dtos, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -54,24 +58,24 @@ public class GenreController {
 
     @PostMapping()
     @PreAuthorize("hasAnyRole('ADMIN')")
-    public ResponseEntity<GenreDto> createGenre(@RequestBody @Validated(Create.class) GenreDto dto) throws Exception {
-        if (dto.getGenres() == null) {
+    public ResponseEntity<GenreDto> addGenre(@RequestBody @Validated(Create.class) GenreEntity entity) throws Exception {
+        if (entity.getGenres() == null) {
             throw new Exception("Genre is required");
         }
-        GenreDto genre = genreService.createGenres(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(genre);
+        GenreDto genreDto = GenreDto.mapEntityToDto(genreService.createGenres(entity));
+        return ResponseEntity.status(HttpStatus.CREATED).body(genreDto);
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<GenreDto> updateGenre(@PathVariable("id") Long id,
                                                 @Validated(Update.class)
-                                                @RequestBody GenreDto dto) throws Exception {
-        GenreDto genre = genreService.updateGenres(id, dto);
-        if (genre == null) {
+                                                @RequestBody GenreEntity entity) throws Exception {
+        GenreDto genreDto = GenreDto.mapEntityToDto(genreService.updateGenres(id, entity));
+        if (genreDto == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(genre);
+        return ResponseEntity.ok(genreDto);
     }
 
     @DeleteMapping("/{id}")

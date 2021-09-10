@@ -1,16 +1,15 @@
 package com.myproject.myprojec.service;
 
+import com.myproject.myprojec.csvUpload.control.CsvControl;
+import com.myproject.myprojec.csvUpload.csvModel.Book;
 import com.myproject.myprojec.persistence.entity.AuthorEntity;
 import com.myproject.myprojec.persistence.entity.BookAuthorEntity;
 import com.myproject.myprojec.persistence.entity.BookEntity;
-import com.myproject.myprojec.persistence.rpository.AuthorRepository;
-import com.myproject.myprojec.persistence.rpository.BookAuthorRepository;
-import com.myproject.myprojec.persistence.rpository.BookRepository;
-import com.myproject.myprojec.csvUpload.control.CsvControl;
+import com.myproject.myprojec.persistence.repository.AuthorRepository;
+import com.myproject.myprojec.persistence.repository.BookAuthorRepository;
+import com.myproject.myprojec.persistence.repository.BookRepository;
 import com.myproject.myprojec.service.criteria.SearchCriteria;
-import com.myproject.myprojec.service.dto.BookDto;
 import com.myproject.myprojec.service.model.QueryResponseWrapper;
-import com.myproject.myprojec.csvUpload.csvModel.Book;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -40,48 +39,43 @@ public class BookService {
         this.csvControl = csvControl;
     }
 
-    public BookDto createBook(BookDto dto) {
-        BookEntity bookEntity = new BookEntity();
-        BookDto.mapDtoToEntity(dto);
-
+    public BookEntity createBook(BookEntity bookEntity) {
         bookEntity = bookRepository.save(bookEntity);
-        return BookDto.mapEntityToDto(bookEntity);
+        return bookEntity;
     }
 
 
-    public BookDto getBook(Long id) throws Exception {
-        BookEntity bookEntity = bookRepository.findById(id)
+    public BookEntity getById(Long id) throws Exception {
+        return bookRepository.findById(id)
                 .orElseThrow(() -> new Exception("Book not found"));
-        return BookDto.mapEntityToDto(bookEntity);
     }
 
-    public QueryResponseWrapper<BookDto> getBooks(SearchCriteria searchCriteria) {
+    public QueryResponseWrapper<BookEntity> getBooks(SearchCriteria searchCriteria) {
         Page<BookEntity> page = bookRepository.findALLWithPagination(searchCriteria.composePageRequest());
         List<BookEntity> content = page.getContent();
-        List<BookDto> dtos = content.stream().map(BookDto::mapEntityToDto).collect(Collectors.toList());
-        return new QueryResponseWrapper<>(page.getTotalElements(), dtos);
+        return new QueryResponseWrapper<>(page.getTotalElements(), content);
     }
 
 
-    public BookDto updateBookData(Long id, BookDto dto) throws Exception {
+    public BookEntity updateBookData(Long id, BookEntity entity) throws Exception {
         BookEntity bookEntity = bookRepository.findById(id)
                 .orElseThrow(() -> new Exception("Book not found"));
 
-        if (dto.getTitle() != null) {
-            bookEntity.setTitle(dto.getTitle());
+        if (entity.getTitle() != null) {
+            bookEntity.setTitle(entity.getTitle());
         }
-        if (dto.getIsbn() != null) {
-            bookEntity.setIsbn(dto.getIsbn());
+        if (entity.getIsbn() != null) {
+            bookEntity.setIsbn(entity.getIsbn());
         }
-        if (dto.getPublisher() != null) {
-            bookEntity.setPublisher(dto.getPublisher());
+        if (entity.getPublisher() != null) {
+            bookEntity.setPublisher(entity.getPublisher());
         }
-        if (dto.getYearOfPublication() != null) {
-            bookEntity.setYearOfPublication(dto.getYearOfPublication());
+        if (entity.getYearOfPublication() != null) {
+            bookEntity.setYearOfPublication(entity.getYearOfPublication());
         }
 
         bookEntity = bookRepository.save(bookEntity);
-        return BookDto.mapEntityToDto(bookEntity);
+        return bookEntity;
     }
 
     public void deleteBook(Long id) {

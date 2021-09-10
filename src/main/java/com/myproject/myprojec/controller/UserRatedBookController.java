@@ -3,7 +3,7 @@ package com.myproject.myprojec.controller;
 import com.myproject.myprojec.service.criteria.SearchCriteria;
 import com.myproject.myprojec.persistence.entity.UserRatedBookEntity;
 import com.myproject.myprojec.service.UserRatedBookService;
-import com.myproject.myprojec.service.dto.UserRatedBookDto;
+import com.myproject.myprojec.controller.dto.UserRatedBookDto;
 import com.myproject.myprojec.service.model.QueryResponseWrapper;
 import com.myproject.myprojec.service.validation.Create;
 import com.myproject.myprojec.service.validation.Update;
@@ -14,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("user-rated-book")
@@ -28,42 +29,45 @@ public class UserRatedBookController {
 
     @GetMapping("/{id}")
     public UserRatedBookDto getRate(@PathVariable("id") Long id) throws Exception {
-        return userRatedBookService.getUsersRatedBooks(id);
+        UserRatedBookEntity userRatedBookEntity = userRatedBookService.getById(id);
+        return UserRatedBookDto.mapEntityToDto(userRatedBookEntity);
     }
 
     @GetMapping
-    public QueryResponseWrapper<UserRatedBookDto> getUserRates(SearchCriteria searchCriteria) {
-        return userRatedBookService.getUserRates(searchCriteria);
+    public List<UserRatedBookDto> getUserRates(SearchCriteria searchCriteria) {
+        QueryResponseWrapper<UserRatedBookEntity> entityQueryResponseWrapper = userRatedBookService.getUserRates(searchCriteria);
+        List<UserRatedBookDto> dtos = entityQueryResponseWrapper.getData().stream().map(UserRatedBookDto::mapEntityToDto).collect(Collectors.toList());
+        return dtos;
     }
 
     @GetMapping("json-format")
-    public ResponseEntity<List<UserRatedBookEntity>> getAllAuthors() {
+    public ResponseEntity<List<UserRatedBookDto>> getAllAuthors() {
         try {
-            List<UserRatedBookEntity> entities = userRatedBookService.getAllUserRates();
-            if (entities.isEmpty()) {
+            List<UserRatedBookDto> dtos = userRatedBookService.getAllUserRates().stream().map(UserRatedBookDto::mapEntityToDto).collect(Collectors.toList());
+            if (dtos.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
-            return new ResponseEntity<>(entities, HttpStatus.OK);
+            return new ResponseEntity<>(dtos, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PostMapping()
-    public ResponseEntity<UserRatedBookDto> addRate(@RequestBody @Validated(Create.class) UserRatedBookDto dto) throws Exception {
-        UserRatedBookDto usersRatedBooks = userRatedBookService.createUsersRatedBooks(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(usersRatedBooks);
+    public ResponseEntity<UserRatedBookDto> addRate(@RequestBody @Validated(Create.class) UserRatedBookEntity entity) throws Exception {
+        UserRatedBookDto usersRatedBooksDto = UserRatedBookDto.mapEntityToDto(userRatedBookService.createUsersRatedBooks(entity));
+        return ResponseEntity.status(HttpStatus.CREATED).body(usersRatedBooksDto);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<UserRatedBookDto> updateBooksRates(@PathVariable("id") Long id,
                                                              @Validated(Update.class)
-                                                             @RequestBody UserRatedBookDto dto) throws Exception {
-        UserRatedBookDto usersRated = userRatedBookService.updateUsersRate(id, dto);
-        if (usersRated == null) {
+                                                             @RequestBody UserRatedBookEntity entity) throws Exception {
+        UserRatedBookDto usersRatedBookDto = UserRatedBookDto.mapEntityToDto(userRatedBookService.updateUsersRate(id, entity));
+        if (usersRatedBookDto == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(usersRated);
+        return ResponseEntity.ok(usersRatedBookDto);
     }
 
     @DeleteMapping("/{id}")

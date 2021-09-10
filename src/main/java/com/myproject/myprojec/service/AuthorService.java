@@ -1,16 +1,14 @@
 package com.myproject.myprojec.service;
 
 import com.myproject.myprojec.persistence.entity.AuthorEntity;
-import com.myproject.myprojec.persistence.rpository.AuthorRepository;
+import com.myproject.myprojec.persistence.repository.AuthorRepository;
 import com.myproject.myprojec.service.criteria.SearchCriteria;
-import com.myproject.myprojec.service.dto.AuthorDto;
 import com.myproject.myprojec.service.model.QueryResponseWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class AuthorService {
@@ -22,35 +20,30 @@ public class AuthorService {
         this.authorRepository = authorRepository;
     }
 
-    public AuthorDto createAuthor(AuthorDto dto) {
-        AuthorEntity authorEntity = new AuthorEntity();
-        AuthorDto.mapDtoToEntity(dto);
-
+    public AuthorEntity createAuthor(AuthorEntity authorEntity) {
         authorEntity = authorRepository.save(authorEntity);
-        return AuthorDto.mapEntityToDto(authorEntity);
+        return authorEntity;
     }
 
-    public AuthorDto getAuthor(Long id) throws Exception {
-        AuthorEntity authorEntity = authorRepository.findById(id)
+    public AuthorEntity getById(Long id) throws Exception {
+        return authorRepository.findById(id)
                 .orElseThrow(() -> new Exception("Author not found"));
-        return AuthorDto.mapEntityToDto(authorEntity);
     }
 
-    public QueryResponseWrapper<AuthorDto> getAuthors(SearchCriteria searchCriteria) {
+    public QueryResponseWrapper<AuthorEntity> getAuthors(SearchCriteria searchCriteria) {
         Page<AuthorEntity> page = authorRepository.findALLWithPagination(searchCriteria.composePageRequest());
         List<AuthorEntity> content = page.getContent();
-        List<AuthorDto> dtos = content.stream().map(AuthorDto::mapEntityToDto).collect(Collectors.toList());
-        return new QueryResponseWrapper<>(page.getTotalElements(), dtos);
+        return new QueryResponseWrapper<>(page.getTotalElements(), content);
     }
 
-    public AuthorDto updateAuthorData(Long id, AuthorDto dto) throws Exception {
+    public AuthorEntity updateAuthorData(Long id, AuthorEntity entity) throws Exception {
         AuthorEntity authorEntity = authorRepository.findById(id)
                 .orElseThrow(() -> new Exception("Author not found"));
-        if (dto.getName() != null) {
-            authorEntity.setName(dto.getName());
+        if (entity.getName() != null) {
+            authorEntity.setName(entity.getName());
         }
         authorEntity = authorRepository.save(authorEntity);
-        return AuthorDto.mapEntityToDto(authorEntity);
+        return authorEntity;
     }
 
     public void delete(Long id) {

@@ -1,11 +1,10 @@
 package com.myproject.myprojec.service;
 
 import com.myproject.myprojec.csvUpload.control.CsvControl;
-import com.myproject.myprojec.service.criteria.SearchCriteria;
 import com.myproject.myprojec.csvUpload.csvModel.Genre;
 import com.myproject.myprojec.persistence.entity.GenreEntity;
-import com.myproject.myprojec.persistence.rpository.GenreRepository;
-import com.myproject.myprojec.service.dto.GenreDto;
+import com.myproject.myprojec.persistence.repository.GenreRepository;
+import com.myproject.myprojec.service.criteria.SearchCriteria;
 import com.myproject.myprojec.service.model.QueryResponseWrapper;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,33 +27,30 @@ public class GenreService {
         this.csvControl = csvControl;
     }
 
-    public GenreDto createGenres(GenreDto dto) {
-        GenreEntity genreEntity = new GenreEntity();
-        GenreDto.mapDtoToEntity(dto);
-        return GenreDto.mapEntityToDto(genreEntity);
+    public GenreEntity createGenres(GenreEntity genreEntity) {
+        genreEntity = genreRepository.save(genreEntity);
+        return genreEntity;
     }
 
-    public GenreDto getGenres(Long id) throws Exception {
-        GenreEntity genreEntity = genreRepository.findById(id)
+    public GenreEntity getById(Long id) throws Exception {
+        return genreRepository.findById(id)
                 .orElseThrow(() -> new Exception("Genres not found about that name"));
-        return GenreDto.mapEntityToDto(genreEntity);
     }
 
-    public QueryResponseWrapper<GenreDto> getGenres(SearchCriteria searchCriteria) {
+    public QueryResponseWrapper<GenreEntity> getGenres(SearchCriteria searchCriteria) {
         Page<GenreEntity> page = genreRepository.findALLWithPagination(searchCriteria.composePageRequest());
         List<GenreEntity> content = page.getContent();
-        List<GenreDto> dtos = content.stream().map(GenreDto::mapEntityToDto).collect(Collectors.toList());
-        return new QueryResponseWrapper<>(page.getTotalElements(), dtos);
+        return new QueryResponseWrapper<>(page.getTotalElements(), content);
     }
 
-    public GenreDto updateGenres(Long id, GenreDto dto) throws Exception {
+    public GenreEntity updateGenres(Long id, GenreEntity entity) throws Exception {
         GenreEntity genreEntity = genreRepository.findById(id)
                 .orElseThrow(() -> new Exception("Genres not found about that name"));
-        if (dto.getGenres() != null) {
-            genreEntity.setGenres(dto.getGenres());
+        if (entity.getGenres() != null) {
+            genreEntity.setGenres(entity.getGenres());
         }
         genreEntity = genreRepository.save(genreEntity);
-        return GenreDto.mapEntityToDto(genreEntity);
+        return entity;
     }
 
     public void deleteGenres(Long id) {

@@ -1,11 +1,10 @@
 package com.myproject.myprojec.service;
 
 import com.myproject.myprojec.csvUpload.control.CsvControl;
-import com.myproject.myprojec.service.criteria.SearchCriteria;
 import com.myproject.myprojec.csvUpload.csvModel.User;
 import com.myproject.myprojec.persistence.entity.UserEntity;
-import com.myproject.myprojec.persistence.rpository.UserRepository;
-import com.myproject.myprojec.service.dto.UserDto;
+import com.myproject.myprojec.persistence.repository.UserRepository;
+import com.myproject.myprojec.service.criteria.SearchCriteria;
 import com.myproject.myprojec.service.model.QueryResponseWrapper;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,47 +30,44 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public UserDto creatUser(UserDto dto) {
-        UserEntity userEntity = UserDto.mapDtoToEntity(dto, new UserEntity());
-        userEntity.setId(dto.getId());
-        userEntity.setPassword(passwordEncoder.encode(dto.getPassword()));
-        UserEntity entity =userRepository.save(userEntity);
-        return UserDto.mapEntityToDto(entity);
+    public UserEntity creatUser(UserEntity entity) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(entity.getId());
+        userEntity.setPassword(passwordEncoder.encode(entity.getPassword()));
+        return userRepository.save(userEntity);
     }
 
-    public UserDto getUser(Long id) throws Exception {
-        UserEntity userEntity = userRepository.findById(id)
+    public UserEntity getById(Long id) throws Exception {
+        return userRepository.findById(id)
                 .orElseThrow(() -> new Exception("User not found"));
-        return UserDto.mapEntityToDto(userEntity);
     }
 
-    public QueryResponseWrapper<UserDto> getUsers(SearchCriteria searchCriteria) {
+    public QueryResponseWrapper<UserEntity> getUsers(SearchCriteria searchCriteria) {
         Page<UserEntity> page = userRepository.findALLWithPagination(searchCriteria.composePageRequest());
         List<UserEntity> content = page.getContent();
-        List<UserDto> dtos = content.stream().map(UserDto::mapEntityToDto).collect(Collectors.toList());
-        return new QueryResponseWrapper<>(page.getTotalElements(), dtos);
+        return new QueryResponseWrapper<>(page.getTotalElements(), content);
     }
 
-    public UserDto updateUser(Long id, UserDto dto) throws Exception {
+    public UserEntity updateUser(Long id, UserEntity entity) throws Exception {
         UserEntity userEntity = userRepository.findById(id)
                 .orElseThrow(() -> new Exception("User not found"));
-        if (dto.getFirstName() != null) {
-            userEntity.setFirstName(dto.getFirstName());
+        if (entity.getFirstName() != null) {
+            userEntity.setFirstName(entity.getFirstName());
         }
-        if (dto.getLastName() != null) {
-            userEntity.setLastName(dto.getLastName());
+        if (entity.getLastName() != null) {
+            userEntity.setLastName(entity.getLastName());
         }
-        if (dto.getEmail() != null) {
-            userEntity.setEmail(dto.getEmail());
+        if (entity.getEmail() != null) {
+            userEntity.setEmail(entity.getEmail());
         }
-        if (dto.getUsername() != null) {
-            userEntity.setUsername(dto.getUsername());
+        if (entity.getUsername() != null) {
+            userEntity.setUsername(entity.getUsername());
         }
-        if (dto.getPassword() != null) {
-            userEntity.setPassword(passwordEncoder.encode(dto.getPassword()));
+        if (entity.getPassword() != null) {
+            userEntity.setPassword(passwordEncoder.encode(entity.getPassword()));
         }
         userEntity = userRepository.save(userEntity);
-        return UserDto.mapEntityToDto(userEntity);
+        return userEntity;
     }
 
     public void deleteUser(Long id) {
