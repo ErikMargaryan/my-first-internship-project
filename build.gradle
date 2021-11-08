@@ -37,10 +37,11 @@ dependencies {
 
     implementation 'org.junit.jupiter:junit-jupiter:5.8.1'
     implementation 'junit:junit:4.13.2'
-    implementation 'org.projectlombok:lombok:1.18.22'
+    compileOnly 'org.projectlombok:lombok:1.18.22'
+    annotationProcessor 'org.projectlombok:lombok:1.18.22' //??
     compileOnly group: 'org.jbpm', name: 'jbpm-document', version: '7.6.0.Final'
-    // https://mvnrepository.com/artifact/org.apache.commons/commons-csv
-    implementation group: 'org.apache.commons', name: 'commons-csv', version: '1.8'
+//    // https://mvnrepository.com/artifact/org.apache.commons/commons-csv
+//    implementation group: 'org.apache.commons', name: 'commons-csv', version: '1.8'
 
 }
 
