@@ -36,28 +36,27 @@ public class UserEntity {
     @Column(name = "password", nullable = false, length = 10485760)
     private String password;
 
-    @OneToMany(mappedBy = "users")
+    @OneToMany(mappedBy = "user", targetEntity = UserRatedBookEntity.class)
     private List<UserRatedBookEntity> userRatedBookEntityList;
 
-    @OneToMany(mappedBy = "user", targetEntity = UserRoleEntity.class, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", targetEntity = UserRoleEntity.class)
     private List<UserRoleEntity> listOfUserRole;
 
     public UserEntity() {
     }
 
-    public UserEntity(Long id, String firstName, String lastName, String address, String email, String username, String password, List<UserRatedBookEntity> userRatedBookEntityList, List<UserRoleEntity> listOfUserRole, Integer age, String phoneNumber) {
+    public UserEntity(Long id, String firstName, String lastName, Integer age, String address, String phoneNumber, String email, String username, String password, List<UserRatedBookEntity> userRatedBookEntityList, List<UserRoleEntity> listOfUserRole) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.age = age;
         this.address = address;
+        this.phoneNumber = phoneNumber;
         this.email = email;
         this.username = username;
         this.password = password;
         this.userRatedBookEntityList = userRatedBookEntityList;
         this.listOfUserRole = listOfUserRole;
-        this.age = age;
-        this.phoneNumber = phoneNumber;
-//        this.userDetailEntity = userDetailEntity;
     }
 
     public Long getId() {

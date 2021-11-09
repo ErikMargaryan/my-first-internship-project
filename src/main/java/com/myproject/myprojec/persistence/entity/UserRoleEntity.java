@@ -1,6 +1,7 @@
 package com.myproject.myprojec.persistence.entity;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "user_role")
@@ -8,6 +9,7 @@ public class UserRoleEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     @ManyToOne
@@ -47,8 +49,8 @@ public class UserRoleEntity {
         return role;
     }
 
-    public void setRole(RoleEntity role) {
-        this.role = role;
+    public void setRole(RoleEntity roles) {
+        this.role = roles;
     }
 
     @Override
@@ -60,5 +62,17 @@ public class UserRoleEntity {
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserRoleEntity that = (UserRoleEntity) o;
+        return Objects.equals(id, that.id) && Objects.equals(user, that.user) && Objects.equals(role, that.role);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, user, role);
+    }
 }
 

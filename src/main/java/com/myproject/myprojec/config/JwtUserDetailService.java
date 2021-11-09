@@ -5,7 +5,7 @@ import com.myproject.myprojec.config.session.CurrentUser;
 import com.myproject.myprojec.persistence.entity.RoleEntity;
 import com.myproject.myprojec.persistence.entity.UserEntity;
 import com.myproject.myprojec.persistence.entity.UserRoleEntity;
-import com.myproject.myprojec.persistence.rpository.UserRepository;
+import com.myproject.myprojec.persistence.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;

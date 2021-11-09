@@ -1,7 +1,7 @@
 package com.myproject.myprojec.service;
 
 import com.myproject.myprojec.persistence.entity.AuthorEntity;
-import com.myproject.myprojec.persistence.rpository.AuthorRepository;
+import com.myproject.myprojec.persistence.repository.AuthorRepository;
 import com.myproject.myprojec.service.criteria.SearchCriteria;
 import com.myproject.myprojec.service.dto.AuthorDto;
 import com.myproject.myprojec.service.model.QueryResponseWrapper;

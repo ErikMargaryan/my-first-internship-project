@@ -6,6 +6,7 @@ import com.myproject.myprojec.persistence.entity.UserRatedBookEntity;
 import com.myproject.myprojec.persistence.entity.UserRoleEntity;
 import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,12 +22,50 @@ public class UserDto {
     private String username;
     private String password;
     private List<UserRatedBookDto> userRatedBookDtoList;
-    private String role;
+    private List<UserRoleDto> userRoleDtoList;
+//    private List<String> userRoleDtoList;
+//    private String role;
 
     public UserDto() {
     }
 
-    public UserDto(Long id, String firstName, String lastName, Integer age, String address, String phoneNumber, String email, String username, String password, List<UserRatedBookDto> userRatedBookDtoList, String role) {
+    //USerRole - string list
+//    public UserDto(Long id, String firstName, String lastName, Integer age,
+//                   String address, String phoneNumber, String email, String username,
+//                   String password, List<UserRatedBookDto> userRatedBookDtoList, List<String> userRoleDtoList) {
+//        this.id = id;
+//        this.firstName = firstName;
+//        this.lastName = lastName;
+//        this.age = age;
+//        this.address = address;
+//        this.phoneNumber = phoneNumber;
+//        this.email = email;
+//        this.username = username;
+//        this.password = password;
+//        this.userRatedBookDtoList = userRatedBookDtoList;
+//        this.userRoleDtoList = userRoleDtoList;
+//    }
+    //role string
+//    public UserDto(Long id, String firstName, String lastName, Integer age,
+//                   String address, String phoneNumber, String email, String username,
+//                   String password, List<UserRatedBookDto> userRatedBookDtoList, String role) {
+//        this.id = id;
+//        this.firstName = firstName;
+//        this.lastName = lastName;
+//        this.age = age;
+//        this.address = address;
+//        this.phoneNumber = phoneNumber;
+//        this.email = email;
+//        this.username = username;
+//        this.password = password;
+//        this.userRatedBookDtoList = userRatedBookDtoList;
+//        this.role = role;
+//    }
+
+
+    public UserDto(Long id, String firstName, String lastName, Integer age, String address, String phoneNumber,
+                   String email, String username,
+                   String password, List<UserRatedBookDto> userRatedBookDtoList, List<UserRoleDto> userRoleDtoList) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -37,7 +76,7 @@ public class UserDto {
         this.username = username;
         this.password = password;
         this.userRatedBookDtoList = userRatedBookDtoList;
-        this.role = role;
+        this.userRoleDtoList = userRoleDtoList;
     }
 
     public Long getId() {
@@ -120,13 +159,30 @@ public class UserDto {
         this.userRatedBookDtoList = userRatedBookDtoList;
     }
 
-    public String getRole() {
-        return role;
+    public List<UserRoleDto> getUserRoleDtoList() {
+        return userRoleDtoList;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setUserRoleDtoList(List<UserRoleDto> userRoleDtoList) {
+        this.userRoleDtoList = userRoleDtoList;
     }
+
+    //    public List<String> getUserRoleDtoList() {
+//        return userRoleDtoList;
+//    }
+//
+//    public void setUserRoleDtoList(List<String> userRoleDtoList) {
+//        this.userRoleDtoList = userRoleDtoList;
+//    }
+
+
+//    public String getRole() {
+//        return role;
+//    }
+//
+//    public void setRole(String role) {
+//        this.role = role;
+//    }
 
     public static UserDto mapEntityToDto(UserEntity entity) {
         if (entity == null) {
@@ -145,7 +201,19 @@ public class UserDto {
         if (!CollectionUtils.isEmpty(userRatedBookEntityList)) {
             dto.setUsersRatedBooksDtoList(userRatedBookEntityList.stream().map(UserRatedBookDto::mapEntityToDto).collect(Collectors.toList()));
         }
-        dto.setRole(getRoles(entity));
+        List<UserRoleEntity> userRoleEntityList = entity.getListOfUserRole();
+        if (!CollectionUtils.isEmpty(userRoleEntityList)) {
+            dto.setUserRoleDtoList(userRoleEntityList.stream().map(UserRoleDto::mapEntityToDto).collect(Collectors.toList()));
+        }
+
+//        List<UserRoleEntity> userRoleEntityList = entity.getListOfUserRole();
+//        if (!CollectionUtils.isEmpty(userRoleEntityList)) {
+//            dto.setUserRoleDtoList(userRoleEntityList.stream().map(UserRoleEntity::getRole)
+//                    .map(RoleEntity::getName)
+//                    .collect(Collectors.toList()));
+//        }
+
+//        dto.setRole(getRolesFromEntity(entity));
         return dto;
     }
 
@@ -165,14 +233,21 @@ public class UserDto {
         if (!CollectionUtils.isEmpty(userRatedBookDtoList)) {
             entity.setUsersRatedBooksList(userRatedBookDtoList.stream().map(UserRatedBookDto::mapDtoToEntity).collect(Collectors.toList()));
         }
+        List<UserRoleDto> userRoleDtoList = dto.getUserRoleDtoList();
+        if (!CollectionUtils.isEmpty(userRoleDtoList)) {
+            entity.setListOfUserRole(userRoleDtoList.stream().map(UserRoleDto::mapDtoToEntity).collect(Collectors.toList()));
+        }
+
         return entity;
     }
 
-    private static String getRoles(UserEntity entity) {
-
-        return entity.getListOfUserRole().stream()
-                .map(UserRoleEntity::getRole)
-                .map(RoleEntity::getName)
-                .collect(Collectors.joining(", "));
-    }
+//    private static String getRolesFromEntity(UserEntity entity) {
+//        if (entity.getListOfUserRole() == null) {
+//            return "USER";
+//        }
+//        return entity.getListOfUserRole().stream()
+//                .map(UserRoleEntity::getRole)
+//                .map(RoleEntity::getName)
+//                .collect(Collectors.joining(", "));
+//    }
 }

@@ -12,13 +12,13 @@ public class BookEntity {
     private Long id;
     @Column(name = "title", nullable = false)
     private String title;
-    @OneToMany(mappedBy = "books")
+    @OneToMany(mappedBy = "book", targetEntity = BookAuthorEntity.class)
     private List<BookAuthorEntity> bookAuthorEntityList;
     @Column(name = "isbn", nullable = false)
     private String isbn;
-    @OneToMany(mappedBy = "books")
+    @OneToMany(mappedBy = "book", targetEntity = UserRatedBookEntity.class)
     private List<UserRatedBookEntity> userRatedBookEntityList;
-    @OneToMany(mappedBy = "books")
+    @OneToMany(mappedBy = "book", targetEntity = BookGenreEntity.class)
     private List<BookGenreEntity> bookGenreEntityList;
     @Column(name = "publisher", nullable = false)
     private String publisher;

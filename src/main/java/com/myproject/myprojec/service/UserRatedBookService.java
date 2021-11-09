@@ -1,7 +1,7 @@
 package com.myproject.myprojec.service;
 
 import com.myproject.myprojec.persistence.entity.UserRatedBookEntity;
-import com.myproject.myprojec.persistence.rpository.UserRatedBookRepository;
+import com.myproject.myprojec.persistence.repository.UserRatedBookRepository;
 import com.myproject.myprojec.service.criteria.SearchCriteria;
 import com.myproject.myprojec.service.dto.UserRatedBookDto;
 import com.myproject.myprojec.service.model.QueryResponseWrapper;

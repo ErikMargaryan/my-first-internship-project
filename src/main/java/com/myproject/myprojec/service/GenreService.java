@@ -4,7 +4,7 @@ import com.myproject.myprojec.csvUpload.control.CsvControl;
 import com.myproject.myprojec.service.criteria.SearchCriteria;
 import com.myproject.myprojec.csvUpload.csvModel.Genre;
 import com.myproject.myprojec.persistence.entity.GenreEntity;
-import com.myproject.myprojec.persistence.rpository.GenreRepository;
+import com.myproject.myprojec.persistence.repository.GenreRepository;
 import com.myproject.myprojec.service.dto.GenreDto;
 import com.myproject.myprojec.service.model.QueryResponseWrapper;
 import javassist.NotFoundException;
@@ -51,7 +51,7 @@ public class GenreService {
         GenreEntity genreEntity = genreRepository.findById(id)
                 .orElseThrow(() -> new Exception("Genres not found about that name"));
         if (dto.getGenres() != null) {
-            genreEntity.setGenres(dto.getGenres());
+            genreEntity.setGenre(dto.getGenres());
         }
         genreEntity = genreRepository.save(genreEntity);
         return GenreDto.mapEntityToDto(genreEntity);

@@ -1,4 +1,4 @@
-package com.myproject.myprojec.persistence.rpository;
+package com.myproject.myprojec.persistence.repository;
 
 import com.myproject.myprojec.persistence.entity.UserRatedBookEntity;
 import org.springframework.data.domain.Page;

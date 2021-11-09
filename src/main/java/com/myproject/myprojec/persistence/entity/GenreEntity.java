@@ -13,17 +13,17 @@ public class GenreEntity {
     private Long id;
 
     @Column(name = "list_of_genres")
-    private String genres;
+    private String genre;
 
-    @OneToMany(mappedBy = "genres")
+    @OneToMany(mappedBy = "genre", targetEntity = BookGenreEntity.class)
     private List<BookGenreEntity> bookGenreEntityList;
 
     public GenreEntity() {
     }
 
-    public GenreEntity(Long id, String genres, List<BookGenreEntity> bookGenreEntityList) {
+    public GenreEntity(Long id, String genre, List<BookGenreEntity> bookGenreEntityList) {
         this.id = id;
-        this.genres = genres;
+        this.genre = genre;
         this.bookGenreEntityList = bookGenreEntityList;
     }
 
@@ -35,12 +35,12 @@ public class GenreEntity {
         this.id = id;
     }
 
-    public String getGenres() {
-        return genres;
+    public String getGenre() {
+        return genre;
     }
 
-    public void setGenres(String genres) {
-        this.genres = genres;
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 
     public List<BookGenreEntity> getBookGenreEntityList() {
@@ -55,7 +55,7 @@ public class GenreEntity {
     public String toString() {
         return "GenresEntity{" +
                 "id=" + id +
-                ", genres=" + genres +
+                ", genre=" + genre +
                 '}';
     }
 }

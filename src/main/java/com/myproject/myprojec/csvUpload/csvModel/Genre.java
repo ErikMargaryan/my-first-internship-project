@@ -40,7 +40,7 @@ public class Genre {
     public static GenreEntity mapCsvToEntity(Genre csv) {
         GenreEntity entity = new GenreEntity();
         entity.setId(csv.getId());
-        entity.setGenres(csv.getGenres());
+        entity.setGenre(csv.getGenres());
         return entity;
     }
 

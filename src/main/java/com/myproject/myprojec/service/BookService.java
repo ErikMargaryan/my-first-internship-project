@@ -3,9 +3,9 @@ package com.myproject.myprojec.service;
 import com.myproject.myprojec.persistence.entity.AuthorEntity;
 import com.myproject.myprojec.persistence.entity.BookAuthorEntity;
 import com.myproject.myprojec.persistence.entity.BookEntity;
-import com.myproject.myprojec.persistence.rpository.AuthorRepository;
-import com.myproject.myprojec.persistence.rpository.BookAuthorRepository;
-import com.myproject.myprojec.persistence.rpository.BookRepository;
+import com.myproject.myprojec.persistence.repository.AuthorRepository;
+import com.myproject.myprojec.persistence.repository.BookAuthorRepository;
+import com.myproject.myprojec.persistence.repository.BookRepository;
 import com.myproject.myprojec.csvUpload.control.CsvControl;
 import com.myproject.myprojec.service.criteria.SearchCriteria;
 import com.myproject.myprojec.service.dto.BookDto;
@@ -129,7 +129,7 @@ public class BookService {
     public void saveRelations(List<BookEntity> bookEntities) {
         List<BookAuthorEntity> bookAuthorEntityList = new ArrayList<>();
         bookEntities.forEach(entity -> {
-            bookAuthorEntityList.addAll(entity.getBookAuthorEntityList().stream().peek(bookAuthorEntity -> bookAuthorEntity.getBooks().setId(entity.getId())).collect(Collectors.toList()));
+            bookAuthorEntityList.addAll(entity.getBookAuthorEntityList().stream().peek(bookAuthorEntity -> bookAuthorEntity.getBook().setId(entity.getId())).collect(Collectors.toList()));
         });
         bookAuthorRepository.saveAll(bookAuthorEntityList);
     }

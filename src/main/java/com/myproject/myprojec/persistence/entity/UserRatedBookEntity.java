@@ -11,12 +11,12 @@ public class UserRatedBookEntity {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "book_id")
-    private BookEntity books;
+    @JoinColumn(name = "book_id", referencedColumnName = "id")
+    private BookEntity book;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private UserEntity users;
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private UserEntity user;
 
     @Column(name = "book_rating")
     private Integer bookRating;
@@ -24,10 +24,10 @@ public class UserRatedBookEntity {
     public UserRatedBookEntity() {
     }
 
-    public UserRatedBookEntity(Long id, BookEntity books, UserEntity users, Integer bookRating) {
+    public UserRatedBookEntity(Long id, BookEntity book, UserEntity user, Integer bookRating) {
         this.id = id;
-        this.books = books;
-        this.users = users;
+        this.book = book;
+        this.user = user;
         this.bookRating = bookRating;
     }
 
@@ -39,20 +39,20 @@ public class UserRatedBookEntity {
         this.id = id;
     }
 
-    public BookEntity getBooks() {
-        return books;
+    public BookEntity getBook() {
+        return book;
     }
 
-    public void setBooks(BookEntity books) {
-        this.books = books;
+    public void setBook(BookEntity book) {
+        this.book = book;
     }
 
-    public UserEntity getUsers() {
-        return users;
+    public UserEntity getUser() {
+        return user;
     }
 
-    public void setUsers(UserEntity users) {
-        this.users = users;
+    public void setUser(UserEntity user) {
+        this.user = user;
     }
 
     public Integer getBookRating() {

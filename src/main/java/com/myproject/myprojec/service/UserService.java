@@ -1,11 +1,15 @@
 package com.myproject.myprojec.service;
 
 import com.myproject.myprojec.csvUpload.control.CsvControl;
+import com.myproject.myprojec.persistence.entity.RoleEntity;
+import com.myproject.myprojec.persistence.repository.RoleRepository;
 import com.myproject.myprojec.service.criteria.SearchCriteria;
 import com.myproject.myprojec.csvUpload.csvModel.User;
 import com.myproject.myprojec.persistence.entity.UserEntity;
-import com.myproject.myprojec.persistence.rpository.UserRepository;
+import com.myproject.myprojec.persistence.repository.UserRepository;
+import com.myproject.myprojec.service.dto.RoleDto;
 import com.myproject.myprojec.service.dto.UserDto;
+import com.myproject.myprojec.service.dto.UserRoleDto;
 import com.myproject.myprojec.service.model.QueryResponseWrapper;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,21 +25,32 @@ import java.util.stream.Collectors;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
     private final CsvControl<User> csvControl;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository, CsvControl<User> csvControl, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, CsvControl<User> csvControl, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
         this.csvControl = csvControl;
         this.passwordEncoder = passwordEncoder;
     }
 
-    public UserDto creatUser(UserDto dto) {
+    public UserDto createUser(UserDto dto) {
         UserEntity userEntity = UserDto.mapDtoToEntity(dto, new UserEntity());
         userEntity.setId(dto.getId());
         userEntity.setPassword(passwordEncoder.encode(dto.getPassword()));
-        UserEntity entity =userRepository.save(userEntity);
+        RoleDto role = new RoleDto();
+        role.setName(dto.getUserRoleDtoList().stream()
+                .map(UserRoleDto::getRole)
+                .map(RoleDto::getName)
+                .collect(Collectors.joining(", "))
+        );
+        RoleEntity roleEntity = RoleDto.mapDtoToEntity(role);
+        RoleEntity roleEntity1 = roleRepository.save(roleEntity);
+        UserEntity entity = userRepository.save(userEntity);
+
         return UserDto.mapEntityToDto(entity);
     }
 

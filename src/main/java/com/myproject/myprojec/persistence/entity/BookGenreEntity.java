@@ -12,20 +12,20 @@ public class BookGenreEntity {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "book_id")
-    private BookEntity books;
+    @JoinColumn(name = "book_id", referencedColumnName = "id")
+    private BookEntity book;
 
     @ManyToOne
-    @JoinColumn(name = "genre_id")
-    private GenreEntity genres;
+    @JoinColumn(name = "genre_id", referencedColumnName = "id")
+    private GenreEntity genre;
 
     public BookGenreEntity() {
     }
 
-    public BookGenreEntity(Long id, BookEntity books, GenreEntity genres) {
+    public BookGenreEntity(Long id, BookEntity book, GenreEntity genre) {
         this.id = id;
-        this.books = books;
-        this.genres = genres;
+        this.book = book;
+        this.genre = genre;
     }
 
     public Long getId() {
@@ -36,28 +36,28 @@ public class BookGenreEntity {
         this.id = id;
     }
 
-    public BookEntity getBooks() {
-        return books;
+    public BookEntity getBook() {
+        return book;
     }
 
-    public void setBooks(BookEntity books) {
-        this.books = books;
+    public void setBook(BookEntity book) {
+        this.book = book;
     }
 
-    public GenreEntity getGenres() {
-        return genres;
+    public GenreEntity getGenre() {
+        return genre;
     }
 
-    public void setGenres(GenreEntity genres) {
-        this.genres = genres;
+    public void setGenre(GenreEntity genre) {
+        this.genre = genre;
     }
 
     @Override
     public String toString() {
         return "BookGenreEntity{" +
                 "id=" + id +
-                ", books=" + books +
-                ", genres=" + genres +
+                ", book=" + book +
+                ", genre=" + genre +
                 '}';
     }
 }

@@ -12,25 +12,25 @@ public class BookAuthorEntity {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "book_id")
-    private BookEntity books;
+    @JoinColumn(name = "book_id", referencedColumnName = "id")
+    private BookEntity book;
 
     @ManyToOne
-    @JoinColumn(name = "author_id")
-    private AuthorEntity authors;
+    @JoinColumn(name = "author_id", referencedColumnName = "id")
+    private AuthorEntity author;
 
     public BookAuthorEntity() {
     }
 
-    public BookAuthorEntity(Long id, BookEntity books, AuthorEntity authors) {
+    public BookAuthorEntity(Long id, BookEntity book, AuthorEntity author) {
         this.id = id;
-        this.books = books;
-        this.authors = authors;
+        this.book = book;
+        this.author = author;
     }
 
-    public BookAuthorEntity(BookEntity books, AuthorEntity authors) {
-        this.books = books;
-        this.authors = authors;
+    public BookAuthorEntity(BookEntity book, AuthorEntity author) {
+        this.book = book;
+        this.author = author;
     }
 
     public Long getId() {
@@ -41,28 +41,28 @@ public class BookAuthorEntity {
         this.id = id;
     }
 
-    public BookEntity getBooks() {
-        return books;
+    public BookEntity getBook() {
+        return book;
     }
 
-    public void setBooks(BookEntity books) {
-        this.books = books;
+    public void setBook(BookEntity book) {
+        this.book = book;
     }
 
-    public AuthorEntity getAuthors() {
-        return authors;
+    public AuthorEntity getAuthor() {
+        return author;
     }
 
-    public void setAuthors(AuthorEntity authors) {
-        this.authors = authors;
+    public void setAuthor(AuthorEntity author) {
+        this.author = author;
     }
 
     @Override
     public String toString() {
         return "BookAuthorEntity{" +
                 "id=" + id +
-                ", books=" + books +
-                ", authors=" + authors +
+                ", book=" + book +
+                ", author=" + author +
                 '}';
     }
 }

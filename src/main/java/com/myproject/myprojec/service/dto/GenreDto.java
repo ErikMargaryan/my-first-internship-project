@@ -52,7 +52,7 @@ public class GenreDto {
         }
         GenreDto dto = new GenreDto();
         dto.setId(entity.getId());
-        dto.setGenres(entity.getGenres());
+        dto.setGenres(entity.getGenre());
         List<BookGenreEntity> bookGenreEntityList = entity.getBookGenreEntityList();
         if (!CollectionUtils.isEmpty(bookGenreEntityList)) {
             dto.setBookGenreDtoList(bookGenreEntityList.stream().map(BookGenreDto::mapEntityToDto).collect(Collectors.toList()));
@@ -66,7 +66,7 @@ public class GenreDto {
         }
         GenreEntity entity = new GenreEntity();
         entity.setId(entity.getId());
-        entity.setGenres(entity.getGenres());
+        entity.setGenre(entity.getGenre());
         List<BookGenreDto> bookGenreDtoList = dto.getBookGenreDtoList();
         if (!CollectionUtils.isEmpty(bookGenreDtoList)) {
             entity.setBookGenreEntityList(bookGenreDtoList.stream().map(BookGenreDto::mapDtoToEntity).collect(Collectors.toList()));

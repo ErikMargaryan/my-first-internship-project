@@ -10,7 +10,6 @@ import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -41,7 +40,6 @@ public class UserController {
     }
 
     @PostMapping("/registration")
-    @PreAuthorize("hasAnyRole('USER')")
     public ResponseEntity<UserDto> addUser(@RequestBody @Validated(Create.class) UserDto dto) throws Exception {
         if (dto.getFirstName() == null) {
             throw new Exception("FirstName is required");
@@ -64,7 +62,7 @@ public class UserController {
         if (dto.getPassword() == null) {
             throw new Exception("Password is required");
         }
-        UserDto user = userService.creatUser(dto);
+        UserDto user = userService.createUser(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
 
