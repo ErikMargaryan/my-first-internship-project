@@ -39,7 +39,7 @@ public class UserService {
 
     public UserDto createUser(UserDto dto) {
         UserEntity userEntity = UserDto.mapDtoToEntity(dto, new UserEntity());
-        userEntity.setId(dto.getId());
+//        userEntity.setId(dto.getId());
         userEntity.setPassword(passwordEncoder.encode(dto.getPassword()));
         RoleDto role = new RoleDto();
         role.setName(dto.getUserRoleDtoList().stream()
@@ -48,7 +48,7 @@ public class UserService {
                 .collect(Collectors.joining(", "))
         );
         RoleEntity roleEntity = RoleDto.mapDtoToEntity(role);
-        RoleEntity roleEntity1 = roleRepository.save(roleEntity);
+        roleEntity = roleRepository.save(roleEntity);
         UserEntity entity = userRepository.save(userEntity);
 
         return UserDto.mapEntityToDto(entity);
