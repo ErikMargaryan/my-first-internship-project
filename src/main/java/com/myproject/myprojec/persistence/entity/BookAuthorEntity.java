@@ -1,8 +1,6 @@
 package com.myproject.myprojec.persistence.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -11,6 +9,7 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
 public class BookAuthorEntity {
 
     @Id
@@ -20,10 +19,12 @@ public class BookAuthorEntity {
 
     @ManyToOne
     @JoinColumn(name = "book_id", referencedColumnName = "id")
+    @NonNull
     private BookEntity book;
 
     @ManyToOne
     @JoinColumn(name = "author_id", referencedColumnName = "id")
+    @NonNull
     private AuthorEntity author;
 
 }
