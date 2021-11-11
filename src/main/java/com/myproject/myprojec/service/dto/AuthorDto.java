@@ -2,49 +2,22 @@ package com.myproject.myprojec.service.dto;
 
 import com.myproject.myprojec.persistence.entity.AuthorEntity;
 import com.myproject.myprojec.persistence.entity.BookAuthorEntity;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class AuthorDto {
 
     private Long id;
     private String name;
     private List<BookAuthorDto> bookAuthorDtoList;
-
-    public AuthorDto() {
-    }
-
-    public AuthorDto(Long id, String name, List<BookAuthorDto> bookAuthorDtoList) {
-        this.id = id;
-        this.name = name;
-        this.bookAuthorDtoList = bookAuthorDtoList;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<BookAuthorDto> getBookAuthorDtoList() {
-        return bookAuthorDtoList;
-    }
-
-    public void setBookAuthorDtoList(List<BookAuthorDto> bookAuthorDtoList) {
-        this.bookAuthorDtoList = bookAuthorDtoList;
-    }
 
     public static AuthorDto mapEntityToDto(AuthorEntity entity) {
         if (entity == null) {

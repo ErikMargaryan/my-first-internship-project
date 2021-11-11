@@ -2,45 +2,17 @@ package com.myproject.myprojec.service.dto;
 
 import com.myproject.myprojec.persistence.entity.UserEntity;
 import com.myproject.myprojec.persistence.entity.UserRoleEntity;
-import org.springframework.util.CollectionUtils;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserRoleDto {
     private Long id;
     private UserDto user;
     private RoleDto role;
-
-    public UserRoleDto() {
-    }
-
-    public UserRoleDto(Long id, UserDto user, RoleDto role) {
-        this.id = id;
-        this.user = user;
-        this.role = role;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public UserDto getUser() {
-        return user;
-    }
-
-    public void setUser(UserDto user) {
-        this.user = user;
-    }
-
-    public RoleDto getRole() {
-        return role;
-    }
-
-    public void setRole(RoleDto role) {
-        this.role = role;
-    }
 
     public static UserRoleDto mapEntityToDto(UserRoleEntity entity) {
         if (entity == null) {

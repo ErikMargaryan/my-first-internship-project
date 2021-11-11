@@ -1,10 +1,17 @@
 package com.myproject.myprojec.persistence.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "genre")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class GenreEntity {
 
     @Id
@@ -18,44 +25,4 @@ public class GenreEntity {
     @OneToMany(mappedBy = "genre", targetEntity = BookGenreEntity.class)
     private List<BookGenreEntity> bookGenreEntityList;
 
-    public GenreEntity() {
-    }
-
-    public GenreEntity(Long id, String genre, List<BookGenreEntity> bookGenreEntityList) {
-        this.id = id;
-        this.genre = genre;
-        this.bookGenreEntityList = bookGenreEntityList;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getGenre() {
-        return genre;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
-
-    public List<BookGenreEntity> getBookGenreEntityList() {
-        return bookGenreEntityList;
-    }
-
-    public void setBookGenreEntityList(List<BookGenreEntity> bookGenreEntityList) {
-        this.bookGenreEntityList = bookGenreEntityList;
-    }
-
-    @Override
-    public String toString() {
-        return "GenresEntity{" +
-                "id=" + id +
-                ", genre=" + genre +
-                '}';
-    }
 }

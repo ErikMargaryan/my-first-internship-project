@@ -2,49 +2,22 @@ package com.myproject.myprojec.service.dto;
 
 import com.myproject.myprojec.persistence.entity.BookGenreEntity;
 import com.myproject.myprojec.persistence.entity.GenreEntity;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class GenreDto {
 
     private Long id;
     private String genres;
     private List<BookGenreDto> bookGenreDtoList;
-
-    public GenreDto() {
-    }
-
-    public GenreDto(Long id, String genres, List<BookGenreDto> bookGenreDtoList) {
-        this.id = id;
-        this.genres = genres;
-        this.bookGenreDtoList = bookGenreDtoList;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getGenres() {
-        return genres;
-    }
-
-    public void setGenres(String genres) {
-        this.genres = genres;
-    }
-
-    public List<BookGenreDto> getBookGenreDtoList() {
-        return bookGenreDtoList;
-    }
-
-    public void setBookGenreDtoList(List<BookGenreDto> bookGenreDtoList) {
-        this.bookGenreDtoList = bookGenreDtoList;
-    }
 
     public static GenreDto mapEntityToDto(GenreEntity entity) {
         if (entity == null) {

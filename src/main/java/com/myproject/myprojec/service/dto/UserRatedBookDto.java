@@ -1,55 +1,19 @@
 package com.myproject.myprojec.service.dto;
 
 import com.myproject.myprojec.persistence.entity.UserRatedBookEntity;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserRatedBookDto {
 
     private Long id;
     private BookDto books;
     private UserDto users;
     private Integer bookRating;
-
-    public UserRatedBookDto() {
-    }
-
-    public UserRatedBookDto(Long id, BookDto books, UserDto users, Integer bookRating) {
-        this.id = id;
-        this.books = books;
-        this.users = users;
-        this.bookRating = bookRating;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public BookDto getBooks() {
-        return books;
-    }
-
-    public void setBooks(BookDto books) {
-        this.books = books;
-    }
-
-    public UserDto getUsers() {
-        return users;
-    }
-
-    public void setUsers(UserDto users) {
-        this.users = users;
-    }
-
-    public Integer getBookRating() {
-        return bookRating;
-    }
-
-    public void setBookRating(Integer bookRating) {
-        this.bookRating = bookRating;
-    }
 
     public static UserRatedBookDto mapEntityToDto(UserRatedBookEntity entity) {
         if (entity == null) {
