@@ -5,6 +5,7 @@ import com.myproject.myprojec.persistence.repository.AuthorRepository;
 import com.myproject.myprojec.service.criteria.SearchCriteria;
 import com.myproject.myprojec.service.dto.AuthorDto;
 import com.myproject.myprojec.service.model.QueryResponseWrapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -13,14 +14,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class AuthorService {
 
     private final AuthorRepository authorRepository;
 
-    @Autowired
-    public AuthorService(AuthorRepository authorRepository) {
-        this.authorRepository = authorRepository;
-    }
+//    @Autowired
+//    public AuthorService(AuthorRepository authorRepository) {
+//        this.authorRepository = authorRepository;
+//    }
 
     public AuthorDto createAuthor(AuthorDto dto) {
         AuthorEntity authorEntity = new AuthorEntity();
