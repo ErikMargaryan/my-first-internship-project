@@ -1,5 +1,6 @@
 package com.myproject.myprojec.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,7 +23,8 @@ public class RoleEntity {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "role", targetEntity = UserRoleEntity.class)
+    @OneToMany(mappedBy = "role", targetEntity = UserRoleEntity.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonIgnore
     private List<UserRoleEntity> listOfUserRole;
 
 }

@@ -28,9 +28,7 @@ public class UserDto {
     private String username;
     private String password;
     private List<UserRatedBookDto> userRatedBookDtoList;
-    private List<UserRoleDto> userRoleDtoList;
-//    private List<String> userRoleDtoList;
-//    private String role;
+    private String role;
 
     public static UserDto mapEntityToDto(UserEntity entity) {
         if (entity == null) {
@@ -45,30 +43,16 @@ public class UserDto {
         dto.setPhoneNumber(entity.getPhoneNumber());
         dto.setEmail(entity.getEmail());
         dto.setUsername(entity.getUsername());
-        List<UserRatedBookEntity> userRatedBookEntityList = entity.getUserRatedBookEntityList();
-        if (!CollectionUtils.isEmpty(userRatedBookEntityList)) {
-            dto.setUserRatedBookDtoList(userRatedBookEntityList.stream().map(UserRatedBookDto::mapEntityToDto).collect(Collectors.toList()));
-        }
-        List<UserRoleEntity> userRoleEntityList = entity.getListOfUserRole();
-        if (!CollectionUtils.isEmpty(userRoleEntityList)) {
-            dto.setUserRoleDtoList(userRoleEntityList.stream().map(UserRoleDto::mapEntityToDto).collect(Collectors.toList()));
-        }
-
-//        List<UserRoleEntity> userRoleEntityList = entity.getListOfUserRole();
-//        if (!CollectionUtils.isEmpty(userRoleEntityList)) {
-//            dto.setUserRoleDtoList(userRoleEntityList.stream().map(UserRoleEntity::getRole)
-//                    .map(RoleEntity::getName)
-//                    .collect(Collectors.toList()));
-//        }
-
-//        dto.setRole(getRolesFromEntity(entity));
+        //rating list?
+        dto.setRole(getRolesFromEntity(entity));
         return dto;
     }
 
-    public static UserEntity mapDtoToEntity(UserDto dto, UserEntity entity) {
+    public static UserEntity mapDtoToEntity(UserDto dto) {
         if (dto == null) {
             return null;
         }
+        UserEntity entity = new UserEntity();
         entity.setId(dto.getId());
         entity.setFirstName(dto.getFirstName());
         entity.setLastName(dto.getLastName());
@@ -77,25 +61,25 @@ public class UserDto {
         entity.setPhoneNumber(dto.getPhoneNumber());
         entity.setEmail(dto.getEmail());
         entity.setUsername(dto.getUsername());
-        List<UserRatedBookDto> userRatedBookDtoList = dto.getUserRatedBookDtoList();
-        if (!CollectionUtils.isEmpty(userRatedBookDtoList)) {
-            entity.setUserRatedBookEntityList(userRatedBookDtoList.stream().map(UserRatedBookDto::mapDtoToEntity).collect(Collectors.toList()));
-        }
-        List<UserRoleDto> userRoleDtoList = dto.getUserRoleDtoList();
-        if (!CollectionUtils.isEmpty(userRoleDtoList)) {
-            entity.setListOfUserRole(userRoleDtoList.stream().map(UserRoleDto::mapDtoToEntity).collect(Collectors.toList()));
-        }
+//        List<UserRatedBookDto> userRatedBookDtoList = dto.getUserRatedBookDtoList();
+//        if (!CollectionUtils.isEmpty(userRatedBookDtoList)) {
+//            entity.setUserRatedBookEntityList(userRatedBookDtoList.stream().map(UserRatedBookDto::mapDtoToEntity).collect(Collectors.toList()));
+//        }
+        RoleEntity roleEntity = new RoleEntity();
+        roleEntity.setName(dto.getRole());
+        UserRoleEntity userRoleEntity = new UserRoleEntity(entity.getId(), entity, roleEntity);
+        entity.setListOfUserRole(List.of(userRoleEntity));
 
         return entity;
     }
 
-//    private static String getRolesFromEntity(UserEntity entity) {
-//        if (entity.getListOfUserRole() == null) {
-//            return "USER";
-//        }
-//        return entity.getListOfUserRole().stream()
-//                .map(UserRoleEntity::getRole)
-//                .map(RoleEntity::getName)
-//                .collect(Collectors.joining(", "));
-//    }
+    private static String getRolesFromEntity(UserEntity entity) {
+        if (entity.getListOfUserRole() == null) {
+            return "User";
+        }
+        return entity.getListOfUserRole().stream()
+                .map(UserRoleEntity::getRole)
+                .map(RoleEntity::getName)
+                .collect(Collectors.joining(", "));
+    }
 }

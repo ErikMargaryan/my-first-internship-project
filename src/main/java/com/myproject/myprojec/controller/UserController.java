@@ -7,6 +7,7 @@ import com.myproject.myprojec.service.model.QueryResponseWrapper;
 import com.myproject.myprojec.service.validation.Create;
 import com.myproject.myprojec.service.validation.Update;
 import javassist.NotFoundException;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,8 +40,9 @@ public class UserController {
         return userService.getUsers(searchCriteria);
     }
 
+    @SneakyThrows
     @PostMapping("/registration")
-    public ResponseEntity<UserDto> addUser(@RequestBody @Validated(Create.class) UserDto dto) throws Exception {
+    public ResponseEntity<UserDto> addUser(@RequestBody @Validated(Create.class) UserDto dto) {
         if (dto.getFirstName() == null) {
             throw new Exception("FirstName is required");
         }
@@ -62,14 +64,15 @@ public class UserController {
         if (dto.getPassword() == null) {
             throw new Exception("Password is required");
         }
-        UserDto user = userService.createUser(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(user);
+        dto = userService.createUser(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(dto);
     }
 
+    @SneakyThrows
     @PutMapping("/{id}")
     public ResponseEntity<UserDto> updateUser(@PathVariable("id") Long id,
                                               @Validated(Update.class)
-                                              @RequestBody UserDto dto) throws Exception {
+                                              @RequestBody UserDto dto) {
         UserDto user = userService.updateUser(id, dto);
         if (user == null) {
             return ResponseEntity.notFound().build();

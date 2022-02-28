@@ -46,7 +46,7 @@ public class UserEntity {
     @OneToMany(mappedBy = "user", targetEntity = UserRatedBookEntity.class)
     private List<UserRatedBookEntity> userRatedBookEntityList;
 
-    @OneToMany(mappedBy = "user", targetEntity = UserRoleEntity.class)
+    @OneToMany(mappedBy = "user", targetEntity = UserRoleEntity.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<UserRoleEntity> listOfUserRole;
 
 }
